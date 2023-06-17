@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AuthApi from "shared/Api";
+import AuthApi from "shared/api";
 
 function Boatlist() {
   const [boatList, setBoatList] = useState([]);

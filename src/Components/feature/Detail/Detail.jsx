@@ -1,5 +1,5 @@
 import React from "react";
-import AuthApi from "shared/Api";
+import AuthApi from "shared/api";
 
 function Detail() {
   console.log(AuthApi);
