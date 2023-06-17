@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 
 import Login from "Components/feature/Kakaologin/Kakaologin";
 import Kakaomap from "Components/feature/Kakaomap/Kakaomap";
+import Editor from "Components/feature/Editor/Editor";
 
 function Home() {
   const [cookie, setCookie, removeCookie] = useCookies(["authorization"]);
@@ -27,7 +28,10 @@ function Home() {
     //   <div>Home</div>
     //   <Login />
     // </>
-    <Kakaomap />
+    <>
+      <Kakaomap />
+      <Editor/>
+    </>
   );
 }
 
