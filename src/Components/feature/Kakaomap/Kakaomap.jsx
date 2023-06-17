@@ -1,43 +1,90 @@
-import React, { useEffect } from "react";
-
-const { kakao } = window;
+import React, { useEffect, useState } from "react";
 
 function Kakaomap() {
+  const [markerPosition, setMarkerPosition] = useState(null); // 마커 위치 좌표 상태 변수
+  const [markerAddress, setMarkerAddress] = useState(""); // 마커 주소 상태 변수
+
   useEffect(() => {
-    const container = document.getElementById("map"); // 지도를 담을 영역의 DOM 레퍼런스
-    const options = {
-      // 지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표.
-      level: 3, // 지도의 레벨(확대, 축소 정도)
+    const { kakao } = window;
+
+    // 지도 컨테이너 요소를 가져옵니다.
+    const mapContainer = document.getElementById("map");
+    const mapOptions = {
+      center: new kakao.maps.LatLng(37.56192, 126.965), // 지도의 중심좌표
+      level: 6, // 지도의 확대 레벨
+      mapTypeId: kakao.maps.MapTypeId.ROADMAP, // 지도종류
     };
-    const map = new kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
 
-    // 지도를 클릭한 위치에 표출할 마커입니다
+    // 카카오 지도 객체를 생성합니다.
+    const map = new kakao.maps.Map(mapContainer, mapOptions);
+
+    // 확대 축소 컨트롤을 생성하고 지도에 추가합니다.
+    const zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+    // 마커 객체를 생성하고 지도에 추가합니다.
     const marker = new kakao.maps.Marker({
-      // 지도 중심좌표에 마커를 생성합니다
-      position: map.getCenter(),
+      map,
     });
-    // 지도에 마커를 표시합니다
-    marker.setMap(map);
 
-    // 지도에 클릭 이벤트를 등록합니다
-    // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+    // 인포윈도우 객체를 생성합니다.
+    const infowindow = new kakao.maps.InfoWindow({
+      content: `<div style="padding:5px;">인포 박스</div>`, // 인포윈도우에 표시할 내용
+    });
+
+    // 마커 클릭 이벤트를 등록합니다.
+    kakao.maps.event.addListener(marker, "click", () => {
+      infowindow.open(map, marker); // 인포윈도우를 지도에 표시합니다.
+    });
+
+    // 지도 클릭 이벤트를 등록합니다.
     kakao.maps.event.addListener(map, "click", (mouseEvent) => {
-      // 클릭한 위도, 경도 정보를 가져옵니다
-      const latlng = mouseEvent.latLng;
+      // 주소-좌표 변환 객체를 생성합니다.
+      const geocoder = new kakao.maps.services.Geocoder();
 
-      // 마커 위치를 클릭한 위치로 옮깁니다
-      marker.setPosition(latlng);
+      // 클릭한 위치의 좌표를 이용하여 법정동 상세 주소 정보를 요청합니다.
+      geocoder.coord2Address(
+        mouseEvent.latLng.getLng(),
+        mouseEvent.latLng.getLat(),
+        (result, status) => {
+          if (status === kakao.maps.services.Status.OK) {
+            let detailAddr = result[0].road_address
+              ? `<div>도로명주소 : ${result[0].road_address.address_name}</div>`
+              : "";
+            detailAddr += `<div>지번 주소 : ${result[0].address.address_name}</div>`;
 
-      // const message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-      // message += '경도는 ' + latlng.getLng() + ' 입니다';
+            const content = `<div class="bAddr"><span class="title">법정동 주소정보</span>${detailAddr}</div>`;
 
-      const resultDiv = document.getElementById("clickLatlng");
-      // resultDiv.innerHTML = message;
+            marker.setPosition(mouseEvent.latLng);
+            marker.setMap(map);
+
+            infowindow.setContent(content);
+            infowindow.open(map, marker);
+
+            // 마커 위치 좌표 업데이트
+            setMarkerPosition(mouseEvent.latLng);
+            // 마커 주소 업데이트
+            setMarkerAddress(result[0].address.address_name);
+          }
+        }
+      );
     });
   }, []);
 
-  return <div id="map" style={{ width: "500px", height: "400px" }} />;
+  return (
+    <div>
+      <div id="map" style={{ width: "400px", height: "500px" }} />
+      <div>
+        {/* 마커 위치 좌표 표시 */}
+        마커 위치 좌표:{" "}
+        {markerPosition && `${markerPosition.getLat()}, ${markerPosition.getLng()}`}
+      </div>
+      <div>
+        {/* 마커 주소 표시 */}
+        마커 주소: {markerAddress}
+      </div>
+    </div>
+  );
 }
 
 export default Kakaomap;
