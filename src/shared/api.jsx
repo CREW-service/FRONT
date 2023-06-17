@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 // 싱글톤 패턴으로 axios 인스터스를 생성
 const api = axios.create({
@@ -9,6 +9,6 @@ const api = axios.create({
 });
 
 export const AuthApi = {
-  imgUpload: (payload) => api.post('/job/upload', payload),
-  write: (payload, config) => api.post('/job/write', payload, { ...config }),
+  imgUpload: (payload) => api.post("/job/upload", payload),
+  write: (payload, config) => api.post("/job/write", payload, { ...config }),
 };

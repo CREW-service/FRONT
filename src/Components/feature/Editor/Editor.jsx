@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AuthApi } from "shared/api";
+import { AuthApi } from "shared/Api";
 import { useCookies } from "react-cookie";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
