@@ -11,5 +11,6 @@ const api = axios.create({
 const AuthApi = {
   imgUpload: (payload) => api.post("/job/upload", payload),
   write: (payload, config) => api.post("/job/write", payload, { ...config }),
+  getBoatList: () => api.get("/boat/map")
 };
 export default AuthApi;
