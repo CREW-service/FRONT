@@ -8,7 +8,8 @@ const api = axios.create({
   },
 });
 
-export const AuthApi = {
+const AuthApi = {
   imgUpload: (payload) => api.post("/job/upload", payload),
   write: (payload, config) => api.post("/job/write", payload, { ...config }),
 };
+export default AuthApi;

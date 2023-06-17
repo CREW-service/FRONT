@@ -1,39 +1,41 @@
 import React, { useEffect } from "react";
 
 const { kakao } = window;
-
 function Kakaomap() {
   useEffect(() => {
-    const container = document.getElementById("map"); // 지도를 담을 영역의 DOM 레퍼런스
-    const options = {
-      // 지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표.
-      level: 3, // 지도의 레벨(확대, 축소 정도)
+    const mapContainer = document.getElementById("map"); // 지도를 표시할 div
+    const mapOption = {
+      center: new kakao.maps.LatLng(37.56192, 126.965), // 지도의 중심좌표
+      level: 6, // 지도의 확대 레벨
+      mapTypeId: kakao.maps.MapTypeId.ROADMAP, // 지도종류
     };
-    const map = new kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
 
-    // 지도를 클릭한 위치에 표출할 마커입니다
+    // 지도를 생성한다
+    const map = new kakao.maps.Map(mapContainer, mapOption);
+
+    // 지도에 확대 축소 컨트롤을 생성한다
+    const zoomControl = new kakao.maps.ZoomControl();
+
+    // 지도의 우측에 확대 축소 컨트롤을 추가한다
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+    // 지도에 마커를 생성하고 표시한다
     const marker = new kakao.maps.Marker({
-      // 지도 중심좌표에 마커를 생성합니다
-      position: map.getCenter(),
+      position: new kakao.maps.LatLng(37.56192, 126.965), // 마커의 좌표
+      map, // 마커를 표시할 지도 객체
     });
-    // 지도에 마커를 표시합니다
-    marker.setMap(map);
 
-    // 지도에 클릭 이벤트를 등록합니다
-    // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-    kakao.maps.event.addListener(map, "click", (mouseEvent) => {
-      // 클릭한 위도, 경도 정보를 가져옵니다
-      const latlng = mouseEvent.latLng;
+    // 마커 위에 표시할 인포윈도우를 생성한다
+    const infowindow = new kakao.maps.InfoWindow({
+      content: '<div style="padding:5px;">인포윈도우 :D</div>', // 인포윈도우에 표시할 내용
+    });
 
-      // 마커 위치를 클릭한 위치로 옮깁니다
-      marker.setPosition(latlng);
+    // 인포윈도우를 지도에 표시한다
+    infowindow.open(map, marker);
 
-      // const message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-      // message += '경도는 ' + latlng.getLng() + ' 입니다';
-
-      const resultDiv = document.getElementById("clickLatlng");
-      // resultDiv.innerHTML = message;
+    // 마커에 클릭 이벤트를 등록한다 (우클릭 : rightclick)
+    kakao.maps.event.addListener(marker, "click", () => {
+      alert("마커를 클릭했습니다!");
     });
   }, []);
 
