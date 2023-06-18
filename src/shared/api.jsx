@@ -12,7 +12,7 @@ const AuthApi = {
   write: (payload, config) => api.post("/boat/write", payload, { ...config }),
   getBoatList: () => api.get("/boat/map"),
   getBoatDetail: (payload) => api.get(`/boat/${payload}`),
-  joinBoat: (payload, config) => api.post(`/boat/${payload}/join`, {...config})
+  joinBoat: (payload, config) => api.post(`/join/${payload}`, {...config})
 };
 
 export default AuthApi;
