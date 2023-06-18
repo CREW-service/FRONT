@@ -24,7 +24,7 @@ function Editor() {
   const [isIndefiniteRecruitment, setIsIndefiniteRecruitment] = useState(false);
 
   const markerAddress = useRecoilState(markerAddressAtom); // 마커 주소 상태 변수
-  const [recoilLatLng] = useRecoilState(recoilLatLngAtom);
+  const recoilLatLng = useRecoilState(recoilLatLngAtom);
 
 
   const onChangeRecruitmentTitleHandler = (e) => {
