@@ -77,7 +77,8 @@ function Kakaomap() {
       <div>
         {/* 마커 위치 좌표 표시 */}
         마커 위치 좌표:{" "}
-        {markerPosition && `${markerPosition.getLat()}, ${markerPosition.getLng()}`}
+        {markerPosition &&
+          `${markerPosition.getLat()}, ${markerPosition.getLng()}`}
       </div>
       <div>
         {/* 마커 주소 표시 */}
