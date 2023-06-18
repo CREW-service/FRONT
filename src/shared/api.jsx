@@ -11,7 +11,8 @@ const api = axios.create({
 const AuthApi = {
   write: (payload, config) => api.post("/boat/write", payload, { ...config }),
   getBoatList: () => api.get("/boat/map"),
-  getBoatDetail: (boatId) => api.get(`/boat/${boatId}`),
+  getBoatDetail: (payload) => api.get(`/boat/${payload}`),
+  joinBoat: (payload, config) => api.post(`/boat/${payload}/join`, {...config})
 };
 
 export default AuthApi;

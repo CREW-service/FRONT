@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AuthApi from "shared/api";
 
 function Boatlist() {
@@ -9,8 +9,7 @@ function Boatlist() {
     try {
       const { data } = await AuthApi.getBoatList();
       // console.log(data);
-      const boatListData = data.boats[0];
-      setBoatList(boatListData);
+      setBoatList(data.boats);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching post:", error);
@@ -20,25 +19,24 @@ function Boatlist() {
   useEffect(() => {
     getBoatList();
   }, []);
-  const navigate = useNavigate();
-  const navigateDetail = () => {
-    navigate("/Detail");
-  };
+
   return (
     <div>
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <>
-          <div>{boatList.title}</div>
-          <div>
-            모집인원 : {boatList.crewNum}/{boatList.maxCrewNum}
+        boatList.map((item) => (
+          <div key={item.boatId}>
+            <div>{item.title}</div>
+            <div>
+              모집인원 : {item.crewNum}/{item.maxCrewNum}
+            </div>
+            <div>마감일: {item.endDate}</div>
+            <Link to={`/boat/${item.boatId}`}>
+              <button type="button">자세히보기</button>
+            </Link>
           </div>
-          <div>마감일: {boatList.endDate}</div>
-          <button type="button" onClick={navigateDetail}>
-            자세히보기
-          </button>
-        </>
+        ))
       )}
     </div>
   );
