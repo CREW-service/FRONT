@@ -34,7 +34,9 @@ function Detail() {
       const res = await AuthApi.joinBoat(id, config);
       console.log(res);
     } catch (error) {
-      console.error("Error:", error);
+
+      console.log("Error:", error);
+      alert(error.response.data.errorMessage);
     }
   };
 

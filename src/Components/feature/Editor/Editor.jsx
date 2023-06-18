@@ -86,7 +86,7 @@ function Editor() {
       const res = await AuthApi.write(newPost, config);
       alert(res.data.message);
     } catch (err) {
-      alert(err.message)
+      alert(err.response.data.errorMessage)
     }
   };
 
