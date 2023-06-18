@@ -1,23 +1,46 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthApi from "shared/api";
 
 function Boatlist() {
   const [boatList, setBoatList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const getBoatList = async () => {
-    const { data } = await AuthApi.getBoatList();
-    const boatListData = data.boats[0];
-    console.log(boatListData);
-    setBoatList(boatListData);
+    try {
+      const { data } = await AuthApi.getBoatList();
+      // console.log(data);
+      const boatListData = data.boats[0];
+      setBoatList(boatListData);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching post:", error);
+      setIsLoading(false);
+    }
   };
   useEffect(() => {
     getBoatList();
   }, []);
+  const navigate = useNavigate();
+  const navigateDetail = () => {
+    navigate("/Detail");
+  };
   return (
-    <>
-      <div>{boatList.title}</div>
-      <div>모집인원 : {boatList.boatId}</div>
-      <div>마감일: {boatList.endDate}</div>
-    </>
+    <div>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <div>{boatList.title}</div>
+          <div>
+            모집인원 : {boatList.crewNum}/{boatList.maxCrewNum}
+          </div>
+          <div>마감일: {boatList.endDate}</div>
+          <button type="button" onClick={navigateDetail}>
+            자세히보기
+          </button>
+        </>
+      )}
+    </div>
   );
 }
 export default Boatlist;
