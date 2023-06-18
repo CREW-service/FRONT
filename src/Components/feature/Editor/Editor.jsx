@@ -147,13 +147,6 @@ function Editor() {
         </select>
         <ReactQuill onChange={onChangeBodyHandler} modules={modules} />
       </StEditorContainer>
-
-      <div dangerouslySetInnerHTML={{ __html: bodyContents }} />
-      {/* {process.browser ? (
-        <div dangerouslySetInnerHTML={{ __html: bodyContents }} />
-      ) : (
-        <div />
-      )} */}
     </StContainer>
   );
 }
