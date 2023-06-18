@@ -6,7 +6,7 @@ import "react-quill/dist/quill.snow.css";
 // styled...
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import { markerPositionAtom, markerAddressAtom } from "Recoil/recoilAtoms";
+import { markerAddressAtom, recoilLatLngAtom } from "Recoil/recoilAtoms";
 
 const recruitmentNum = [2, 3, 4, 5, 6, 7, 8];
 const recruitmentTypeList = ["같이 해요", "같이 먹어요", "같이 사요"];
@@ -17,14 +17,15 @@ const alertList = {
 
 function Editor() {
   const [recruitmentTitle, setRecruitmentTitle] = useState("");
-  const [recruitmentCount, setRecruitmentCount] = useState(0);
+  const [recruitmentCount, setRecruitmentCount] = useState(2);
   const [recruitmentDeadline, setRecruitmentDeadline] = useState("");
-  const [recruitmentType, setRecruitmentType] = useState("");
+  const [recruitmentType, setRecruitmentType] = useState(recruitmentTypeList[0]);
   const [bodyContents, setBodyContent] = useState("");
   const [isIndefiniteRecruitment, setIsIndefiniteRecruitment] = useState(false);
 
-  const markerPosition = useRecoilState(markerPositionAtom); // 마커 위치 좌표 상태 변수
   const markerAddress = useRecoilState(markerAddressAtom); // 마커 주소 상태 변수
+  const [recoilLatLng] = useRecoilState(recoilLatLngAtom);
+
 
   const onChangeRecruitmentTitleHandler = (e) => {
     setRecruitmentTitle(e.target.value);
@@ -42,10 +43,13 @@ function Editor() {
   };
 
   const onChangeIsIndefiniteRecruitment = () => {
-    setIsIndefiniteRecruitment(!isIndefiniteRecruitment);
-    if (isIndefiniteRecruitment) {
-      setRecruitmentDeadline(""); // 모집 기한이 null일 경우 상시모집으로 처리
-    }
+    setIsIndefiniteRecruitment((prevState) => {
+      const nextState = !prevState;
+      if (nextState === true) {
+        setRecruitmentDeadline(null);
+      }
+      return nextState;
+    });
   };
 
   const onChangeBodyHandler = (contents) => {
@@ -60,9 +64,9 @@ function Editor() {
     maxCrewNum: recruitmentCount,
     endDate: recruitmentDeadline,
     address: markerAddress[0],
-    markerPosition,
+    latitude: String(recoilLatLng.lat),
+    longitude: String(recoilLatLng.lng),
   };
-console.log(newPost)
   const [cookies] = useCookies(["authorization"]);
   const config = {
     headers: {
@@ -80,9 +84,9 @@ console.log(newPost)
     }
     try {
       const res = await AuthApi.write(newPost, config);
-      console.log(res);
+      alert(res.data.message);
     } catch (err) {
-      console.log(err);
+      alert(err.message)
     }
   };
 
