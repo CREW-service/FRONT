@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Kakaomap from "Components/feature/Kakaomap/Kakaomap";
+import Editor from "Components/feature/Editor/Editor";
 
 function Home() {
   const [cookie, setCookie, removeCookie] = useCookies(["authorization"]);
@@ -21,7 +22,10 @@ function Home() {
   }, [navigate]);
 
   return (
+    <>
       <Kakaomap />
+      <Editor />
+    </>
   );
 }
 

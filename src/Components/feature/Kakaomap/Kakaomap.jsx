@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { markerPositionAtom, markerAddressAtom } from "Recoil/recoilAtoms";
 
 function Kakaomap() {
-  const [markerPosition, setMarkerPosition] = useState(null); // 마커 위치 좌표 상태 변수
-  const [markerAddress, setMarkerAddress] = useState(""); // 마커 주소 상태 변수
+  const [markerPosition, setMarkerPosition] =
+    useRecoilState(markerPositionAtom); // 마커 위치 좌표 상태 변수
+  const [markerAddress, setMarkerAddress] = useRecoilState(markerAddressAtom); // 마커 주소 상태 변수
 
   useEffect(() => {
     const { kakao } = window;
@@ -69,7 +72,7 @@ function Kakaomap() {
         }
       );
     });
-  }, []);
+  }, [setMarkerAddress, setMarkerPosition]);
 
   return (
     <div>
@@ -77,7 +80,8 @@ function Kakaomap() {
       <div>
         {/* 마커 위치 좌표 표시 */}
         마커 위치 좌표:{" "}
-        {markerPosition && `${markerPosition.getLat()}, ${markerPosition.getLng()}`}
+        {markerPosition &&
+          `${markerPosition.getLat()}, ${markerPosition.getLng()}`}
       </div>
       <div>
         {/* 마커 주소 표시 */}

@@ -5,6 +5,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 // styled...
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { markerPositionAtom, markerAddressAtom } from "Recoil/recoilAtoms";
 
 const recruitmentNum = [2, 3, 4, 5, 6, 7, 8];
 const recruitmentTypeList = ["같이 해요", "같이 먹어요", "같이 사요"];
@@ -20,6 +22,9 @@ function Editor() {
   const [recruitmentType, setRecruitmentType] = useState("");
   const [bodyContents, setBodyContent] = useState("");
   const [isIndefiniteRecruitment, setIsIndefiniteRecruitment] = useState(false);
+
+  const markerPosition = useRecoilState(markerPositionAtom); // 마커 위치 좌표 상태 변수
+  const markerAddress = useRecoilState(markerAddressAtom); // 마커 주소 상태 변수
 
   const onChangeRecruitmentTitleHandler = (e) => {
     setRecruitmentTitle(e.target.value);
@@ -54,8 +59,10 @@ function Editor() {
     keyword: recruitmentType,
     maxCrewNum: recruitmentCount,
     endDate: recruitmentDeadline,
-    address: "string",
+    address: markerAddress[0],
+    markerPosition,
   };
+console.log(newPost)
   const [cookies] = useCookies(["authorization"]);
   const config = {
     headers: {
