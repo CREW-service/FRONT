@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthApi from "shared/api";
 
 function Boatlist() {
@@ -19,6 +20,10 @@ function Boatlist() {
   useEffect(() => {
     getBoatList();
   }, []);
+  const navigate = useNavigate();
+  const navigateDetail = () => {
+    navigate("/Detail");
+  };
   return (
     <div>
       {isLoading ? (
@@ -30,7 +35,9 @@ function Boatlist() {
             모집인원 : {boatList.crewNum}/{boatList.maxCrewNum}
           </div>
           <div>마감일: {boatList.endDate}</div>
-          <button type="button">자세히보기</button>
+          <button type="button" onClick={navigateDetail}>
+            자세히보기
+          </button>
         </>
       )}
     </div>
