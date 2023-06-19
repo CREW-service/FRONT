@@ -20,12 +20,12 @@ const initialState = {
   recruitmentCount: 2,
   recruitmentDeadline: "",
   recruitmentType: recruitmentTypeList[0],
-  bodyContents: "",
   isIndefiniteRecruitment: false,
 };
 
 function Editor() {
   const [state, setState] = useState(initialState);
+  const [bodyContents, setBodyContent] = useState("");
   const [cookies] = useCookies(["authorization"]);
   const markerAddress = useRecoilState(markerAddressAtom);
   const recoilLatLng = useRecoilState(recoilLatLngAtom);
@@ -40,26 +40,26 @@ function Editor() {
     }));
   };
 
+  const onChangeBodyHandler = (contents) => {
+    setBodyContent(contents);
+  };
+
   const onSubmiltHandler = async (e) => {
     e.preventDefault();
-    if (
-      !state.recruitmentTitle ||
-      !state.bodyContents ||
-      !state.recruitmentCount
-    ) {
+    if (!state.recruitmentTitle || !bodyContents || !state.recruitmentCount) {
       alert(alertList.missingInfo);
       return;
     }
     try {
       const newPost = {
         title: state.recruitmentTitle,
-        content: state.bodyContents,
+        content: bodyContents,
         keyword: state.recruitmentType,
         maxCrewNum: state.recruitmentCount,
         endDate: state.recruitmentDeadline,
         address: markerAddress[0],
-        latitude: recoilLatLng.lat,
-        longitude: recoilLatLng.lng,
+        latitude: recoilLatLng[0].lat,
+        longitude: recoilLatLng[0].lng,
       };
 
       const config = {
@@ -67,7 +67,6 @@ function Editor() {
           authorization: cookies.authorization,
         },
       };
-
       const res = await AuthApi.write(newPost, config);
       alert(res.data.message);
     } catch (err) {
@@ -135,7 +134,7 @@ function Editor() {
             </option>
           ))}
         </select>
-        <ReactQuill onChange={handleChange} modules={modules} />
+        <ReactQuill onChange={onChangeBodyHandler} modules={modules} />
       </StEditorContainer>
     </StContainer>
   );
