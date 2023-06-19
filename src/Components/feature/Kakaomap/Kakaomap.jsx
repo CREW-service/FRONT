@@ -27,7 +27,8 @@ function Kakaomap() {
             },
             (error) => {
               // 위치 정보를 가져오지 못한 경우의 처리를 여기에 작성할 수 있습니다.
-              reject(error);
+              const locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+              resolve(locPosition);
             }
           );
         } else {
