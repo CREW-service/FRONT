@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthApi from "shared/api";
+import { useRecoilState } from "recoil";
+import { boatListAtom } from "Recoil/recoilAtoms";
 
 function Boatlist() {
-  const [boatList, setBoatList] = useState([]);
+  const [boatList, setBoatList] = useRecoilState(boatListAtom);
   const [isLoading, setIsLoading] = useState(true);
   const getBoatList = async () => {
     try {
