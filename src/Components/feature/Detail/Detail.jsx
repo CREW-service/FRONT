@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import DOMPurify from 'dompurify'; // DOMPurify 라이브러리 가져오기
+import DOMPurify from "dompurify"; // DOMPurify 라이브러리 가져오기
 import AuthApi from "shared/api";
 
 function Detail() {
@@ -20,7 +20,7 @@ function Detail() {
       setIsLoading(false);
     }
   };
-  
+
   const [cookies] = useCookies(["authorization"]);
   const config = {
     headers: {
@@ -34,7 +34,6 @@ function Detail() {
       const res = await AuthApi.joinBoat(id, config);
       console.log(res);
     } catch (error) {
-
       console.log("Error:", error);
       alert(error.response.data.errorMessage);
     }
@@ -62,11 +61,16 @@ function Detail() {
             모집 인원: {boat.crewNum}/{boat.maxCrewNum}
           </div>
           <div>
-            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(boat.content) }} />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(boat.content),
+              }}
+            />
           </div>
           <button type="button" onClick={joinBoatHandler}>
             참여하기
           </button>
+          {/* test 주석 */}
         </>
       )}
     </div>
