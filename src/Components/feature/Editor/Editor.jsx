@@ -58,10 +58,9 @@ function Editor() {
         maxCrewNum: state.recruitmentCount,
         endDate: state.recruitmentDeadline,
         address: markerAddress[0],
-        latitude: recoilLatLng[0].lat,
-        longitude: recoilLatLng[0].lng,
+        latitude: String(recoilLatLng[0].lat),
+        longitude: String(recoilLatLng[0].lng),
       };
-
       const config = {
         headers: {
           authorization: cookies.authorization,
