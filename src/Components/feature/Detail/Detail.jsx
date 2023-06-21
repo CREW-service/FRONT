@@ -37,11 +37,22 @@ function Detail() {
       {
         console.log(res);
       }
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log("Error:", error);
       alert(error.response.data.errorMessage);
     }
+  };
+
+  // 버튼 클릭시 참여하기 버튼 안보이기
+  const [isVisible, setIsVisible] = useState(true);
+  const visibleHandler = () => {
+    setIsVisible(false);
+  };
+  // 버튼 클릭시 댓글 div 보이기
+  const [showComment, setShowComment] = useState(false);
+  const ShowCommentClickBtn = () => {
+    setShowComment(true);
   };
 
   // // 모달창 노출 여부 state
@@ -80,10 +91,19 @@ function Detail() {
               }}
             />
           </div>
-
-          <button type="button" onClick={joinBoatHandler}>
-            참여하기
-          </button>
+          {isVisible && (
+            <button
+              type="button"
+              onClick={() => {
+                joinBoatHandler();
+                visibleHandler();
+                ShowCommentClickBtn();
+              }}
+            >
+              참여하기
+            </button>
+          )}
+          {showComment && <div>comment</div>}
 
           {/* <div>
             <button type="button" onClick={showModal}>
