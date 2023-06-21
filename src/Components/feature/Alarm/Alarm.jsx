@@ -1,34 +1,7 @@
-// import React, { useState } from "react";
-// import AuthApi from "shared/api";
+import React from "react";
 
-// function Alarm() {
-//   const [alarm, setAlarm] = useState("");
-//   const fetchAlarm = async () => {
-//     try {
-//       const { data } = await AuthApi.get();
-//       setAlarm(data);
-//       setIsLoading(false);
-//     } catch (error) {
-//       cconsole.error("Error fetching post:", error);
-//       setIsLoading(false);
-//     }
-//   };
-//   useEffect(() => {
-//     fetchAlarm();
-//   }, []);
-//   return (
-//     <div>
-//       {isLoading ? (
-//         <div>Loading...</div>
-//       ) : (
-//         <>
-//           <div>{alarm}</div>
-//           <div>{alarm}</div>
-//           <div>{alarm}</div>
-//         </>
-//       )}
-//     </div>
-//   );
-// }
+function Alarm() {
+  return <div>Alarm</div>;
+}
 
-// export default Alarm;
+export default Alarm;

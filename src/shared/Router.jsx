@@ -9,6 +9,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/boat/:id" element={<Boat />} />
+
         {/* <Route path="/job" element={<PostList />} />
         
         <Route path="/job/:job_id" element={<Detailpage />} />
