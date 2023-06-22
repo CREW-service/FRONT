@@ -17,5 +17,5 @@ export const recoilLatLngAtom = atom({
 
 export const boatListAtom = atom({
   key: "boatList",
-  default: null,
+  default: [],
 });

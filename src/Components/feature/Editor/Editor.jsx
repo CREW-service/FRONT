@@ -8,85 +8,68 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { markerAddressAtom, recoilLatLngAtom } from "Recoil/recoilAtoms";
 
-const recruitmentNum = [2, 3, 4, 5, 6, 7, 8];
+const recruitmentNum = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 const recruitmentTypeList = ["같이 해요", "같이 먹어요", "같이 사요"];
 const alertList = {
   noCookie: "로그인 정보가 올바르지 않습니다.",
   missingInfo: "필수 정보가 누락되었습니다.",
 };
 
-function Editor() {
-  const [recruitmentTitle, setRecruitmentTitle] = useState("");
-  const [recruitmentCount, setRecruitmentCount] = useState(2);
-  const [recruitmentDeadline, setRecruitmentDeadline] = useState("");
-  const [recruitmentType, setRecruitmentType] = useState(recruitmentTypeList[0]);
-  const [bodyContents, setBodyContent] = useState("");
-  const [isIndefiniteRecruitment, setIsIndefiniteRecruitment] = useState(false);
+const initialState = {
+  recruitmentTitle: "",
+  recruitmentCount: 2,
+  recruitmentDeadline: "",
+  recruitmentType: recruitmentTypeList[0],
+  isIndefiniteRecruitment: false,
+};
 
-  const markerAddress = useRecoilState(markerAddressAtom); // 마커 주소 상태 변수
+function Editor() {
+  const [state, setState] = useState(initialState);
+  const [bodyContents, setBodyContent] = useState("");
+  const [cookies] = useCookies(["authorization"]);
+  const markerAddress = useRecoilState(markerAddressAtom);
   const recoilLatLng = useRecoilState(recoilLatLngAtom);
 
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    const newValue = type === "checkbox" ? checked : value;
 
-  const onChangeRecruitmentTitleHandler = (e) => {
-    setRecruitmentTitle(e.target.value);
-  };
-
-  const onChangeRecrutmentCountHandler = (e) => {
-    setRecruitmentCount(e.target.value);
-  };
-
-  const onChangeRecruitmentTypeHandler = (e) => {
-    setRecruitmentType(e.target.value);
-  };
-  const onChangeRecruitmentDeadlineHandler = (e) => {
-    setRecruitmentDeadline(e.target.value);
-  };
-
-  const onChangeIsIndefiniteRecruitment = () => {
-    setIsIndefiniteRecruitment((prevState) => {
-      const nextState = !prevState;
-      if (nextState === true) {
-        setRecruitmentDeadline(null);
-      }
-      return nextState;
-    });
+    setState((prevState) => ({
+      ...prevState,
+      [name]: newValue,
+    }));
   };
 
   const onChangeBodyHandler = (contents) => {
     setBodyContent(contents);
   };
 
-  // 서버에 보내기 위한 데이터
-  const newPost = {
-    title: recruitmentTitle,
-    content: bodyContents,
-    keyword: recruitmentType,
-    maxCrewNum: recruitmentCount,
-    endDate: recruitmentDeadline,
-    address: markerAddress[0],
-    latitude: String(recoilLatLng.lat),
-    longitude: String(recoilLatLng.lng),
-  };
-  const [cookies] = useCookies(["authorization"]);
-  const config = {
-    headers: {
-      // 쿠키를 헤더에 추가
-      authorization: cookies.authorization,
-    },
-  };
-
   const onSubmiltHandler = async (e) => {
     e.preventDefault();
-    if (!recruitmentTitle || !bodyContents || !recruitmentCount) {
-      // 알럿 대신 모달 같은 것으로 경고를 보내 주는 것이 좋을 것 같아요.
+    if (!state.recruitmentTitle || !bodyContents || !state.recruitmentCount) {
       alert(alertList.missingInfo);
       return;
     }
     try {
+      const newPost = {
+        title: state.recruitmentTitle,
+        content: bodyContents,
+        keyword: state.recruitmentType,
+        maxCrewNum: state.recruitmentCount,
+        endDate: state.recruitmentDeadline,
+        address: markerAddress[0],
+        latitude: String(recoilLatLng[0].lat),
+        longitude: String(recoilLatLng[0].lng),
+      };
+      const config = {
+        headers: {
+          authorization: cookies.authorization,
+        },
+      };
       const res = await AuthApi.write(newPost, config);
       alert(res.data.message);
     } catch (err) {
-      alert(err.response.data.errorMessage)
+      alert(err.response.data.errorMessage);
     }
   };
 
@@ -104,29 +87,33 @@ function Editor() {
         <input
           type="text"
           placeholder="제목"
-          value={recruitmentTitle}
-          onChange={onChangeRecruitmentTitleHandler}
+          name="recruitmentTitle"
+          value={state.recruitmentTitle}
+          onChange={handleChange}
         />
         모집 기한:
         <input
           placeholder="모집 기한"
           type="date"
-          value={recruitmentDeadline}
-          onChange={onChangeRecruitmentDeadlineHandler}
-          disabled={isIndefiniteRecruitment}
+          name="recruitmentDeadline"
+          value={state.recruitmentDeadline}
+          onChange={handleChange}
+          disabled={state.isIndefiniteRecruitment}
         />
         <div>
           <input
             type="checkbox"
-            checked={isIndefiniteRecruitment}
-            onChange={onChangeIsIndefiniteRecruitment}
+            name="isIndefiniteRecruitment"
+            checked={state.isIndefiniteRecruitment}
+            onChange={handleChange}
           />
           상시 모집
         </div>
         모집 인원:
         <select
-          value={recruitmentCount}
-          onChange={onChangeRecrutmentCountHandler}
+          name="recruitmentCount"
+          value={state.recruitmentCount}
+          onChange={handleChange}
         >
           {recruitmentNum.map((option) => (
             <option key={option} value={option}>
@@ -136,8 +123,9 @@ function Editor() {
         </select>
         모임 유형:
         <select
-          value={recruitmentType}
-          onChange={onChangeRecruitmentTypeHandler}
+          name="recruitmentType"
+          value={state.recruitmentType}
+          onChange={handleChange}
         >
           {recruitmentTypeList.map((option) => (
             <option key={option} value={option}>
