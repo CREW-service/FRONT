@@ -54,20 +54,6 @@ function Detail() {
     }
   };
 
-  // 댓글 창 구현
-  const [comments, setComments] = useState("");
-  const commentChangeHandler = (event) => {
-    setComments(event.target.value);
-  };
-  // 댓글 게시 버튼 클릭
-  const clickAddBtnHandler = () => {
-    const newComment = {
-      commentId: comments.length + 1,
-    };
-    setComments([...comments, newComment]);
-    setComments("");
-  };
-
   let componentToRender;
 
   if (isLoading) {
@@ -75,14 +61,7 @@ function Detail() {
   } else if (personType === "captain") {
     componentToRender = <Captindetail boat={boat} />;
   } else if (personType === "crew") {
-    componentToRender = (
-      <Crewdetail
-        boat={boat}
-        comments={comments}
-        commentChangeHandler={commentChangeHandler}
-        clickAddBtnHandler={clickAddBtnHandler}
-      />
-    );
+    componentToRender = <Crewdetail boat={boat} />;
   } else {
     componentToRender = <Otherpeople joinBoatHandler={joinBoatHandler} />;
   }
@@ -101,20 +80,7 @@ function Detail() {
     //         참여하기
     //       </button>
 
-    //       <div>
-    //         <div>
-    //           <input
-    //             type="text"
-    //             placeholder="댓글을 입력하세요"
-    //             value={comments}
-    //             onChange={commentChangeHandler}
-    //           />
-    //           <button type="button" onClick={clickAddBtnHandler}>
-    //             게시
-    //           </button>
-    //         </div>
-    //         <div>{comments}</div>
-    //       </div>
+    //
     //     </>
     //   )}
     // </div>
