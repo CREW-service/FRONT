@@ -7,6 +7,36 @@ import {
   boatListAtom,
 } from "Recoil/recoilAtoms";
 
+const { kakao } = window;
+
+const getLocation = async () =>
+  new Promise((resolve, reject) => {
+    if (navigator.geolocation) {
+      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude; // 위도
+          const lon = position.coords.longitude; // 경도
+          const locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+          resolve(locPosition);
+        },
+        (error) => {
+          // 위치 정보를 가져오지 못한 경우의 처리를 여기에 작성할 수 있습니다.
+          const locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+          resolve(locPosition);
+        }
+      );
+    } else {
+      // HTML5의 GeoLocation을 사용할 수 없을 때의 기본 위치를 설정합니다
+      const locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+      resolve(locPosition);
+    }
+  });
+
+// 마커 이미지의 이미지 주소입니다
+const imageSrc =
+  "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
 function Kakaomap() {
   const [boatList] = useRecoilState(boatListAtom); // 보트 리스트를 가져오기 위함
   const [, setMarkerPosition] = useRecoilState(markerPositionAtom); // 마커 위치 좌표 상태
@@ -14,32 +44,6 @@ function Kakaomap() {
   const [, setRecoilLatLng] = useRecoilState(recoilLatLngAtom); // 위도와 경도를 저장하는 상태
 
   useEffect(() => {
-    const { kakao } = window;
-
-    const getLocation = async () =>
-      new Promise((resolve, reject) => {
-        if (navigator.geolocation) {
-          // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const lat = position.coords.latitude; // 위도
-              const lon = position.coords.longitude; // 경도
-              const locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-              resolve(locPosition);
-            },
-            (error) => {
-              // 위치 정보를 가져오지 못한 경우의 처리를 여기에 작성할 수 있습니다.
-              const locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-              resolve(locPosition);
-            }
-          );
-        } else {
-          // HTML5의 GeoLocation을 사용할 수 없을 때의 기본 위치를 설정합니다
-          const locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-          resolve(locPosition);
-        }
-      });
-
     const initializeMap = async () => {
       // 위치 정보 가져오기
       const defaultPosition = await getLocation();
@@ -59,25 +63,7 @@ function Kakaomap() {
       const zoomControl = new kakao.maps.ZoomControl();
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-      // 마커 객체를 생성하고 지도에 추가합니다.
-      // let marker = new kakao.maps.Marker({
-      //   map,
-      // });
-
-      // 마커 이미지의 이미지 주소입니다
-      const imageSrc =
-        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-
       boatList.forEach((boat) => {
-        // const content = `<div style="padding:5px;">
-        //   <div class="close" onclick="closeOverlay()" title="닫기">닫기</div>
-        //   <div>제목: ${boat.title}</div>
-        //               <div>모집 유형: ${boat.keyword}</div>
-        //               <div>모집 인원: ${boat.crewNum}/${boat.maxCrewNum}</div>
-        //               <div>모집 마감: ${boat.endDate}</div>
-        //               <a href="/boat/${boat.boatId}">자세히 보기</a>
-        //             </div>`;
-
         const content = `<div class="wrap" style="padding:5px;"> 
                           <div class="info"> 
                             <div class="title">
@@ -155,8 +141,12 @@ function Kakaomap() {
               marker.setPosition(mouseEvent.latLng);
               // marker.setMap(map);
 
-              infowindow.setContent(content);
-              infowindow.open(map, marker);
+              infowindow.close();
+              kakao.maps.event.addListener(marker, 'click', () => {
+                infowindow.setContent(content);
+                infowindow.open(map, marker);
+            });
+              
 
               // 마커 위치 좌표 업데이트
               setMarkerPosition(mouseEvent.latLng);
