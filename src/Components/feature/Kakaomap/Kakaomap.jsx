@@ -6,6 +6,7 @@ import {
   recoilLatLngAtom,
   boatListAtom,
 } from "Recoil/recoilAtoms";
+import { styled } from "styled-components";
 
 const { kakao } = window;
 
@@ -170,10 +171,14 @@ function Kakaomap() {
   // },[markerPosition])
 
   return (
-    <div>
-      <div id="map" style={{ width: "360px", height: "450px" }} />
-    </div>
+      <StMapContainer id="map"/>
   );
 }
 
 export default Kakaomap;
+
+const StMapContainer = styled.div`
+width: 100%;
+height: 760px;
+margin: 0 auto;
+`

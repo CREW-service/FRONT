@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import Kakaomap from "Components/feature/Kakaomap/Kakaomap";
 import Boatlist from "Components/feature/Boatlist/Boatlist";
 import Editor from "Components/feature/Editor/Editor";
 import Layout from "Components/Layout/Layout";
 import Kakaologin from "Components/feature/Kakaologin/Kakaologin";
+import Kakaomap from "Components/feature/Kakaomap/Kakaomap";
 
 function Home() {
   const [cookie, setCookie, removeCookie] = useCookies(["authorization"]);
@@ -26,10 +26,8 @@ function Home() {
 
   return (
     <Layout>
-      <Kakaologin />
-      <Kakaomap />
+      {/* <Kakaologin /> */}
       <Boatlist />
-      <Editor/>
     </Layout>
   );
 }
