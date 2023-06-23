@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DOMPurify from "dompurify"; // DOMPurify 라이브러리 가져오기
+import Captinmodal from "./Modal/Captinmodal";
 
 function Captindetail({ boat }) {
+  // 모달창 노출 여부 state
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // 모달창 노출
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
   return (
     <div>
       <div>
@@ -24,6 +33,12 @@ function Captindetail({ boat }) {
             }}
           />
         </div>
+      </div>
+      <div>
+        <button type="button" onClick={showModal}>
+          글수정삭제btn
+        </button>
+        {modalOpen && <Captinmodal setModalOpen={setModalOpen} />}
       </div>
     </div>
   );
