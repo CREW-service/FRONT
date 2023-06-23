@@ -39,7 +39,8 @@ const StContainer = styled.div`
 `;
 
 const StMenuBox = styled.div`
-  font-size: 32px;
+  font-size: 46px;
+  color: var(--gr-deep, #3e4756);
 `;
 
 const StLogobox = styled.div`

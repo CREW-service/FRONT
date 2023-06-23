@@ -1,20 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import Homeicon from "./Homeicon.png";
-import Writngicon from "./Writingicon.png";
+import Homeicon from "./Homeicondefualt.png";
+import Homeiconactive from "./Homeiconactive.png"
+import Writingicon from "./Writingicon.png";
+import Writingiconactive from "./Writingiconactive.png"
 import Mypageicon from "./Mypageicon.png";
+import Mypageiconactive from "./Mypageiconactive.png"
 
 function Footer() {
   return (
     <StContainer>
       <StIconBox>
         <StImg src={Homeicon} alt="홈" />
+        <StdefualtTxt>홈</StdefualtTxt>
       </StIconBox>
       <StIconBox>
-        <StImg src={Writngicon} alt="글쓰기" />
+        <StImg src={Writingicon} alt="글쓰기" />
+        <StdefualtTxt>글쓰기</StdefualtTxt>
       </StIconBox>
       <StIconBox>
         <StImg src={Mypageicon} alt="마이페이지" />
+        <StdefualtTxt>마이페이지</StdefualtTxt>
       </StIconBox>
     </StContainer>
   );
@@ -29,7 +35,7 @@ const StContainer = styled.div`
   padding: 4px 20px;
   justify-content: center;
   align-items: center;
-  gap: 64px;
+  gap: 68px;
   flex-shrink: 0;
 
   background: var(--gr-white, #fff);
@@ -40,8 +46,29 @@ const StContainer = styled.div`
 
 const StIconBox = styled.div`
   display: flex;
-  margin: 0 auto;
+  width: 52px;
+  height: 62px;
+  padding: 4px 12px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
 `;
-const StImg = styled.img`
+const StImg = styled.img``;
 
+const StActiveTxt = styled.p`
+  color: var(--primary-blue, #30a2ff);
+  text-align: center;
+  font-size: 12px;
+  font-family: Pretendard;
+  line-height: 20px;
+`;
+
+const StdefualtTxt = styled.p`
+  color: var(--gr-deep, #3e4756);
+  text-align: center;
+  font-size: 12px;
+  font-family: Pretendard;
+  line-height: 20px;
 `;

@@ -10,7 +10,7 @@ function Layout({ children }) {
     <StLayoutBox className="content">
       <Header />
       <Body>{children}</Body>
-      <Footer/>
+      <Footer />
     </StLayoutBox>
   );
 }
@@ -22,7 +22,6 @@ Layout.propTypes = {
 export default Layout;
 
 const StLayoutBox = styled.div`
-  max-width: 500px;
-  min-width:360px;
+  width: 360px;
   margin: 0 auto;
 `;
