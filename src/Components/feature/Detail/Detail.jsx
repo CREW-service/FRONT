@@ -9,6 +9,7 @@ import Otherpeople from "./Otherpeople";
 // import Detailoptinmodal from "./Detailoptinmodal";
 
 function Detail() {
+  const [renderTrigger, setRenderTrigger] = useState(false);
   const [cookies] = useCookies(["authorization"]);
   const config = {
     headers: {
@@ -27,7 +28,7 @@ function Detail() {
     try {
       const { data } = await AuthApi.getBoatDetail(id, config);
       // console.log("data", data);
-      setBoat(data.boat);
+      setBoat(data);
       setPersonType(data.personType);
       console.log("data", data);
       setIsLoading(false);
@@ -37,9 +38,13 @@ function Detail() {
     }
   };
 
+  const renderTriggerHandler = () => {
+    setRenderTrigger(!renderTrigger);
+  };
+
   useEffect(() => {
     fetchBoat();
-  }, []);
+  }, [renderTrigger]);
 
   const joinBoatHandler = async () => {
     try {
@@ -59,9 +64,21 @@ function Detail() {
   if (isLoading) {
     componentToRender = <div>Loading...</div>;
   } else if (personType === "captain") {
-    componentToRender = <Captindetail boat={boat} />;
+    componentToRender = (
+      <Captindetail
+        boat={boat}
+        boatId={id}
+        renderTriggerHandler={renderTriggerHandler}
+      />
+    );
   } else if (personType === "crew") {
-    componentToRender = <Crewdetail boat={boat} />;
+    componentToRender = (
+      <Crewdetail
+        boat={boat}
+        boatId={id}
+        renderTriggerHandler={renderTriggerHandler}
+      />
+    );
   } else {
     componentToRender = <Otherpeople joinBoatHandler={joinBoatHandler} />;
   }

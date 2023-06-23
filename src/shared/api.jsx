@@ -15,6 +15,10 @@ const AuthApi = {
     api.get(`/boat/${payload}`, { ...config }),
   joinBoat: (payload, config) =>
     api.post(`/boat/${payload}/join`, 1, { ...config }),
+  correctionBoatDetail: (payload, config) =>
+    api.put(`/boat/${payload}`, payload, { ...config }),
+  comment: (boatId, payload, config) =>
+    api.post(`/boat/${boatId}/comment`, payload, { ...config }),
 };
 
 export default AuthApi;
