@@ -23,5 +23,6 @@ export default Layout;
 
 const StLayoutBox = styled.div`
   width: 360px;
+  height: 800px;
   margin: 0 auto;
 `;

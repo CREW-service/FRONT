@@ -1,27 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import Homeicon from "./Homeicondefualt.png";
-import Homeiconactive from "./Homeiconactive.png"
+import Homeiconactive from "./Homeiconactive.png";
 import Writingicon from "./Writingicon.png";
-import Writingiconactive from "./Writingiconactive.png"
+import Writingiconactive from "./Writingiconactive.png";
 import Mypageicon from "./Mypageicon.png";
-import Mypageiconactive from "./Mypageiconactive.png"
+import Mypageiconactive from "./Mypageiconactive.png";
 
 function Footer() {
+  const [currentPage, setCurrentPage] = useState("");
+
+  const getCurrentPage = () => {
+    const { pathname } = window.location;
+    setCurrentPage(pathname)
+  }
+  const navigate = useNavigate()
+
+  const onClickHome = (url) => {
+    navigate(url)
+  }
+  
+  useEffect(() => {
+    getCurrentPage()
+  }, []);
+
   return (
     <StContainer>
-      <StIconBox>
-        <StImg src={Homeicon} alt="홈" />
-        <StdefualtTxt>홈</StdefualtTxt>
-      </StIconBox>
-      <StIconBox>
-        <StImg src={Writingicon} alt="글쓰기" />
-        <StdefualtTxt>글쓰기</StdefualtTxt>
-      </StIconBox>
-      <StIconBox>
-        <StImg src={Mypageicon} alt="마이페이지" />
-        <StdefualtTxt>마이페이지</StdefualtTxt>
-      </StIconBox>
+      {currentPage === "/" ? (
+        <StIconBox>
+          <StImg src={Homeiconactive} alt="홈" />
+          <StActiveTxt>홈</StActiveTxt>
+        </StIconBox>
+      ) : (
+        <StIconBox onClick={()=>onClickHome("/")}>
+          <StImg src={Homeicon} alt="홈" />
+          <StdefualtTxt>홈</StdefualtTxt>
+        </StIconBox>
+      )}
+      {currentPage === "/writing" ? (
+        <StIconBox>
+          <StImg src={Writingiconactive} alt="글쓰기" />
+          <StActiveTxt>글쓰기</StActiveTxt>
+        </StIconBox>
+      ) : (
+        <StIconBox onClick={()=>onClickHome("/writing")}>
+          <StImg src={Writingicon} alt="글쓰기" />
+          <StdefualtTxt>글쓰기</StdefualtTxt>
+        </StIconBox>
+      )}
+      {currentPage === "Mypage" ? (
+        <StIconBox>
+          <StImg src={Mypageiconactive} alt="마이페이지" />
+          <StActiveTxt>마이페이지</StActiveTxt>
+        </StIconBox>
+      ) : (
+        <StIconBox>
+          <StImg src={Mypageicon} alt="마이페이지" />
+          <StdefualtTxt>마이페이지</StdefualtTxt>
+        </StIconBox>
+      )}
     </StContainer>
   );
 }

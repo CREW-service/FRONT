@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AuthApi from "shared/api";
 import { useCookies } from "react-cookie";
 import ReactQuill from "react-quill";
@@ -7,6 +7,7 @@ import "react-quill/dist/quill.snow.css";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { markerAddressAtom, recoilLatLngAtom } from "Recoil/recoilAtoms";
+import { useNavigate } from "react-router-dom";
 
 const recruitmentNum = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 const recruitmentTypeList = ["같이 해요", "같이 먹어요", "같이 사요"];
@@ -29,8 +30,20 @@ function Editor() {
   const [cookies] = useCookies(["authorization"]);
   const markerAddress = useRecoilState(markerAddressAtom);
   const recoilLatLng = useRecoilState(recoilLatLngAtom);
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  useEffect(() => {
+    if (!cookies.authorization) {
+      // 쿠키가 없을 경우 접근 차단
+      // 예: 리다이렉션을 사용하여 로그인 페이지로 이동
+      // window.location.href = "/login"; // 로그인 페이지로 이동하는 경우
+      // 또는 아래와 같이 접근 차단 메시지를 렌더링하거나 다른 작업을 수행할 수 있습니다.
+      alert(alertList.noCookie);
+      navigate("/")
+    }
+  }, [cookies.authorization, navigate]);
+
+  function handleChange(e) {
     const { name, value, type, checked } = e.target;
     const newValue = type === "checkbox" ? checked : value;
 
@@ -38,7 +51,7 @@ function Editor() {
       ...prevState,
       [name]: newValue,
     }));
-  };
+  }
 
   const onChangeBodyHandler = (contents) => {
     setBodyContent(contents);
@@ -50,6 +63,7 @@ function Editor() {
       alert(alertList.missingInfo);
       return;
     }
+
     try {
       const newPost = {
         title: state.recruitmentTitle,
@@ -68,6 +82,7 @@ function Editor() {
       };
       const res = await AuthApi.write(newPost, config);
       alert(res.data.message);
+      navigate("/")
     } catch (err) {
       alert(err.response.data.errorMessage);
     }
@@ -144,7 +159,7 @@ export default Editor;
 // 디자인 영역
 // // 임시 컨테이너
 const StContainer = styled.div`
-  margin: 20px auto;
+  margin: 0 auto;
   width: 80%;
 `;
 

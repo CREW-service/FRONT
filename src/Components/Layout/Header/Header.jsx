@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import Alerticon from "./Alerticon.png";
 import Alerthaveicon from "./Alerthaveicon.png";
 
 function Header() {
   const [haveAlert, setHaveAlert] = useState(false);
+  const navigate = useNavigate();
+
+  const onClickLogo = ()=> {
+    navigate("/")
+  }
+
   return (
     <StContainer>
       <StMenuBox>☰</StMenuBox>
-      <StLogobox>CREW</StLogobox>
+      <StLogobox onClick={onClickLogo}>CREW</StLogobox>
       <StAlertBox>
         {haveAlert ? (
           <img src={Alerthaveicon} alt="알림 있음" />
