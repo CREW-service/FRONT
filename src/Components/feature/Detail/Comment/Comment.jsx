@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { currentUserIdAtom } from "Recoil/recoilAtoms";
 import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 import PropTypes from "prop-types";
@@ -9,10 +11,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
 
   const [comments, setComments] = useState([]);
   const [cookies] = useCookies(["authorization"]);
-
-  // useEffect(() => {
-  //   setComments(boat.comments);
-  // }, [boat.comments]);
+  const [currentUserId, setCurrentUserId] = useRecoilState(currentUserIdAtom);
 
   const commentChangeHandler = (event) => {
     setComments(event.target.value);
@@ -83,6 +82,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
               >
                 글수정삭제btn
               </button>
+
               {selectedComment === comment.commentId && (
                 <Commentmodal
                   boatId={boatId}

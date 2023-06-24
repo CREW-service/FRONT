@@ -19,3 +19,8 @@ export const boatListAtom = atom({
   key: "boatList",
   default: [],
 });
+
+export const currentUserIdAtom = atom({
+  key: "currentUserId",
+  default: "",
+});

@@ -9,6 +9,7 @@ const api = axios.create({
 });
 
 const AuthApi = {
+  getCurrentUser: (config) => api.get("/currentuser", { ...config }),
   write: (payload, config) => api.post("/boat/write", payload, { ...config }),
   getBoatList: () => api.get("/boat/map"),
   getBoatDetail: (payload, config) =>
