@@ -30,22 +30,27 @@ function Commentmodal({ boatId, comment, renderTriggerHandler, closeModal }) {
 
   const deleteComment = async () => {
     try {
+      const deletedAt = new Date();
       const config = {
         headers: {
           authorization: cookies.authorization,
         },
       };
+      const newDeleteData = {
+        deletedAt,
+      };
 
       const res = await AuthApi.deleteComment(
         boatId,
         comment.commentId,
+        newDeleteData,
         config
       );
-      console.log(res);
+
       alert(res.data.message);
       renderTriggerHandler();
     } catch (err) {
-      alert(err.response.data.errorMessage);
+      console.log(err);
     }
   };
 
@@ -75,6 +80,6 @@ export default Commentmodal;
 Commentmodal.propTypes = {
   closeModal: PropTypes.node.isRequired,
   comment: PropTypes.node.isRequired,
-  renderTriggerHandler: PropTypes.func.isRequired,
+  renderTriggerHandler: PropTypes.node.isRequired,
   boatId: PropTypes.node.isRequired,
 };

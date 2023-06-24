@@ -47,8 +47,6 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
 
-  const isOpenModal = () => {};
-
   // 모달창 노출
   const showModal = () => {
     setModalOpen(true);

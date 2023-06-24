@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import DOMPurify from "dompurify"; // DOMPurify 라이브러리 가져오기
 import AuthApi from "shared/api";
-import Captindetail from "./Captindetail";
+import Captaindetail from "./Captaindetail";
 import Crewdetail from "./Crewdetail";
 import Otherpeople from "./Otherpeople";
 // import Detailoptinmodal from "./Detailoptinmodal";
@@ -66,7 +66,7 @@ function Detail() {
     componentToRender = <div>Loading...</div>;
   } else if (personType === "captain") {
     componentToRender = (
-      <Captindetail
+      <Captaindetail
         boat={boat}
         boatId={id}
         renderTriggerHandler={renderTriggerHandler}

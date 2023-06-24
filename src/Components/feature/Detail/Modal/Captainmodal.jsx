@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-// import AuthApi from "shared/api";
+import { useCookies } from "react-cookie";
+import AuthApi from "shared/api";
 
-function Captinmodal({ setModalOpen }) {
+function Captainmodal({ setModalOpen, boatId, renderTriggerHandler }) {
+  console.log("boat", boatId);
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -25,19 +27,26 @@ function Captinmodal({ setModalOpen }) {
     };
   }, [setModalOpen]);
 
-  //   const [boatId, setBoatId] = useState("");
-  //   const [payload, setPayload] = useState("");
+  const [cookies] = useCookies(["authorization"]);
 
-  //   const correctionHandler = () => {
-  //     const config = {};
-  //     AuthApi.correctionBoatDetail(boatId, payload, config)
-  //       .then((response) => {
-  //         // API 호출 성공 시 처리 로직 작성
-  //       })
-  //       .catch((error) => {
-  //         // API 호출 실패 시 처리 로직 작성
-  //       });
-  //   };
+  const deleteBoatList = async () => {
+    try {
+      const deletedAt = new Date();
+      const config = {
+        headers: {
+          authorization: cookies.authorization,
+        },
+      };
+      const newDeleteData = {
+        deletedAt,
+      };
+      const res = await AuthApi.deleteBoatList(boatId, newDeleteData, config);
+      alert(res.data.message);
+      renderTriggerHandler();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div
@@ -53,13 +62,17 @@ function Captinmodal({ setModalOpen }) {
       </button>
       <button type="button">마감</button>
       <button type="button">수정</button>
-      <button type="button">삭제</button>
+      <button type="button" onClick={deleteBoatList}>
+        삭제
+      </button>
     </div>
   );
 }
 
-export default Captinmodal;
+export default Captainmodal;
 
-Captinmodal.propTypes = {
+Captainmodal.propTypes = {
   setModalOpen: PropTypes.node.isRequired,
+  boatId: PropTypes.node.isRequired,
+  renderTriggerHandler: PropTypes.node.isRequired,
 };

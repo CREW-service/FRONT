@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DOMPurify from "dompurify"; // DOMPurify 라이브러리 가져오기
-import Captinmodal from "./Modal/Captinmodal";
+import Captainmodal from "./Modal/Captainmodal";
 import Comment from "./Comment/Comment";
 
-function Captindetail({ boat, boatId, renderTriggerHandler }) {
+function Captaindetail({ boat, boatId, renderTriggerHandler }) {
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -39,7 +39,9 @@ function Captindetail({ boat, boatId, renderTriggerHandler }) {
         <button type="button" onClick={showModal}>
           글수정삭제btn
         </button>
-        {modalOpen && <Captinmodal setModalOpen={setModalOpen} />}
+        {modalOpen && (
+          <Captainmodal boatId={boatId} setModalOpen={setModalOpen} />
+        )}
       </div>
       <Comment
         boat={boat}
@@ -50,9 +52,9 @@ function Captindetail({ boat, boatId, renderTriggerHandler }) {
   );
 }
 
-export default Captindetail;
+export default Captaindetail;
 
-Captindetail.propTypes = {
+Captaindetail.propTypes = {
   boat: PropTypes.node.isRequired,
   boatId: PropTypes.node.isRequired,
   renderTriggerHandler: PropTypes.node.isRequired,
