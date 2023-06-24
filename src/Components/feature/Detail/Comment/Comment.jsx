@@ -47,10 +47,14 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
 
+  const isOpenModal = () => {};
+
   // 모달창 노출
   const showModal = () => {
     setModalOpen(true);
   };
+
+  const [selectedComment, setSeletedComment] = useState(null);
 
   return (
     <div>
@@ -71,19 +75,22 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
             style={{
               border: "1px solid ",
             }}
-            key={comment.id}
+            key={comment.commentId}
           >
             {comment.comment}
             <div>
-              <button type="button" onClick={showModal}>
+              <button
+                type="button"
+                onClick={() => setSeletedComment(comment.commentId)}
+              >
                 글수정삭제btn
               </button>
-              {modalOpen && (
+              {selectedComment === comment.commentId && (
                 <Commentmodal
                   boatId={boatId}
                   comment={comment}
                   renderTriggerHandler={renderTriggerHandler}
-                  setModalOpen={setModalOpen}
+                  closeModal={setSeletedComment}
                 />
               )}
             </div>

@@ -3,17 +3,17 @@ import { useCookies } from "react-cookie";
 import PropTypes from "prop-types";
 import AuthApi from "shared/api";
 
-function Commentmodal({ boatId, comment, renderTriggerHandler, setModalOpen }) {
+function Commentmodal({ boatId, comment, renderTriggerHandler, closeModal }) {
   console.log("comment", comment);
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  // const closeModal = () => {
+  //   closeModal(null);
+  // };
   const modalRef = useRef(null);
 
   useEffect(() => {
     const handler = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setModalOpen(false);
+        closeModal(null);
       }
     };
 
@@ -24,16 +24,11 @@ function Commentmodal({ boatId, comment, renderTriggerHandler, setModalOpen }) {
       document.removeEventListener("mousedown", handler);
       // document.removeEventListener('touchstart', handler); // 모바일 대응
     };
-  }, [setModalOpen]);
+  }, [closeModal]);
 
   const [cookies] = useCookies(["authorization"]);
 
   const deleteComment = async () => {
-    if (comment !== cookies.authorization) {
-      alert("본인의 댓글만 삭제할 수 있습니다.");
-      return;
-    }
-
     try {
       const config = {
         headers: {
@@ -64,13 +59,13 @@ function Commentmodal({ boatId, comment, renderTriggerHandler, setModalOpen }) {
       }}
       ref={modalRef}
     >
-      <button type="button" onClick={closeModal}>
+      <button type="button" onClick={() => closeModal(null)}>
         X
       </button>
+      <button type="button">수정</button>
       <button type="button" onClick={deleteComment}>
-        수정
+        삭제
       </button>
-      <button type="button">삭제</button>
     </div>
   );
 }
@@ -78,7 +73,7 @@ function Commentmodal({ boatId, comment, renderTriggerHandler, setModalOpen }) {
 export default Commentmodal;
 
 Commentmodal.propTypes = {
-  setModalOpen: PropTypes.node.isRequired,
+  closeModal: PropTypes.node.isRequired,
   comment: PropTypes.node.isRequired,
   renderTriggerHandler: PropTypes.func.isRequired,
   boatId: PropTypes.node.isRequired,
