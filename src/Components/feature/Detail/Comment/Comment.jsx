@@ -81,7 +81,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
               {modalOpen && (
                 <Commentmodal
                   boatId={boatId}
-                  comment={comments}
+                  comment={comment}
                   renderTriggerHandler={renderTriggerHandler}
                   setModalOpen={setModalOpen}
                 />

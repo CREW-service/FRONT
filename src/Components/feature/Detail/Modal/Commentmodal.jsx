@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import AuthApi from "shared/api";
 
 function Commentmodal({ boatId, comment, renderTriggerHandler, setModalOpen }) {
-  console.log(comment);
+  console.log("comment", comment);
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -41,7 +41,11 @@ function Commentmodal({ boatId, comment, renderTriggerHandler, setModalOpen }) {
         },
       };
 
-      const res = await AuthApi.deleteComment(boatId, comment.id, config);
+      const res = await AuthApi.deleteComment(
+        boatId,
+        comment.commentId,
+        config
+      );
       console.log(res);
       alert(res.data.message);
       renderTriggerHandler();
@@ -52,6 +56,7 @@ function Commentmodal({ boatId, comment, renderTriggerHandler, setModalOpen }) {
 
   return (
     <div
+      id={comment.commentId}
       style={{
         border: "1px solid ",
         width: "200px",
