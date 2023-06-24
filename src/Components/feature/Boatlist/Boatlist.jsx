@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AuthApi from "shared/api";
 import { useRecoilState } from "recoil";
 import { boatListAtom } from "Recoil/recoilAtoms";
+import Kakaomap from "../Kakaomap/Kakaomap";
 
 function Boatlist() {
   const [boatList, setBoatList] = useRecoilState(boatListAtom);
@@ -27,18 +28,19 @@ function Boatlist() {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        boatList.map((item) => (
-          <div key={item.boatId}>
-            <div>{item.title}</div>
-            <div>
-              모집인원 : {item.crewNum}/{item.maxCrewNum}
-            </div>
-            <div>마감일: {item.endDate}</div>
-            <Link to={`/boat/${item.boatId}`}>
-              <button type="button">자세히보기</button>
-            </Link>
-          </div>
-        ))
+        <Kakaomap/>
+        // boatList.map((item) => (
+        //   <div key={item.boatId}>
+        //     <div>{item.title}</div>
+        //     <div>
+        //       모집인원 : {item.crewNum}/{item.maxCrewNum}
+        //     </div>
+        //     <div>마감일: {item.endDate}</div>
+        //     <Link to={`/boat/${item.boatId}`}>
+        //       <button type="button">자세히보기</button>
+        //     </Link>
+        //   </div>
+        // ))
       )}
     </div>
   );

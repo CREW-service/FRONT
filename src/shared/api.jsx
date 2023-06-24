@@ -24,6 +24,7 @@ const AuthApi = {
     api.post(`/boat/${boatId}/comment`, payload, { ...config }),
   deleteComment: (boatId, commentId, payload, config) =>
     api.patch(`/boat/${boatId}/comment/${commentId}`, payload, { ...config }),
+  getMyInfo: (config) => api.get("/mypage", { ...config }),
 };
 
 export default AuthApi;

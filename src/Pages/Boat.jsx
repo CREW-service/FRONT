@@ -1,10 +1,13 @@
-import React from 'react'
-import Detail from 'Components/feature/Detail/Detail'
+import React from "react";
+import Detail from "Components/feature/Detail/Detail";
+import Layout from "Components/Layout/Layout";
 
 function Boat() {
   return (
-    <Detail/>
-  )
+    <Layout>
+      <Detail />
+    </Layout>
+  );
 }
 
-export default Boat
+export default Boat;

@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import {
   markerPositionAtom,
@@ -6,6 +7,7 @@ import {
   recoilLatLngAtom,
   boatListAtom,
 } from "Recoil/recoilAtoms";
+import { styled } from "styled-components";
 
 const { kakao } = window;
 
@@ -38,11 +40,11 @@ const imageSrc =
   "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
 function Kakaomap() {
+  const [isLoading, setIsLoarding] = useState(true);
   const [boatList] = useRecoilState(boatListAtom); // 보트 리스트를 가져오기 위함
   const [, setMarkerPosition] = useRecoilState(markerPositionAtom); // 마커 위치 좌표 상태
   const [, setMarkerAddress] = useRecoilState(markerAddressAtom); // 마커 주소 상태
   const [, setRecoilLatLng] = useRecoilState(recoilLatLngAtom); // 위도와 경도를 저장하는 상태
-
   useEffect(() => {
     const initializeMap = async () => {
       // 위치 정보 가져오기
@@ -64,22 +66,32 @@ function Kakaomap() {
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
       boatList.forEach((boat) => {
-        const content = `<div class="wrap" style="padding:5px;"> 
+        const content = `<div class="wrap marker"> 
                           <div class="info"> 
-                            <div class="title">
+                            <div class="title detailtitle">
                               ${boat.title}
                             </div>
                             <div class="body">
                               <div class="desc">
-                                <div>모집 유형: ${boat.keyword}</div>
-                                <div>모집 인원: ${boat.crewNum}/${
-          boat.maxCrewNum
-        }</div>
-                                <div>모집 마감: ${
-                                  boat.endDate ? boat.endDate : "상시 모집"
-                                }</div>
-                                <a href="/boat/${boat.boatId}">자세히 보기</a>
+                                <div>
+                                  모집 인원:
+                                </div>
+                                <div>
+                                  ${boat.crewNum}/${boat.maxCrewNum}
+                                </div>
                               </div>
+                              <div class="desc">
+                                <div>모집 마감:
+                                </div>
+                                <div>
+                                  ${boat.endDate ? boat.endDate : "상시 모집"}
+                                </div>
+                              </div>
+                                <div class="">
+                                  <a class="detaillink" href="/boat/${boat.boatId}">
+                                    자세히 보기
+                                  </a>
+                                </div>
                             </div>
                           </div>
                         </div>`;
@@ -102,6 +114,9 @@ function Kakaomap() {
         });
 
         marker.addListener("click", () => {
+          document.querySelectorAll(".marker").forEach((item) => {
+            item.parentElement.parentElement.remove();
+          });
           infowindow.open(map, marker);
         });
 
@@ -129,24 +144,23 @@ function Kakaomap() {
           mouseEvent.latLng.getLat(),
           (result, status) => {
             if (status === kakao.maps.services.Status.OK) {
-              let detailAddr = result[0].road_address
-                ? `<div>도로명주소 : ${result[0].road_address.address_name}</div>`
-                : "";
-              detailAddr += `<div>지번 주소 : ${result[0].address.address_name}</div>`;
+              // let detailAddr = result[0].road_address
+              //   ? `<div>도로명주소 : ${result[0].road_address.address_name}</div>`
+              //   : "";
+              // detailAddr += `<div>지번 주소 : ${result[0].address.address_name}</div>`;
 
               // 글 작성 등 메뉴 표시
-              const content = `<div class="bAddr">이 위치에 모임 생성하기${detailAddr}</div>
+              const content = `<div class="bAddr">이 위치에 모임을 생성할까요?</div>
               <div></div>`;
 
               marker.setPosition(mouseEvent.latLng);
               // marker.setMap(map);
 
               infowindow.close();
-              kakao.maps.event.addListener(marker, 'click', () => {
+              kakao.maps.event.addListener(marker, "click", () => {
                 infowindow.setContent(content);
                 infowindow.open(map, marker);
-            });
-              
+              });
 
               // 마커 위치 좌표 업데이트
               setMarkerPosition(mouseEvent.latLng);
@@ -160,6 +174,8 @@ function Kakaomap() {
           }
         );
       });
+
+      setIsLoarding(false);
     };
 
     initializeMap();
@@ -170,10 +186,17 @@ function Kakaomap() {
   // },[markerPosition])
 
   return (
-    <div>
-      <div id="map" style={{ width: "360px", height: "450px" }} />
-    </div>
+    <StMapContainer id="map">
+      {isLoading && <div>Loading...</div>}
+    </StMapContainer>
   );
 }
 
 export default Kakaomap;
+
+const StMapContainer = styled.div`
+  width: calc(100% - 40px);
+  height: 670px;
+  margin: 0 auto;
+  padding: 0px 20px;
+`;
