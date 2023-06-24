@@ -17,7 +17,7 @@ function Footer() {
   }
   const navigate = useNavigate()
 
-  const onClickHome = (url) => {
+  const onClick = (url) => {
     navigate(url)
   }
   
@@ -33,7 +33,7 @@ function Footer() {
           <StActiveTxt>홈</StActiveTxt>
         </StIconBox>
       ) : (
-        <StIconBox onClick={()=>onClickHome("/")}>
+        <StIconBox onClick={()=>onClick("/")}>
           <StImg src={Homeicon} alt="홈" />
           <StdefualtTxt>홈</StdefualtTxt>
         </StIconBox>
@@ -44,18 +44,18 @@ function Footer() {
           <StActiveTxt>글쓰기</StActiveTxt>
         </StIconBox>
       ) : (
-        <StIconBox onClick={()=>onClickHome("/writing")}>
+        <StIconBox onClick={()=>onClick("/writing")}>
           <StImg src={Writingicon} alt="글쓰기" />
           <StdefualtTxt>글쓰기</StdefualtTxt>
         </StIconBox>
       )}
-      {currentPage === "Mypage" ? (
+      {currentPage === "/mypage" ? (
         <StIconBox>
           <StImg src={Mypageiconactive} alt="마이페이지" />
           <StActiveTxt>마이페이지</StActiveTxt>
         </StIconBox>
       ) : (
-        <StIconBox>
+        <StIconBox onClick={()=>onClick("/mypage")}>
           <StImg src={Mypageicon} alt="마이페이지" />
           <StdefualtTxt>마이페이지</StdefualtTxt>
         </StIconBox>

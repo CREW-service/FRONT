@@ -15,6 +15,7 @@ const AuthApi = {
     api.get(`/boat/${payload}`, { ...config }),
   joinBoat: (payload, config) =>
     api.post(`/boat/${payload}/join`, 1, { ...config }),
+  getMyInfo: (config) => api.get("/mypage", { ...config }),
 };
 
 export default AuthApi;
