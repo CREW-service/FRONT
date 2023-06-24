@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import {
   markerPositionAtom,
@@ -39,6 +39,7 @@ const imageSrc =
   "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
 function Kakaomap() {
+  const [isLoading, setIsLoarding] = useState(true)
   const [boatList] = useRecoilState(boatListAtom); // 보트 리스트를 가져오기 위함
   const [, setMarkerPosition] = useRecoilState(markerPositionAtom); // 마커 위치 좌표 상태
   const [, setMarkerAddress] = useRecoilState(markerAddressAtom); // 마커 주소 상태
@@ -161,6 +162,8 @@ function Kakaomap() {
           }
         );
       });
+
+      setIsLoarding(false)
     };
 
     initializeMap();
@@ -171,7 +174,9 @@ function Kakaomap() {
   // },[markerPosition])
 
   return (
-      <StMapContainer id="map"/>
+    <StMapContainer id="map">
+    {isLoading && <div>Loading...</div>}
+  </StMapContainer>
   );
 }
 
