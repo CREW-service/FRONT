@@ -10,6 +10,7 @@ import Otherpeople from "./Otherpeople";
 
 function Detail() {
   const [renderTrigger, setRenderTrigger] = useState(false);
+
   const [cookies] = useCookies(["authorization"]);
   const config = {
     headers: {
@@ -80,28 +81,12 @@ function Detail() {
       />
     );
   } else {
-    componentToRender = <Otherpeople joinBoatHandler={joinBoatHandler} />;
+    componentToRender = (
+      <Otherpeople boat={boat} joinBoatHandler={joinBoatHandler} />
+    );
   }
 
-  return (
-    <div>{componentToRender}</div>
-
-    //
-
-    //       <button
-    //         type="button"
-    //         onClick={() => {
-    //           joinBoatHandler();
-    //         }}
-    //       >
-    //         참여하기
-    //       </button>
-
-    //
-    //     </>
-    //   )}
-    // </div>
-  );
+  return <div>{componentToRender}</div>;
 }
 
 export default Detail;

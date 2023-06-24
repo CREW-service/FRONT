@@ -2,12 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 import PropTypes from "prop-types";
+import Commentmodal from "../Modal/Commentmodal";
 
 function Comment({ boat, boatId, renderTriggerHandler }) {
-  const [comments, setComments] = useState([]);
-
-  const [cookies] = useCookies(["authorization"]);
   console.log("boat", boat);
+
+  const [comments, setComments] = useState([]);
+  const [cookies] = useCookies(["authorization"]);
+
+  // useEffect(() => {
+  //   setComments(boat.comments);
+  // }, [boat.comments]);
 
   const commentChangeHandler = (event) => {
     setComments(event.target.value);
@@ -16,7 +21,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
   const commentHandler = async (e) => {
     e.preventDefault();
     if (comments.length === 0) {
-      alert("글을입력해");
+      alert("글을 입력해주세요");
       return;
     }
     try {
@@ -39,6 +44,14 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
     }
   };
 
+  // 모달창 노출 여부 state
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // 모달창 노출
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
   return (
     <div>
       <div>
@@ -54,7 +67,27 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
       </div>
       <div>
         {boat.comments.map((comment) => (
-          <div key={comment.id}>{comment.comment}</div>
+          <div
+            style={{
+              border: "1px solid ",
+            }}
+            key={comment.id}
+          >
+            {comment.comment}
+            <div>
+              <button type="button" onClick={showModal}>
+                글수정삭제btn
+              </button>
+              {modalOpen && (
+                <Commentmodal
+                  boatId={boatId}
+                  comment={comments}
+                  renderTriggerHandler={renderTriggerHandler}
+                  setModalOpen={setModalOpen}
+                />
+              )}
+            </div>
+          </div>
         ))}
       </div>
     </div>

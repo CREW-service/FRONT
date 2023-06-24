@@ -49,7 +49,6 @@ function Captinmodal({ setModalOpen }) {
       ref={modalRef}
     >
       <button type="button" onClick={closeModal}>
-        {" "}
         X
       </button>
       <button type="button">마감</button>
