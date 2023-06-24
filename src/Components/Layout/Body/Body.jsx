@@ -19,4 +19,20 @@ export default Body
 const StContainer = styled.div`
   width: 100%;
   height: 670px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+
+  &::-webkit-scrollbar {
+    width: 0px; /* 스크롤 바 너비 */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent; /* 스크롤 바 트랙 배경색 */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent; /* 스크롤 바 썸 배경색 */
+  }
 `

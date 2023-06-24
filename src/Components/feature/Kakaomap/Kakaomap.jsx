@@ -39,7 +39,7 @@ const imageSrc =
   "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
 function Kakaomap() {
-  const [isLoading, setIsLoarding] = useState(true)
+  const [isLoading, setIsLoarding] = useState(true);
   const [boatList] = useRecoilState(boatListAtom); // 보트 리스트를 가져오기 위함
   const [, setMarkerPosition] = useRecoilState(markerPositionAtom); // 마커 위치 좌표 상태
   const [, setMarkerAddress] = useRecoilState(markerAddressAtom); // 마커 주소 상태
@@ -66,7 +66,7 @@ function Kakaomap() {
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
       boatList.forEach((boat) => {
-        const content = `<div class="wrap" style="padding:5px;"> 
+        const content = `<div class="wrap marker" style="padding:5px;"> 
                           <div class="info"> 
                             <div class="title">
                               ${boat.title}
@@ -104,6 +104,9 @@ function Kakaomap() {
         });
 
         marker.addListener("click", () => {
+          document.querySelectorAll('.marker').forEach((item) =>{
+            item.parentElement.parentElement.remove()
+          }) 
           infowindow.open(map, marker);
         });
 
@@ -144,11 +147,10 @@ function Kakaomap() {
               // marker.setMap(map);
 
               infowindow.close();
-              kakao.maps.event.addListener(marker, 'click', () => {
+              kakao.maps.event.addListener(marker, "click", () => {
                 infowindow.setContent(content);
                 infowindow.open(map, marker);
-            });
-              
+              });
 
               // 마커 위치 좌표 업데이트
               setMarkerPosition(mouseEvent.latLng);
@@ -163,7 +165,7 @@ function Kakaomap() {
         );
       });
 
-      setIsLoarding(false)
+      setIsLoarding(false);
     };
 
     initializeMap();
@@ -175,16 +177,16 @@ function Kakaomap() {
 
   return (
     <StMapContainer id="map">
-    {isLoading && <div>Loading...</div>}
-  </StMapContainer>
+      {isLoading && <div>Loading...</div>}
+    </StMapContainer>
   );
 }
 
 export default Kakaomap;
 
 const StMapContainer = styled.div`
-width: 100%;
-height: 670px;
-margin: 0 auto;
-padding: 0px 20px;
-`
+  width: calc(100% - 40px);
+  height: 670px;
+  margin: 0 auto;
+  padding: 0px 20px;
+`;

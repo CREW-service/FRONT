@@ -68,7 +68,7 @@ export default Footer;
 
 const StContainer = styled.div`
   display: flex;
-  width: 100%;
+  width: calc(100% - 40px);
   height: 64px;
   padding: 4px 20px;
   justify-content: center;
