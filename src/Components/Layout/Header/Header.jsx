@@ -2,34 +2,19 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Alarmdropdown from "Components/feature/Alarm/Alarmdropdown";
-import Alerticon from "./Alerticon.png";
-import Alerthaveicon from "./Alerthaveicon.png";
 
 function Header() {
-  const [haveAlert, setHaveAlert] = useState(false);
-  const [alarmShowDropdown, setalarmShowDropdown] = useState(false);
   const navigate = useNavigate();
 
   const onClickLogo = () => {
     navigate("/");
   };
 
-  const alarmToggleDropdown = () => {
-    setalarmShowDropdown(!alarmShowDropdown);
-  };
   return (
     <StContainer>
       <StMenuBox>☰</StMenuBox>
       <StLogobox onClick={onClickLogo}>CREW</StLogobox>
-      <StAlertBox onClick={alarmToggleDropdown}>
-        {haveAlert ? (
-          <img src={Alerthaveicon} alt="알림 있음" />
-        ) : (
-          <img src={Alerticon} alt="알림 없음" />
-        )}
-
-        {alarmShowDropdown && <Alarmdropdown />}
-      </StAlertBox>
+      <Alarmdropdown />
     </StContainer>
   );
 }
