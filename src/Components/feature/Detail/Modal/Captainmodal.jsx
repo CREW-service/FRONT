@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 
 function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
-  console.log("boat", boatId);
+  // console.log("boat", boatId);
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -66,6 +67,13 @@ function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
     }
   };
 
+  // 수정버튼 클릭 에디터 이동
+  const navigate = useNavigate();
+
+  const onClick = (url) => {
+    navigate(url);
+  };
+
   return (
     <div
       style={{
@@ -81,7 +89,9 @@ function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
       <button type="button" onClick={closeBoat}>
         마감
       </button>
-      <button type="button">수정</button>
+      <button type="button" onClick={() => onClick("/correctionwriting")}>
+        수정
+      </button>
       <button type="button" onClick={deleteBoatList}>
         삭제
       </button>

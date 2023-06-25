@@ -29,3 +29,8 @@ export const personTypeAtom = atom({
   key: "personType",
   default: "",
 });
+
+export const boatAtom = atom({
+  key: "boat",
+  default: "",
+});

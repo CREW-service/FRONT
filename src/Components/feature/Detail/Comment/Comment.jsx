@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import Commentmodal from "../Modal/Commentmodal";
 
 function Comment({ boat, boatId, renderTriggerHandler }) {
-  console.log("boat", boat);
+  // console.log("boat", boat);
   const [comments, setComments] = useState([]);
   const [cookies] = useCookies(["authorization"]);
   const [currentUserId, setCurrentUserId] = useRecoilState(currentUserIdAtom);

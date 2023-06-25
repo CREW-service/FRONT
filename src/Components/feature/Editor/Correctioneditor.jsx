@@ -6,27 +6,40 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 // styled...
 import styled from "styled-components";
+
 import { useRecoilState } from "recoil";
-import { markerAddressAtom, recoilLatLngAtom } from "Recoil/recoilAtoms";
+import {
+  markerAddressAtom,
+  recoilLatLngAtom,
+  boatAtom,
+} from "Recoil/recoilAtoms";
 import { useNavigate } from "react-router-dom";
 
 const recruitmentTypeList = ["같이 해요", "같이 먹어요", "같이 사요"];
 const alertList = {
   noCookie: "로그인 정보가 올바르지 않습니다.",
   missingInfo: "필수 정보가 누락되었습니다.",
-  markerMiss:
-    "지정된 모임 위치가 없습니다. 지도에서 모임 위치를 지정해 주세요!",
+  // markerMiss:
+  //   "지정된 모임 위치가 없습니다. 지도에서 모임 위치를 지정해 주세요!",
 };
 
-const initialState = {
-  recruitmentTitle: "",
-  recruitmentCount: 2,
-  recruitmentDeadline: "",
-  recruitmentType: recruitmentTypeList[0],
-  isIndefiniteRecruitment: false,
-};
+function Correctioneditor() {
+  const [boat, setBoat] = useRecoilState(boatAtom);
+  console.log("boat", boat);
+  let endDate = null;
+  if (boat.boat.endDate) {
+    endDate = false;
+  } else {
+    endDate = true;
+  }
+  const initialState = {
+    recruitmentTitle: boat.boat.title,
+    recruitmentCount: boat.boat.maxCrewNum,
+    recruitmentDeadline: boat.boat.endDate,
+    recruitmentType: boat.boat.keyword,
+    isIndefiniteRecruitment: endDate,
+  };
 
-function Editor() {
   const [state, setState] = useState(initialState);
   const [bodyContents, setBodyContent] = useState("");
   const [cookies] = useCookies(["authorization"]);
@@ -34,23 +47,28 @@ function Editor() {
   const [recoilLatLng, setRecoilLatLng] = useRecoilState(recoilLatLngAtom);
 
   const today = new Date().toISOString().split("T")[0];
-
+  // setBodyContent(boat.boat.content);
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   if (!cookies.authorization) {
+  //     // 쿠키가 없을 경우 접근 차단
+  //     // 예: 리다이렉션을 사용하여 로그인 페이지로 이동
+  //     // window.location.href = "/login"; // 로그인 페이지로 이동하는 경우
+  //     // 또는 아래와 같이 접근 차단 메시지를 렌더링하거나 다른 작업을 수행할 수 있습니다.
+  //     alert(alertList.noCookie);
+  //     navigate("/signin");
+  //     return;
+  //   }
+  //   // if (recoilLatLng.lat === null || recoilLatLng.lng === null) {
+  //   //   alert(alertList.markerMiss);
+  //   //   navigate("/");
+  //   // }
+  // }, []);
+
   useEffect(() => {
-    if (!cookies.authorization) {
-      // 쿠키가 없을 경우 접근 차단
-      // 예: 리다이렉션을 사용하여 로그인 페이지로 이동
-      // window.location.href = "/login"; // 로그인 페이지로 이동하는 경우
-      // 또는 아래와 같이 접근 차단 메시지를 렌더링하거나 다른 작업을 수행할 수 있습니다.
-      alert(alertList.noCookie);
-      navigate("/signin");
-      return;
-    }
-    if (recoilLatLng.lat === null || recoilLatLng.lng === null) {
-      alert(alertList.markerMiss);
-      navigate("/");
-    }
+    // 기존 글을 Quill에 설정합니다.
+    setBodyContent(boat.boat.content);
   }, []);
 
   function handleChange(e) {
@@ -99,15 +117,15 @@ function Editor() {
       return;
     }
 
-    const newPost = {
+    const correctionPost = {
       title: state.recruitmentTitle,
       content: bodyContents,
       keyword: state.recruitmentType,
       maxCrewNum: state.recruitmentCount,
       endDate: state.recruitmentDeadline,
-      address: markerAddress[0],
-      latitude: String(recoilLatLng.lat),
-      longitude: String(recoilLatLng.lng),
+      address: boat.boat.address,
+      latitude: boat.boat.latitude,
+      longitude: boat.boat.longitude,
     };
     const config = {
       headers: {
@@ -115,7 +133,11 @@ function Editor() {
       },
     };
     try {
-      const res = await AuthApi.write(newPost, config);
+      const res = await AuthApi.correctionWrite(
+        boat.boat.boatId,
+        correctionPost,
+        config
+      );
       alert(res.data.message);
       setRecoilLatLng({ lat: null, lng: null });
       navigate("/");
@@ -189,7 +211,11 @@ function Editor() {
             ))}
           </StSelectBox>
         </StTextField>
-        <ReactQuill onChange={onChangeBodyHandler} modules={modules} />
+        <ReactQuill
+          value={bodyContents}
+          onChange={onChangeBodyHandler}
+          modules={modules}
+        />
       </StEditorContainer>
       {/* 버튼 */}
       <StEditorBtnBox>
@@ -204,7 +230,7 @@ function Editor() {
   );
 }
 
-export default Editor;
+export default Correctioneditor;
 
 // 디자인 영역
 const StContainer = styled.div`
