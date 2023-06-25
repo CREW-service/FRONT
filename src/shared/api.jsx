@@ -16,7 +16,7 @@ const AuthApi = {
     api.get(`/boat/${payload}`, { ...config }),
   joinBoat: (payload, config) =>
     api.post(`/boat/${payload}/join`, 1, { ...config }),
-  correctionBoatDetail: (payload, config) =>
+  correctionBoat: (payload, config) =>
     api.put(`/boat/${payload}`, payload, { ...config }),
   deleteBoatList: (boatId, payload, config) =>
     api.patch(`/boat/${boatId}/delete`, payload, { ...config }),
@@ -26,7 +26,7 @@ const AuthApi = {
     api.patch(`/boat/${boatId}/comment/${commentId}`, payload, { ...config }),
   getMyInfo: (config) => api.get("/mypage", { ...config }),
   getalarm: (config) => api.get("/alarm", { ...config }),
-  deleteMember: (boatId, payload, config) =>
+  releaseCrew: (boatId, payload, config) =>
     api.post(`/boat/${boatId}/release`, payload, { ...config }),
 };
 

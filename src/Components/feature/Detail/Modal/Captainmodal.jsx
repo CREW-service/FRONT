@@ -40,7 +40,7 @@ function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
       const newDeleteData = {
         deletedAt,
       };
-      const res = await AuthApi.deleteBoatList(boatId, newDeleteData, config);
+      const res = await AuthApi.deleteBoat(boatId, newDeleteData, config);
       alert(res.data.message);
       renderTriggerHandler();
     } catch (err) {
