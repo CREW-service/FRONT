@@ -18,7 +18,7 @@ const AuthApi = {
     api.post(`/boat/${payload}/join`, 1, { ...config }),
   correctionBoatDetail: (payload, config) =>
     api.put(`/boat/${payload}`, payload, { ...config }),
-  deleteBoatList: (boatId, payload, config) =>
+  deleteBoat: (boatId, payload, config) =>
     api.patch(`/boat/${boatId}/delete`, payload, { ...config }),
   comment: (boatId, payload, config) =>
     api.post(`/boat/${boatId}/comment`, payload, { ...config }),
