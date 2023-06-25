@@ -4,6 +4,7 @@ import Home from "Pages/Home";
 import Boat from "Pages/Boat";
 import Writing from "Pages/Writing";
 import MyPage from "Pages/MyPage";
+import Signin from "Pages/Signin";
 
 function Router() {
   return (
@@ -13,6 +14,7 @@ function Router() {
         <Route path="/boat/:id" element={<Boat />} />
         <Route path="/writing" element={<Writing />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/signin" element={<Signin />} />
         {/* <Route path="/job" element={<PostList />} />
         
         <Route path="/job/:job_id" element={<Detailpage />} />
