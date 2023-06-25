@@ -50,7 +50,7 @@ function Editor() {
       alert(alertList.markerMiss);
       navigate("/");
     }
-  }, [cookies.authorization, navigate]);
+  }, []);
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
@@ -63,7 +63,6 @@ function Editor() {
     } else {
       newValue = type === "checkbox" ? checked : value;
     }
-    // const newValue = type === "checkbox" ? checked : value;
 
     setState((prevState) => ({
       ...prevState,
@@ -90,12 +89,10 @@ function Editor() {
   };
 
   const cancelButtonHandler = () => {
-
     navigate("/")
   }
 
-  const onSubmiltHandler = async (e) => {
-    e.preventDefault();
+  const onSubmitHandler = async () => {
     if (!state.recruitmentTitle || !bodyContents || !state.recruitmentCount) {
       alert(alertList.missingInfo);
       return;
@@ -122,7 +119,8 @@ function Editor() {
       setRecoilLatLng({lat: null, lng: null })
       navigate("/");
     } catch (err) {
-      alert(err.response.data.errorMessage);
+      // alert(err.response.data.errorMessage);
+      console.log(err)
     }
   };
 
@@ -196,7 +194,7 @@ function Editor() {
       {/* 버튼 */}
       <StEditorBtnBox>
         <StCancelButton type="button" onClick={cancelButtonHandler}>취소</StCancelButton>
-        <StSubmitButton type="submit" onClick={onSubmiltHandler}>
+        <StSubmitButton type="button" onClick={onSubmitHandler}>
           저장
         </StSubmitButton>
       </StEditorBtnBox>
