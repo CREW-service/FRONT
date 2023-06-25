@@ -154,6 +154,7 @@ function Kakaomap() {
               const content = `<div class="bAddr">이 위치에 모임을 생성할까요?</div>
               <div></div>`;
 
+              const getAddress = `${result[0].address.region_1depth_name} ${result[0].address.region_2depth_name} ${result[0].address.region_3depth_name}`
               marker.setPosition(mouseEvent.latLng);
               // marker.setMap(map);
 
@@ -166,8 +167,8 @@ function Kakaomap() {
               // 마커 위치 좌표 업데이트
               setMarkerPosition(mouseEvent.latLng);
               // 마커 주소 업데이트
-              setMarkerAddress(result[0].address.address_name);
-
+              setMarkerAddress(getAddress);
+              
               const lat = mouseEvent.latLng.getLat();
               const lng = mouseEvent.latLng.getLng();
               setRecoilLatLng({ lat, lng });

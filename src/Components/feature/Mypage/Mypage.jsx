@@ -214,6 +214,7 @@ const StPofileBox = styled.div`
   align-items: center;
   flex-direction: column;
 `;
+
 const StPropic = styled.div`
   width: 120px;
   height: 120px;
@@ -292,6 +293,7 @@ const StModiyButtonBox = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
 const StModiyButton = styled.button`
   margin: 0 16px 28px 10px;
   border: 0;
@@ -321,6 +323,7 @@ const StDeleteButton = styled.button`
 const StAttendedList = styled.div`
   margin: 24px 16px 10px 16px;
 `;
+
 const StAttendedTitle = styled.div`
   color: var(--gr-black, #222);
 
