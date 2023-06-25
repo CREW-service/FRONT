@@ -14,6 +14,7 @@ const recruitmentTypeList = ["같이 해요", "같이 먹어요", "같이 사요
 const alertList = {
   noCookie: "로그인 정보가 올바르지 않습니다.",
   missingInfo: "필수 정보가 누락되었습니다.",
+  markerMiss: "지정된 모임 위치가 없습니다. 지도에서 모임 위치를 지정해 주세요!"
 };
 
 const initialState = {
@@ -29,7 +30,7 @@ function Editor() {
   const [bodyContents, setBodyContent] = useState("");
   const [cookies] = useCookies(["authorization"]);
   const markerAddress = useRecoilState(markerAddressAtom);
-  const recoilLatLng = useRecoilState(recoilLatLngAtom);
+  const [recoilLatLng, setRecoilLatLng] = useRecoilState(recoilLatLngAtom);
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -42,6 +43,11 @@ function Editor() {
       // window.location.href = "/login"; // 로그인 페이지로 이동하는 경우
       // 또는 아래와 같이 접근 차단 메시지를 렌더링하거나 다른 작업을 수행할 수 있습니다.
       alert(alertList.noCookie);
+      navigate("/signin");
+      return
+    } 
+    if (recoilLatLng.lat === null || recoilLatLng.lng === null) {
+      alert(alertList.markerMiss);
       navigate("/");
     }
   }, [cookies.authorization, navigate]);
@@ -83,6 +89,11 @@ function Editor() {
     setBodyContent(contents);
   };
 
+  const cancelButtonHandler = () => {
+
+    navigate("/")
+  }
+
   const onSubmiltHandler = async (e) => {
     e.preventDefault();
     if (!state.recruitmentTitle || !bodyContents || !state.recruitmentCount) {
@@ -108,6 +119,7 @@ function Editor() {
       };
       const res = await AuthApi.write(newPost, config);
       alert(res.data.message);
+      setRecoilLatLng({lat: null, lng: null })
       navigate("/");
     } catch (err) {
       alert(err.response.data.errorMessage);
@@ -164,18 +176,6 @@ function Editor() {
               +
             </StCounterButton>
           </StInputNumberBox>
-
-          {/* <StSelectBox
-            name="recruitmentCount"
-            value={state.recruitmentCount}
-            onChange={handleChange}
-          >
-            {recruitmentNum.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </StSelectBox> */}
         </StTextField>
         <StTextField>
           <StSpanText>모임 유형:</StSpanText>
@@ -195,7 +195,7 @@ function Editor() {
       </StEditorContainer>
       {/* 버튼 */}
       <StEditorBtnBox>
-        <StCancelButton type="button">취소</StCancelButton>
+        <StCancelButton type="button" onClick={cancelButtonHandler}>취소</StCancelButton>
         <StSubmitButton type="submit" onClick={onSubmiltHandler}>
           저장
         </StSubmitButton>
