@@ -119,8 +119,7 @@ function Editor() {
       setRecoilLatLng({lat: null, lng: null })
       navigate("/");
     } catch (err) {
-      // alert(err.response.data.errorMessage);
-      console.log(err)
+      alert(err.response.data.errorMessage);
     }
   };
 
