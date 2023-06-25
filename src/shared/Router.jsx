@@ -13,6 +13,7 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/boat/:id" element={<Boat />} />
         <Route path="/writing" element={<Writing />} />
+        <Route path="/correctionwriting" element={<Writing />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/signin" element={<Signin />} />
         {/* <Route path="/alarm" element={<Alarm />} /> */}
