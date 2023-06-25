@@ -112,6 +112,7 @@ const modalStyles = {
     right: 0,
     bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0)",
+    zIndex: 1000, // Added z-index property
   },
   content: {
     position: "absolute",
