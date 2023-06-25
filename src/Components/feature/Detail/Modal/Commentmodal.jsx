@@ -5,9 +5,6 @@ import AuthApi from "shared/api";
 
 function Commentmodal({ boatId, comment, renderTriggerHandler, closeModal }) {
   console.log("comment", comment);
-  // const closeModal = () => {
-  //   closeModal(null);
-  // };
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -27,6 +24,10 @@ function Commentmodal({ boatId, comment, renderTriggerHandler, closeModal }) {
   }, [closeModal]);
 
   const [cookies] = useCookies(["authorization"]);
+
+  // const changeCommentHandler = (event) => {
+  //   setChangedComment(event.target.value);
+  // };
 
   const deleteComment = async () => {
     try {
@@ -64,9 +65,7 @@ function Commentmodal({ boatId, comment, renderTriggerHandler, closeModal }) {
       }}
       ref={modalRef}
     >
-      <button type="button" onClick={() => closeModal(null)}>
-        X
-      </button>
+      <button type="button">X</button>
       <button type="button">수정</button>
       <button type="button" onClick={deleteComment}>
         삭제

@@ -1,12 +1,19 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import PropTypes from "prop-types";
 import DOMPurify from "dompurify"; // DOMPurify 라이브러리 가져오기
 import Captainmodal from "./Modal/Captainmodal";
 import Comment from "./Comment/Comment";
+import Member from "./Modal/Member";
 
 function Captaindetail({ boat, boatId, renderTriggerHandler }) {
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [memberShowModal, setMemberShowModal] = useState(false);
+  const memberModalHandler = () => {
+    setMemberShowModal(!memberShowModal);
+  };
 
   // 모달창 노출
   const showModal = () => {
@@ -25,7 +32,13 @@ function Captaindetail({ boat, boatId, renderTriggerHandler }) {
         <div>지역: {boat.boat.address}</div>
         <div>모집 기한: {boat.boat.endDate}</div>
         <div>
-          모집 인원: {boat.boat.crewNum}/{boat.boat.maxCrewNum}
+          모집 인원:{" "}
+          <StMemberBox onClick={memberModalHandler}>
+            {boat.boat.crewNum}/{boat.boat.maxCrewNum}
+          </StMemberBox>
+          {memberShowModal && (
+            <Member boat={boat} setMemberShowModal={setMemberShowModal} />
+          )}
         </div>
         <div>
           <div
@@ -40,7 +53,11 @@ function Captaindetail({ boat, boatId, renderTriggerHandler }) {
           글수정삭제btn
         </button>
         {modalOpen && (
-          <Captainmodal boatId={boatId} setModalOpen={setModalOpen} />
+          <Captainmodal
+            boat={boat}
+            boatId={boatId}
+            setModalOpen={setModalOpen}
+          />
         )}
       </div>
       <Comment
@@ -59,3 +76,7 @@ Captaindetail.propTypes = {
   boatId: PropTypes.node.isRequired,
   renderTriggerHandler: PropTypes.node.isRequired,
 };
+
+const StMemberBox = styled.span`
+  z-index: 9999;
+`;

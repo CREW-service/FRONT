@@ -24,3 +24,8 @@ export const currentUserIdAtom = atom({
   key: "currentUserId",
   default: "",
 });
+
+export const personTypeAtom = atom({
+  key: "personType",
+  default: "",
+});

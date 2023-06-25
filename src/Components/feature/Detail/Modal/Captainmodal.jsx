@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 
-function Captainmodal({ setModalOpen, boatId, renderTriggerHandler }) {
+function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
   console.log("boat", boatId);
   const closeModal = () => {
     setModalOpen(false);
@@ -72,6 +72,7 @@ function Captainmodal({ setModalOpen, boatId, renderTriggerHandler }) {
 export default Captainmodal;
 
 Captainmodal.propTypes = {
+  boat: PropTypes.node.isRequired,
   setModalOpen: PropTypes.node.isRequired,
   boatId: PropTypes.node.isRequired,
   renderTriggerHandler: PropTypes.node.isRequired,

@@ -1,9 +1,15 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import PropTypes from "prop-types";
 import DOMPurify from "dompurify"; // DOMPurify 라이브러리 가져오기
 import Comment from "./Comment/Comment";
+import Member from "./Modal/Member";
 
 function Crewdetail({ boat, boatId, renderTriggerHandler }) {
+  const [memberShowModal, setMemberShowModal] = useState(false);
+  const memberModalHandler = () => {
+    setMemberShowModal(!memberShowModal);
+  };
   return (
     <div>
       <div>
@@ -17,7 +23,13 @@ function Crewdetail({ boat, boatId, renderTriggerHandler }) {
           <div>지역: {boat.boat.address}</div>
           <div>모집 기한: {boat.boat.endDate}</div>
           <div>
-            모집 인원: {boat.boat.crewNum}/{boat.boat.maxCrewNum}
+            모집 인원:
+            <StMemberBox onClick={memberModalHandler}>
+              {boat.boat.crewNum}/{boat.boat.maxCrewNum}
+            </StMemberBox>
+            {memberShowModal && (
+              <Member boat={boat} setMemberShowModal={setMemberShowModal} />
+            )}
           </div>
           <div>
             <div
@@ -45,3 +57,7 @@ Crewdetail.propTypes = {
   boatId: PropTypes.node.isRequired,
   renderTriggerHandler: PropTypes.node.isRequired,
 };
+
+const StMemberBox = styled.span`
+  z-index: 9999;
+`;
