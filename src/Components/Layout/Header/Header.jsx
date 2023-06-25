@@ -8,15 +8,18 @@ function Header() {
   const [haveAlert, setHaveAlert] = useState(false);
   const navigate = useNavigate();
 
-  const onClickLogo = ()=> {
-    navigate("/")
-  }
+  const onClickLogo = () => {
+    navigate("/");
+  };
+  const onClickAlarm = () => {
+    navigate("/alarm");
+  };
 
   return (
     <StContainer>
       <StMenuBox>☰</StMenuBox>
       <StLogobox onClick={onClickLogo}>CREW</StLogobox>
-      <StAlertBox>
+      <StAlertBox onClick={onClickAlarm}>
         {haveAlert ? (
           <img src={Alerthaveicon} alt="알림 있음" />
         ) : (
