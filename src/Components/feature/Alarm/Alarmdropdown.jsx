@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 
-function Alarmbtn() {
+function Alarmdropdown() {
   const [alarms, setAlarms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [cookies] = useCookies(["authorization"]);
@@ -17,6 +17,7 @@ function Alarmbtn() {
       const { data } = await AuthApi.getalarm(config);
       console.log("alarmdata", data);
       setAlarms(data);
+
       setIsLoading(false);
     } catch (err) {
       console.log("alarmerr", err);
@@ -28,20 +29,21 @@ function Alarmbtn() {
     getAlarms();
   }, []);
 
-  const alarmBtnHandler = () => {
-    getAlarms();
-  };
   return (
     <div>
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <button type="button" onClick={alarmBtnHandler}>
-          알림
-        </button>
+        <>
+          {alarms.alarms.map((alarm) => (
+            <div key={alarm.id}>
+              <span>{alarm.message}</span>
+            </div>
+          ))}
+        </>
       )}
     </div>
   );
 }
 
-export default Alarmbtn;
+export default Alarmdropdown;

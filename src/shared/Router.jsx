@@ -5,7 +5,6 @@ import Boat from "Pages/Boat";
 import Writing from "Pages/Writing";
 import MyPage from "Pages/MyPage";
 import Signin from "Pages/Signin";
-import Alarm from "Pages/Alarm";
 
 function Router() {
   return (
@@ -16,7 +15,7 @@ function Router() {
         <Route path="/writing" element={<Writing />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/alarm" element={<Alarm />} />
+        {/* <Route path="/alarm" element={<Alarm />} /> */}
         {/* <Route path="/job" element={<PostList />} />
         
         <Route path="/job/:job_id" element={<Detailpage />} />

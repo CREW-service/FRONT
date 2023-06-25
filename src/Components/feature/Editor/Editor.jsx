@@ -14,7 +14,8 @@ const recruitmentTypeList = ["같이 해요", "같이 먹어요", "같이 사요
 const alertList = {
   noCookie: "로그인 정보가 올바르지 않습니다.",
   missingInfo: "필수 정보가 누락되었습니다.",
-  markerMiss: "지정된 모임 위치가 없습니다. 지도에서 모임 위치를 지정해 주세요!"
+  markerMiss:
+    "지정된 모임 위치가 없습니다. 지도에서 모임 위치를 지정해 주세요!",
 };
 
 const initialState = {
@@ -44,8 +45,8 @@ function Editor() {
       // 또는 아래와 같이 접근 차단 메시지를 렌더링하거나 다른 작업을 수행할 수 있습니다.
       alert(alertList.noCookie);
       navigate("/signin");
-      return
-    } 
+      return;
+    }
     if (recoilLatLng.lat === null || recoilLatLng.lng === null) {
       alert(alertList.markerMiss);
       navigate("/");
@@ -90,11 +91,10 @@ function Editor() {
   };
 
   const cancelButtonHandler = () => {
+    navigate("/");
+  };
 
-    navigate("/")
-  }
-
-  const onSubmiltHandler = async (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (!state.recruitmentTitle || !bodyContents || !state.recruitmentCount) {
       alert(alertList.missingInfo);
@@ -119,7 +119,7 @@ function Editor() {
       };
       const res = await AuthApi.write(newPost, config);
       alert(res.data.message);
-      setRecoilLatLng({lat: null, lng: null })
+      setRecoilLatLng({ lat: null, lng: null });
       navigate("/");
     } catch (err) {
       alert(err.response.data.errorMessage);
@@ -195,7 +195,9 @@ function Editor() {
       </StEditorContainer>
       {/* 버튼 */}
       <StEditorBtnBox>
-        <StCancelButton type="button" onClick={cancelButtonHandler}>취소</StCancelButton>
+        <StCancelButton type="button" onClick={cancelButtonHandler}>
+          취소
+        </StCancelButton>
         <StSubmitButton type="submit" onClick={onSubmiltHandler}>
           저장
         </StSubmitButton>
@@ -274,7 +276,7 @@ const StInputNumberField = styled.input`
   text-align: center;
 
   -moz-appearance: textfield; /* Firefox */
-  
+
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -294,7 +296,6 @@ const StSelectBox = styled.select`
   border-radius: 4px;
   border: solid 2px #eff4f8;
   background-color: #fff;
-  
 `;
 
 const StCounterButton = styled.button`
@@ -326,7 +327,7 @@ const StCancelButton = styled.button`
   border: solid 3px #3e4756;
   border-radius: 35px;
   background-color: #fff;
-  
+
   font-family: Pretendard;
   font-size: 24px;
   font-weight: bold;
@@ -337,9 +338,9 @@ const StCancelButton = styled.button`
   text-align: center;
   color: #3e4756;
   cursor: pointer;
-`
+`;
 const StSubmitButton = styled.button`
- width: 156px;
+  width: 156px;
   height: 68px;
   display: flex;
   flex-direction: row;
