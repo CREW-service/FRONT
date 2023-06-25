@@ -49,19 +49,6 @@ function Detail() {
     fetchBoat();
   }, [renderTrigger]);
 
-  const joinBoatHandler = async () => {
-    try {
-      const res = await AuthApi.joinBoat(id, config);
-      {
-        console.log("res", res);
-      }
-    } catch (error) {
-      console.log("Error:", error);
-      alert("참가못했습니다");
-      // alert(error.response.data.errorMessage);
-    }
-  };
-
   let componentToRender;
 
   if (isLoading) {
@@ -83,9 +70,7 @@ function Detail() {
       />
     );
   } else {
-    componentToRender = (
-      <Otherpeople boat={boat} joinBoatHandler={joinBoatHandler} />
-    );
+    componentToRender = <Otherpeople boat={boat} />;
   }
 
   return <div>{componentToRender}</div>;

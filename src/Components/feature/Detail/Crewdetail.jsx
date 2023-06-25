@@ -28,7 +28,11 @@ function Crewdetail({ boat, boatId, renderTriggerHandler }) {
               {boat.boat.crewNum}/{boat.boat.maxCrewNum}
             </StMemberBox>
             {memberShowModal && (
-              <Member boat={boat} setMemberShowModal={setMemberShowModal} />
+              <Member
+                boat={boat}
+                setMemberShowModal={setMemberShowModal}
+                renderTriggerHandler={renderTriggerHandler}
+              />
             )}
           </div>
           <div>

@@ -18,7 +18,7 @@ const AuthApi = {
     api.post(`/boat/${payload}/join`, 1, { ...config }),
   correctionBoat: (payload, config) =>
     api.put(`/boat/${payload}`, payload, { ...config }),
-  deleteBoatList: (boatId, payload, config) =>
+  deleteBoat: (boatId, payload, config) =>
     api.patch(`/boat/${boatId}/delete`, payload, { ...config }),
   comment: (boatId, payload, config) =>
     api.post(`/boat/${boatId}/comment`, payload, { ...config }),
@@ -28,6 +28,8 @@ const AuthApi = {
   getalarm: (config) => api.get("/alarm", { ...config }),
   releaseCrew: (boatId, payload, config) =>
     api.post(`/boat/${boatId}/release`, payload, { ...config }),
+  closeBoat: (boatId, payload, config) =>
+    api.patch(`/boat/${boatId}`, payload, { ...config }),
 };
 
 export default AuthApi;

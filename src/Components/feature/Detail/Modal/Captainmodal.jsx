@@ -29,6 +29,24 @@ function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
 
   const [cookies] = useCookies(["authorization"]);
 
+  const closeBoat = async () => {
+    try {
+      const config = {
+        headers: {
+          authorization: cookies.authorization,
+        },
+      };
+      const payload = {
+        isDone: true,
+      };
+      const res = await AuthApi.closeBoat(boatId, payload, config);
+      alert(res.data.message);
+      // renderTriggerHandler();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const deleteBoatList = async () => {
     try {
       const deletedAt = new Date();
@@ -60,7 +78,9 @@ function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
       <button type="button" onClick={closeModal}>
         X
       </button>
-      <button type="button">마감</button>
+      <button type="button" onClick={closeBoat}>
+        마감
+      </button>
       <button type="button">수정</button>
       <button type="button" onClick={deleteBoatList}>
         삭제

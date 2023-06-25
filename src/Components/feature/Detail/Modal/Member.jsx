@@ -33,9 +33,6 @@ function Member({ boat, boatId }) {
     }
   };
 
-  useEffect(() => {
-    dropBoatHandler();
-  }, []);
   return (
     <div>
       {personType === "captain" ? (
