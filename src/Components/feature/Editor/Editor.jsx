@@ -98,22 +98,22 @@ function Editor() {
       return;
     }
 
+    const newPost = {
+      title: state.recruitmentTitle,
+      content: bodyContents,
+      keyword: state.recruitmentType,
+      maxCrewNum: state.recruitmentCount,
+      endDate: state.recruitmentDeadline,
+      address: markerAddress[0],
+      latitude: String(recoilLatLng.lat),
+      longitude: String(recoilLatLng.lng),
+    };
+    const config = {
+      headers: {
+        authorization: cookies.authorization,
+      },
+    };
     try {
-      const newPost = {
-        title: state.recruitmentTitle,
-        content: bodyContents,
-        keyword: state.recruitmentType,
-        maxCrewNum: state.recruitmentCount,
-        endDate: state.recruitmentDeadline,
-        address: markerAddress[0],
-        latitude: String(recoilLatLng[0].lat),
-        longitude: String(recoilLatLng[0].lng),
-      };
-      const config = {
-        headers: {
-          authorization: cookies.authorization,
-        },
-      };
       const res = await AuthApi.write(newPost, config);
       alert(res.data.message);
       setRecoilLatLng({lat: null, lng: null })
