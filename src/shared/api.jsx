@@ -30,6 +30,8 @@ const AuthApi = {
     api.post(`/boat/${boatId}/release`, payload, { ...config }),
   closeBoat: (boatId, payload, config) =>
     api.patch(`/boat/${boatId}`, payload, { ...config }),
+  correctionWrite: (boatId, payload, config) =>
+    api.put(`/boat/${boatId}`, payload, { ...config }),
   alarmRead: (alarmId, config) => api.put(`/alarm/${alarmId}`, 1, {...config})
 };
 

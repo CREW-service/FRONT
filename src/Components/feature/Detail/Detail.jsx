@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import DOMPurify from "dompurify"; // DOMPurify 라이브러리 가져오기
 import AuthApi from "shared/api";
-import { personTypeAtom } from "Recoil/recoilAtoms";
+import { personTypeAtom, boatAtom } from "Recoil/recoilAtoms";
+
 import { useRecoilState } from "recoil";
 import Captaindetail from "./Captaindetail";
 import Crewdetail from "./Crewdetail";
@@ -22,7 +23,8 @@ function Detail() {
 
   const { id } = useParams();
 
-  const [boat, setBoat] = useState("");
+  const [boat, setBoat] = useRecoilState(boatAtom);
+
   const [personType, setPersonType] = useRecoilState(personTypeAtom);
 
   const [isLoading, setIsLoading] = useState(true);
