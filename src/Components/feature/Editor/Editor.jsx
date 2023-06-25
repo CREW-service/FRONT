@@ -51,7 +51,7 @@ function Editor() {
       alert(alertList.markerMiss);
       navigate("/");
     }
-  }, [cookies.authorization, navigate]);
+  }, []);
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
@@ -64,7 +64,6 @@ function Editor() {
     } else {
       newValue = type === "checkbox" ? checked : value;
     }
-    // const newValue = type === "checkbox" ? checked : value;
 
     setState((prevState) => ({
       ...prevState,
@@ -91,32 +90,31 @@ function Editor() {
   };
 
   const cancelButtonHandler = () => {
-    navigate("/");
-  };
+    navigate("/")
+  }
 
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
+  const onSubmitHandler = async () => {
     if (!state.recruitmentTitle || !bodyContents || !state.recruitmentCount) {
       alert(alertList.missingInfo);
       return;
     }
 
+    const newPost = {
+      title: state.recruitmentTitle,
+      content: bodyContents,
+      keyword: state.recruitmentType,
+      maxCrewNum: state.recruitmentCount,
+      endDate: state.recruitmentDeadline,
+      address: markerAddress[0],
+      latitude: String(recoilLatLng.lat),
+      longitude: String(recoilLatLng.lng),
+    };
+    const config = {
+      headers: {
+        authorization: cookies.authorization,
+      },
+    };
     try {
-      const newPost = {
-        title: state.recruitmentTitle,
-        content: bodyContents,
-        keyword: state.recruitmentType,
-        maxCrewNum: state.recruitmentCount,
-        endDate: state.recruitmentDeadline,
-        address: markerAddress[0],
-        latitude: String(recoilLatLng[0].lat),
-        longitude: String(recoilLatLng[0].lng),
-      };
-      const config = {
-        headers: {
-          authorization: cookies.authorization,
-        },
-      };
       const res = await AuthApi.write(newPost, config);
       alert(res.data.message);
       setRecoilLatLng({ lat: null, lng: null });
@@ -195,10 +193,8 @@ function Editor() {
       </StEditorContainer>
       {/* 버튼 */}
       <StEditorBtnBox>
-        <StCancelButton type="button" onClick={cancelButtonHandler}>
-          취소
-        </StCancelButton>
-        <StSubmitButton type="submit" onClick={onSubmiltHandler}>
+        <StCancelButton type="button" onClick={cancelButtonHandler}>취소</StCancelButton>
+        <StSubmitButton type="button" onClick={onSubmitHandler}>
           저장
         </StSubmitButton>
       </StEditorBtnBox>

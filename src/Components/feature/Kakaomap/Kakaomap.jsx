@@ -45,6 +45,7 @@ function Kakaomap() {
   const [, setMarkerPosition] = useRecoilState(markerPositionAtom); // 마커 위치 좌표 상태
   const [, setMarkerAddress] = useRecoilState(markerAddressAtom); // 마커 주소 상태
   const [, setRecoilLatLng] = useRecoilState(recoilLatLngAtom); // 위도와 경도를 저장하는 상태
+  
   useEffect(() => {
     const initializeMap = async () => {
       // 위치 정보 가져오기
