@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Alarmdropdown from "Components/feature/Alarm/Alarmdropdown";
+import LOGO from "./logo.png"
 
 function Header() {
   const navigate = useNavigate();
@@ -13,7 +14,9 @@ function Header() {
   return (
     <StContainer>
       <StMenuBox>☰</StMenuBox>
-      <StLogobox onClick={onClickLogo}>CREW</StLogobox>
+      <StLogobox onClick={onClickLogo}>
+        <StLogoImg src={LOGO} alt="LOGO"/>
+      </StLogobox>
       <Alarmdropdown />
     </StContainer>
   );
@@ -56,8 +59,9 @@ const StLogobox = styled.div`
   text-align: center;
   color: #30a2ff;
 `;
-const StAlertBox = styled.div`
-  z-index: 9999;
-  width: 32px;
-  height: 32px;
+
+const StLogoImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 `;

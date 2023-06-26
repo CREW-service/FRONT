@@ -63,7 +63,7 @@ function Alarmdropdown() {
       ) : (
         <div>
           <StAlarmButton type="button" onClick={modalHandler}>
-            <img
+            <StImg
               src={haveAlarms ? Alerthaveicon : Alerticon}
               alt="알림 아이콘"
             />
@@ -120,8 +120,8 @@ const modalStyles = {
     left: "35%",
     // transform: "translate(-50%, -50%)",
     border: "none",
-    borderRadius: "15px",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
+    borderRadius: "12px",
+    boxShadow: "0px 8px 10px 0px rgba(0, 0, 0, 0.20)",
     background: "white",
     width: "210px",
     maxHeight: "280px",
@@ -152,4 +152,10 @@ const StAlarmTextBox = styled.div`
 const StAlarmText = styled.button`
   border: 0;
   background: rgba(255, 255, 255, 0); /* 투명한 백그라운드 컬러 */
+`;
+
+const StImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 `;

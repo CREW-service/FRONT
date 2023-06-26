@@ -18,7 +18,7 @@ export default Body
 
 const StContainer = styled.div`
   width: 100%;
-  height: 670px;
+  height: 672px;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin;

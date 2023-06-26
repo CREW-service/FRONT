@@ -320,9 +320,12 @@ const StCancelButton = styled.button`
   gap: 10px;
   margin: 68px 16px 40px;
   padding: 16px 40px;
-  border: solid 3px #3e4756;
+  border: 0;
+  /* border: solid 1px #3e4756; */
   border-radius: 35px;
   background-color: #fff;
+
+  box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.05);
 
   font-family: Pretendard;
   font-size: 24px;
@@ -348,6 +351,8 @@ const StSubmitButton = styled.button`
   border: 0;
   border-radius: 35px;
   background-color: #30a2ff;
+
+  box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.05);
 
   font-family: Pretendard;
   font-size: 24px;

@@ -4,6 +4,8 @@ import AuthApi from "shared/api";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
+import { useRecoilState } from "recoil";
+import { boatAtom } from "Recoil/recoilAtoms";
 import writedboaticon from "./writedboaticon.png";
 import defualtpic from "./defualtpic.jpg";
 import Rectangle from "./Rectangle.png";
@@ -18,6 +20,8 @@ function Mypage() {
   const navigate = useNavigate();
   const [randerTriger, setRanderTriger] = useState(false);
   const [haveBoat, setHaveBoat] = useState(false);
+
+  const [, setBoat] = useRecoilState(boatAtom);
 
   const config = {
     headers: {
@@ -50,8 +54,8 @@ function Mypage() {
     navigate(`/boat/${boatId}`);
   };
 
-  const goingHomeHandler = ()=>{
-    navigate("/")
+  const goingHomeHandler = () => {
+    navigate("/");
   };
 
   const boatDeleteHandler = async (boatId) => {
@@ -76,6 +80,23 @@ function Mypage() {
     }
   };
 
+  const fetchBoat = async (id) => {
+    try {
+      const { data } = await AuthApi.getBoatDetail(id, config);
+      // console.log("data", data);
+      setBoat(data);
+      navigate("/CorrectionWriting")
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching post:", error);
+      setIsLoading(false);
+    }
+  };
+
+  const goingModiyBoat = async (boatId) => {
+    fetchBoat(boatId);
+  };
+
   return (
     <div>
       {isLoading ? (
@@ -96,15 +117,20 @@ function Mypage() {
                   <span style={{ marginLeft: "8px" }}>내가 만든 보트</span>
                 </StWritedBoatTitle>
                 <StWritedBoatList>
-                  {myInfo.writedBoats.map((boat) => (
-                    <div key={boat.boatId}>
+                  {myInfo.writedBoats.map((boats) => (
+                    <div key={boats.boatId}>
                       <StMyBoatTitle
-                        onClick={() => goingBoatHandler(boat.boatId)}
+                        onClick={() => goingBoatHandler(boats.boatId)}
                       >
-                        {boat.title}
+                        {boats.title}
                       </StMyBoatTitle>
                       <StModiyButtonBox>
-                        <StModiyButton type="button">수정</StModiyButton>|
+                        <StModiyButton
+                          type="button"
+                          onClick={() => goingModiyBoat(boats.boatId)}
+                        >
+                          수정
+                        </StModiyButton>
                         <StDeleteButton
                           type="button"
                           onClick={() => setShowModal(true)}
@@ -147,7 +173,7 @@ function Mypage() {
                             </StModalCancelButton>
                             <StModalDeleteButton
                               type="button"
-                              onClick={() => boatDeleteHandler(boat.boatId)}
+                              onClick={() => boatDeleteHandler(boats.boatId)}
                             >
                               삭제
                             </StModalDeleteButton>
@@ -184,7 +210,10 @@ function Mypage() {
                 <StNoShowingContentsText>
                   새로운 모임을 찾으러 갈까요?
                 </StNoShowingContentsText>
-                <StNoShowingContentsButton type="button" onClick={goingHomeHandler}>
+                <StNoShowingContentsButton
+                  type="button"
+                  onClick={goingHomeHandler}
+                >
                   우리 동네 새로운 모임 찾기
                 </StNoShowingContentsButton>
               </StNoShowingContent>
