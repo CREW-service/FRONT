@@ -46,8 +46,8 @@ const StMenuBox = styled.div`
 `;
 
 const StLogobox = styled.div`
-  width: 88px;
-  height: 32px;
+  width: 86px;
+  height: 22px;
   flex-grow: 0;
   font-family: ELAND Nice;
   font-size: 28px;
@@ -61,7 +61,7 @@ const StLogobox = styled.div`
 `;
 
 const StLogoImg = styled.img`
-  width: auto;
+  width: 100%;
   height: 100%;
   object-fit: contain;
 `;

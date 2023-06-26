@@ -21,8 +21,9 @@ const StMenuButton = styled.button`
   background: #fff;
   border: 0;
   position: relative;
-  font-size: 46px;
-  color: var(--gr-deep, #3e4756);
+  
+  width: 44px;
+  height: 44px;
 `;
 
 const StImg = styled.img`

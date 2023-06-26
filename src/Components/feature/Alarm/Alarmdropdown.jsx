@@ -27,11 +27,12 @@ function Alarmdropdown() {
       console.log(data.alarms);
     } catch (err) {
       console.log("alarmerr", err);
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
   useEffect(() => {
+    if (!cookies.authorization) return; // 쿠키에 authorization이 없으면 아무 동작도 하지 않음
     getAlarms();
   }, []);
 
@@ -44,6 +45,7 @@ function Alarmdropdown() {
   }, [alarms]);
 
   const modalHandler = () => {
+    
     setShowModal(true);
   };
 
@@ -59,7 +61,9 @@ function Alarmdropdown() {
   return (
     <div>
       {isLoading ? (
-        <div />
+        <StAlarmButton type="button">
+          <StImg src={Alerticon} alt="알림 아이콘" />
+        </StAlarmButton>
       ) : (
         <div>
           <StAlarmButton type="button" onClick={modalHandler}>
@@ -99,9 +103,13 @@ function Alarmdropdown() {
 export default Alarmdropdown;
 
 const StAlarmButton = styled.button`
+  padding: 0;
   background: #fff;
   border: 0;
   position: relative;
+
+  width: 44px;
+  height: 44px;
 `;
 
 const modalStyles = {
