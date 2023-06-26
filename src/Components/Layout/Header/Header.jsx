@@ -61,7 +61,7 @@ const StLogobox = styled.div`
 `;
 
 const StLogoImg = styled.img`
-  width: 100%;
+  width: auto;
   height: 100%;
   object-fit: contain;
 `;
