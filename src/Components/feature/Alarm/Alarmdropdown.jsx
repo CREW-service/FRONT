@@ -18,11 +18,12 @@ function Alarmdropdown() {
       authorization: cookies.authorization,
     },
   };
-
+  console.log("dd");
   const getAlarms = async () => {
     try {
       const { data } = await AuthApi.getalarm(config);
       setAlarms(data.alarms);
+      console.log(data);
       setIsLoading(false);
       console.log(data.alarms);
     } catch (err) {

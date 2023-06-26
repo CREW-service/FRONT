@@ -4,42 +4,21 @@ import { useRecoilState } from "recoil";
 import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 import PropTypes from "prop-types";
-// import Commentmodal from "../Modal/Commentmodal";
+import Commentmodal from "../Modal/Commentmodal";
 
 function Corrctioncomment({ boat, boatId, renderTriggerHandler }) {
   // console.log("boat", boat);
   const [comments, setComments] = useState([]);
-
-  const [selectedComment, setSeletedComment] = useState(null);
   const [cookies] = useCookies(["authorization"]);
   const [currentUserId, setCurrentUserId] = useRecoilState(currentUserIdAtom);
   console.log("current", currentUserId);
 
-  const config = {
-    headers: {
-      // 쿠키를 헤더에 추가
-      authorization: cookies.authorization,
-    },
-  };
-
-  const getUserInfo = async () => {
-    try {
-      const res = await AuthApi.getCurrentUser(config);
-      // console.log(res);
-      // localStorage.setItem("userId", JSON.stringify(`${res.data.userId}`));
-      setCurrentUserId(res.data.userId);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const modalRef = useRef(null);
 
   useEffect(() => {
-    getUserInfo();
     const handler = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setSeletedComment(null);
+        closeModal(null);
       }
     };
 
@@ -50,7 +29,7 @@ function Corrctioncomment({ boat, boatId, renderTriggerHandler }) {
       document.removeEventListener("mousedown", handler);
       // document.removeEventListener('touchstart', handler); // 모바일 대응
     };
-  }, [setSeletedComment]);
+  }, [closeModal]);
 
   const commentChangeHandler = (event) => {
     setComments(event.target.value);
@@ -67,26 +46,36 @@ function Corrctioncomment({ boat, boatId, renderTriggerHandler }) {
         id: comments.length + 1,
         comment: comments,
       };
+
+      const config = {
+        headers: {
+          authorization: cookies.authorization,
+        },
+      };
       const res = await AuthApi.comment(boatId, newComment, config);
       alert(res.data.message);
       setComments("");
-
       renderTriggerHandler();
     } catch (err) {
       alert(err.response.data.errorMessage);
     }
   };
 
-  const deleteCommentHandler = async (commentId) => {
+  const deleteComment = async () => {
     try {
       const deletedAt = new Date();
+      const config = {
+        headers: {
+          authorization: cookies.authorization,
+        },
+      };
       const newDeleteData = {
         deletedAt,
       };
 
       const res = await AuthApi.deleteComment(
         boatId,
-        commentId,
+        comment.commentId,
         newDeleteData,
         config
       );
@@ -105,6 +94,8 @@ function Corrctioncomment({ boat, boatId, renderTriggerHandler }) {
   const showModal = () => {
     setModalOpen(true);
   };
+
+  const [selectedComment, setSeletedComment] = useState(null);
 
   return (
     <div>
@@ -128,7 +119,6 @@ function Corrctioncomment({ boat, boatId, renderTriggerHandler }) {
             key={comment.commentId}
           >
             {comment.comment}
-            {console.log(comment)}
             <div>
               <button
                 type="button"
@@ -149,10 +139,7 @@ function Corrctioncomment({ boat, boatId, renderTriggerHandler }) {
                 >
                   <button type="button">X</button>
                   <button type="button">수정</button>
-                  <button
-                    type="button"
-                    onClick={() => deleteCommentHandler(comment.commentId)}
-                  >
+                  <button type="button" onClick={deleteComment}>
                     삭제
                   </button>
                 </div>
