@@ -11,7 +11,9 @@ import { useRecoilState } from "recoil";
 function Home() {
   const [cookies, setCookie, removeCookie] = useCookies(["authorization"]);
   const [currentUserId, setCurrentUserId] = useRecoilState(currentUserIdAtom);
-  
+
+  console.log("userid", currentUserId);
+
   const getUserInfo = async () => {
     try {
       const config = {
