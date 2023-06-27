@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import PropTypes from "prop-types";
@@ -6,6 +6,7 @@ import DOMPurify from "dompurify"; // DOMPurify 라이브러리 가져오기
 import AuthApi from "shared/api";
 
 function Otherpeople({ boat }) {
+  const [randerTriger, setRanderTriger] = useState(false);
   const { id } = useParams();
   const [cookies] = useCookies(["authorization"]);
   const config = {
@@ -18,15 +19,21 @@ function Otherpeople({ boat }) {
   const joinBoatHandler = async () => {
     try {
       const res = await AuthApi.joinBoat(id, config);
+      alert(res.data.message);
       {
         console.log("res", res);
       }
-    } catch (error) {
-      console.log("Error:", error);
-      alert("참가못했습니다");
-      // alert(error.response.data.errorMessage);
+    } catch (err) {
+      // console.log("Error:", error);
+      alert(err.response.data.errorMessage);
     }
   };
+  useEffect(() => {
+    if (randerTriger) {
+      window.location.reload();
+    }
+  }, [randerTriger]);
+
   return (
     <div>
       <div>

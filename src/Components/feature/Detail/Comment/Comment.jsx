@@ -6,14 +6,18 @@ import AuthApi from "shared/api";
 import PropTypes from "prop-types";
 // import Commentmodal from "../Modal/Commentmodal";
 
-function Corrctioncomment({ boat, boatId, renderTriggerHandler }) {
-  // console.log("boat", boat);
+function Comment({ boat, boatId, renderTriggerHandler }) {
   const [comments, setComments] = useState([]);
-
-  const [selectedComment, setSeletedComment] = useState(null);
+  const [selectedComment, setSeletedComment] = useState(false);
   const [cookies] = useCookies(["authorization"]);
   const [currentUserId, setCurrentUserId] = useRecoilState(currentUserIdAtom);
-  console.log("current", currentUserId);
+
+  const modalRef = useRef(null);
+
+  // X 버튼 클릭 코멘트 수정삭제버튼 off
+  const closeModal = () => {
+    setSeletedComment(false);
+  };
 
   const config = {
     headers: {
@@ -25,38 +29,21 @@ function Corrctioncomment({ boat, boatId, renderTriggerHandler }) {
   const getUserInfo = async () => {
     try {
       const res = await AuthApi.getCurrentUser(config);
-      // console.log(res);
-      // localStorage.setItem("userId", JSON.stringify(`${res.data.userId}`));
       setCurrentUserId(res.data.userId);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const modalRef = useRef(null);
-
   useEffect(() => {
     getUserInfo();
-    const handler = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setSeletedComment(null);
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-    // document.addEventListener('touchstart', handler); // 모바일 대응
-
-    return () => {
-      document.removeEventListener("mousedown", handler);
-      // document.removeEventListener('touchstart', handler); // 모바일 대응
-    };
   }, [setSeletedComment]);
 
   const commentChangeHandler = (event) => {
     setComments(event.target.value);
   };
 
-  const commentHandler = async (e) => {
+  const commentInputHandler = async (e) => {
     e.preventDefault();
     if (comments.length === 0) {
       alert("글을 입력해주세요");
@@ -77,6 +64,7 @@ function Corrctioncomment({ boat, boatId, renderTriggerHandler }) {
     }
   };
 
+  // 댓글 삭제 버튼
   const deleteCommentHandler = async (commentId) => {
     try {
       const deletedAt = new Date();
@@ -98,14 +86,6 @@ function Corrctioncomment({ boat, boatId, renderTriggerHandler }) {
     }
   };
 
-  // 모달창 노출 여부 state
-  const [modalOpen, setModalOpen] = useState(false);
-
-  // 모달창 노출
-  const showModal = () => {
-    setModalOpen(true);
-  };
-
   return (
     <div>
       <div>
@@ -115,7 +95,7 @@ function Corrctioncomment({ boat, boatId, renderTriggerHandler }) {
           value={comments}
           onChange={commentChangeHandler}
         />
-        <button type="button" onClick={commentHandler}>
+        <button type="button" onClick={commentInputHandler}>
           게시
         </button>
       </div>
@@ -130,33 +110,39 @@ function Corrctioncomment({ boat, boatId, renderTriggerHandler }) {
             {comment.comment}
             {console.log(comment)}
             <div>
-              <button
-                type="button"
-                onClick={() => setSeletedComment(comment.commentId)}
-              >
-                글수정삭제btn
-              </button>
-
-              {selectedComment === comment.commentId && (
-                <div
-                  id={comment.commentId}
-                  style={{
-                    border: "1px solid ",
-                    width: "200px",
-                    height: "250px",
-                  }}
-                  ref={modalRef}
+              {currentUserId === comment.userId && (
+                <button
+                  type="button"
+                  onClick={() => setSeletedComment(comment.commentId)}
                 >
-                  <button type="button">X</button>
-                  <button type="button">수정</button>
-                  <button
-                    type="button"
-                    onClick={() => deleteCommentHandler(comment.commentId)}
-                  >
-                    삭제
-                  </button>
-                </div>
+                  글수정삭제btn
+                </button>
               )}
+
+              <div>
+                {selectedComment === comment.commentId && (
+                  <div
+                    id={comment.commentId}
+                    style={{
+                      border: "1px solid ",
+                      width: "200px",
+                      height: "250px",
+                    }}
+                    ref={modalRef}
+                  >
+                    <button type="button" onClick={closeModal}>
+                      X
+                    </button>
+                    <button type="button">수정</button>
+                    <button
+                      type="button"
+                      onClick={() => deleteCommentHandler(comment.commentId)}
+                    >
+                      삭제
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         ))}
@@ -165,9 +151,9 @@ function Corrctioncomment({ boat, boatId, renderTriggerHandler }) {
   );
 }
 
-export default Corrctioncomment;
+export default Comment;
 
-Corrctioncomment.propTypes = {
+Comment.propTypes = {
   boat: PropTypes.node.isRequired,
   boatId: PropTypes.node.isRequired,
   renderTriggerHandler: PropTypes.node.isRequired,

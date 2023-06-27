@@ -5,27 +5,20 @@ import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 
 function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
-  // console.log("boat", boatId);
+  const modalRef = useRef(null);
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  const modalRef = useRef(null);
-
   useEffect(() => {
-    const handler = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setModalOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-    // document.addEventListener('touchstart', handler); // 모바일 대응
-
-    return () => {
-      document.removeEventListener("mousedown", handler);
-      // document.removeEventListener('touchstart', handler); // 모바일 대응
-    };
+    // const handler = (event) => {
+    //   if (modalRef.current && !modalRef.current.contains(event.target)) {
+    //     setModalOpen(false);
+    //   }
+    // };
+    // // 빈화면 클릭 모달 off
+    // document.addEventListener("mousedown", handler);
+    // // document.addEventListener('touchstart', handler); // 모바일 대응
   }, [setModalOpen]);
 
   const [cookies] = useCookies(["authorization"]);
