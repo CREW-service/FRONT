@@ -41,8 +41,8 @@ const StLabel = styled.label`
 
 const StImg = styled.img`
   width: 250px;
-height: 56px;
-`
+  height: 56px;
+`;
 
 const StCancelButton = styled.button`
   border: 0;
