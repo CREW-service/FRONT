@@ -72,7 +72,9 @@ function Detail() {
       />
     );
   } else {
-    componentToRender = <Otherpeople boat={boat} />;
+    componentToRender = (
+      <Otherpeople boat={boat} renderTriggerHandler={renderTriggerHandler} />
+    );
   }
 
   return <div>{componentToRender}</div>;

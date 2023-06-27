@@ -6,16 +6,15 @@ import AuthApi from "shared/api";
 import PropTypes from "prop-types";
 // import Commentmodal from "../Modal/Commentmodal";
 
-function Comment({ boat, boatId, renderTriggerHandler }) {
+function Correctionomment({ boat, boatId, renderTriggerHandler }) {
   const [currentUserId, setCurrentUserId] = useRecoilState(currentUserIdAtom);
   const [comments, setComments] = useState([]);
-  const [correctionComment, setCorrectionComment] = useState("");
   const [selectedComment, setSeletedComment] = useState(false);
-  const [editedComment, setEditedComment] = useState("");
+
   const [cookies] = useCookies(["authorization"]);
 
   const modalRef = useRef(null);
-  
+
   // X 버튼 클릭 코멘트 수정삭제버튼 off
   const closeModal = () => {
     setSeletedComment(false);
@@ -66,38 +65,6 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
     }
   };
 
-  // 댓글 수정 버튼
-  const editCommentHandler = (comment) => {
-
-
-    setSeletedComment(comment.commentId);
-    // setEditedComment(comment.comment);
-    setCorrectionComment(comment);
-  };
-
-  // 완료버튼 클릭시 저장
-  const saveEditedCommentHandler = async (commentId) => {
-    try {
-      const updatedComment = {
-        comment: editedComment,
-      };
-      renderTriggerHandler();
-
-      const res = await AuthApi.correctionComment(
-        boatId,
-        commentId,
-        updatedComment,
-        config
-      );
-
-      alert(res.data.message);
-      closeModal();
-      renderTriggerHandler();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   // 댓글 삭제 버튼
   const deleteCommentHandler = async (commentId) => {
     try {
@@ -123,29 +90,15 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
   return (
     <div>
       <div>
-        {selectedComment ===  ? (
-          <div>
-            <input
-              type="text"
-              value={editedComment}
-              onChange={(e) => setEditedComment(e.target.value)}
-            />
-            <button type="button">취소</button>
-            <button type="button">저장</button>
-          </div>
-        ) : (
-          <div>
-            <input
-              type="text"
-              placeholder="댓글을 입력하세요"
-              value={comments}
-              onChange={commentChangeHandler}
-            />
-            <button type="button" onClick={commentInputHandler}>
-              게시
-            </button>
-          </div>
-        )}
+        <input
+          type="text"
+          placeholder="댓글을 입력하세요"
+          value={comments}
+          onChange={commentChangeHandler}
+        />
+        <button type="button" onClick={commentInputHandler}>
+          게시
+        </button>
       </div>
       <div>
         {boat.comments.map((comment) => (
@@ -163,7 +116,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
                   type="button"
                   onClick={() => setSeletedComment(comment.commentId)}
                 >
-                  햄버거btn
+                  글수정삭제btn
                 </button>
               )}
 
@@ -181,12 +134,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
                     <button type="button" onClick={closeModal}>
                       X
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => editCommentHandler(comment)}
-                    >
-                      수정
-                    </button>
+                    <button type="button">수정</button>
                     <button
                       type="button"
                       onClick={() => deleteCommentHandler(comment.commentId)}
@@ -204,9 +152,9 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
   );
 }
 
-export default Comment;
+export default Correctionomment;
 
-Comment.propTypes = {
+Correctionomment.propTypes = {
   boat: PropTypes.node.isRequired,
   boatId: PropTypes.node.isRequired,
   renderTriggerHandler: PropTypes.node.isRequired,

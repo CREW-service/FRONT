@@ -18,14 +18,14 @@ function Alarmdropdown() {
       authorization: cookies.authorization,
     },
   };
-  console.log("dd");
+
   const getAlarms = async () => {
     try {
       const { data } = await AuthApi.getalarm(config);
       setAlarms(data.alarms);
-      console.log(data);
+      // console.log(data);
       setIsLoading(false);
-      console.log(data.alarms);
+      // console.log(data.alarms);
     } catch (err) {
       console.log("alarmerr", err);
       // setIsLoading(false);
@@ -46,7 +46,6 @@ function Alarmdropdown() {
   }, [alarms]);
 
   const modalHandler = () => {
-    
     setShowModal(true);
   };
 

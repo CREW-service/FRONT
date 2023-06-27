@@ -108,7 +108,7 @@ function Correctioneditor() {
   };
 
   const cancelButtonHandler = () => {
-    navigate("/");
+    navigate("/boat/:id");
   };
 
   const onSubmitHandler = async () => {
@@ -380,7 +380,6 @@ const StSubmitButton = styled.button`
   background-color: #30a2ff;
 
   box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.05);
-
 
   font-family: Pretendard;
   font-size: 24px;

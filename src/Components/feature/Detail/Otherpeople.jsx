@@ -5,8 +5,7 @@ import PropTypes from "prop-types";
 import DOMPurify from "dompurify"; // DOMPurify 라이브러리 가져오기
 import AuthApi from "shared/api";
 
-function Otherpeople({ boat }) {
-  const [randerTriger, setRanderTriger] = useState(false);
+function Otherpeople({ boat, renderTriggerHandler }) {
   const { id } = useParams();
   const [cookies] = useCookies(["authorization"]);
   const config = {
@@ -20,6 +19,7 @@ function Otherpeople({ boat }) {
     try {
       const res = await AuthApi.joinBoat(id, config);
       alert(res.data.message);
+      renderTriggerHandler();
       {
         console.log("res", res);
       }
@@ -28,11 +28,6 @@ function Otherpeople({ boat }) {
       alert(err.response.data.errorMessage);
     }
   };
-  useEffect(() => {
-    if (randerTriger) {
-      window.location.reload();
-    }
-  }, [randerTriger]);
 
   return (
     <div>
@@ -73,4 +68,5 @@ export default Otherpeople;
 
 Otherpeople.propTypes = {
   boat: PropTypes.node.isRequired,
+  renderTriggerHandler: PropTypes.node.isRequired,
 };
