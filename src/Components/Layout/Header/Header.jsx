@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Alarmdropdown from "Components/feature/Alarm/Alarmdropdown";
-import LOGO from "./logo.png"
+import Menu from "Components/feature/Menu/Menu";
+import LOGO from "./logo.png";
 
 function Header() {
   const navigate = useNavigate();
@@ -13,9 +14,11 @@ function Header() {
 
   return (
     <StContainer>
-      <StMenuBox>☰</StMenuBox>
+      {/* <StMenuBox> */}
+        <Menu />
+      {/* </StMenuBox> */}
       <StLogobox onClick={onClickLogo}>
-        <StLogoImg src={LOGO} alt="LOGO"/>
+        <StLogoImg src={LOGO} alt="LOGO" />
       </StLogobox>
       <Alarmdropdown />
     </StContainer>

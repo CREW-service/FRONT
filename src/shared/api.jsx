@@ -36,6 +36,7 @@ const AuthApi = {
     api.put(`/alarm/${alarmId}`, 1, { ...config }),
   correctionComment: (boatId, commentId, payload, config) =>
     api.put(`/boat/${boatId}/comment/${commentId}`, payload, { ...config }),
+    logOut: () => api.get("/auth/logout")
 };
 
 export default AuthApi;
