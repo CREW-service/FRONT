@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import KakaoBtn from "./login_popup_kakao.png";
 
-function Kakaologin() {
+function Kakaologin({closeLoginModal}) {
   const loginUrl = `${process.env.REACT_APP_BACKEND_SERVER_URL}/auth/kakao`;
   return (
     <StContainer>
@@ -11,10 +12,14 @@ function Kakaologin() {
       <Link to={loginUrl}>
         <StImg src={KakaoBtn} alt="kakao login button" />
       </Link>
-      <StCancelButton type="button">취소</StCancelButton>
+      <StCancelButton type="button" onClick={closeLoginModal}>취소</StCancelButton>
     </StContainer>
   );
 }
+
+Kakaologin.propTypes = {
+  closeLoginModal: PropTypes.node.isRequired,
+};
 
 export default Kakaologin;
 

@@ -36,7 +36,7 @@ function Mypage() {
       setIsLoading(false);
     } catch (err) {
       alert(err.response.data.errorMessage);
-      navigate("/signin");
+      navigate("/");
     }
   };
 

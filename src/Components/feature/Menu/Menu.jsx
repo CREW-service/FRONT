@@ -83,7 +83,7 @@ function Menu() {
         style={loginModalStyes}
       >
         {/* 새로운 모달 내용 */}
-        <Kakaologin />
+        <Kakaologin closeLoginModal={closeLoginModal}/>
       </Modal>
     </div>
   );
