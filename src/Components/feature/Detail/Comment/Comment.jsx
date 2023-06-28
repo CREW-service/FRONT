@@ -15,7 +15,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
   const [cookies] = useCookies(["authorization"]);
 
   const modalRef = useRef(null);
-  
+
   // X 버튼 클릭 코멘트 수정삭제버튼 off
   const closeModal = () => {
     setSeletedComment(false);
@@ -68,8 +68,6 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
 
   // 댓글 수정 버튼
   const editCommentHandler = (comment) => {
-
-
     setSeletedComment(comment.commentId);
     // setEditedComment(comment.comment);
     setCorrectionComment(comment);
@@ -123,7 +121,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
   return (
     <div>
       <div>
-        {selectedComment ===  ? (
+        {/* {selectedComment ===  ? (
           <div>
             <input
               type="text"
@@ -133,19 +131,19 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
             <button type="button">취소</button>
             <button type="button">저장</button>
           </div>
-        ) : (
-          <div>
-            <input
-              type="text"
-              placeholder="댓글을 입력하세요"
-              value={comments}
-              onChange={commentChangeHandler}
-            />
-            <button type="button" onClick={commentInputHandler}>
-              게시
-            </button>
-          </div>
-        )}
+        ) : ( */}
+        <div>
+          <input
+            type="text"
+            placeholder="댓글을 입력하세요"
+            value={comments}
+            onChange={commentChangeHandler}
+          />
+          <button type="button" onClick={commentInputHandler}>
+            게시
+          </button>
+        </div>
+        {/* )} */}
       </div>
       <div>
         {boat.comments.map((comment) => (
