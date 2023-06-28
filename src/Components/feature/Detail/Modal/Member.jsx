@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { useCookies } from "react-cookie";
 import { personTypeAtom } from "Recoil/recoilAtoms";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
 import AuthApi from "shared/api";
 
 function Member({ boat, boatId }) {
-  console.log(boatId);
   const [cookies] = useCookies(["authorization"]);
   const config = {
     headers: {
@@ -14,7 +14,6 @@ function Member({ boat, boatId }) {
       authorization: cookies.authorization,
     },
   };
-  console.log("ModalBoat", boat);
   const [personType, setPersonType] = useRecoilState(personTypeAtom);
 
   const dropBoatHandler = async (id) => {
@@ -34,29 +33,26 @@ function Member({ boat, boatId }) {
   };
 
   return (
-    <div>
+    <StContainer>
       {personType === "captain" ? (
-        <div>
+        <CrewMemberBox>
           {boat.crew.map((crewMember) => (
-            <div key={crewMember.userId}>
+            <Box key={crewMember.userId}>
               {crewMember.nickName}
-              <button
-                type="button"
-                onClick={() => dropBoatHandler(crewMember.userId)}
-              >
+              <ReleaseBtn onClick={() => dropBoatHandler(crewMember.userId)}>
                 내보내기
-              </button>
-            </div>
+              </ReleaseBtn>
+            </Box>
           ))}
-        </div>
+        </CrewMemberBox>
       ) : (
-        <div>
+        <CrewMemberBox>
           {boat.crew.map((crewMember) => (
-            <div key={crewMember.id}>{crewMember.nickName}</div>
+            <Box key={crewMember.id}>{crewMember.nickName}</Box>
           ))}
-        </div>
+        </CrewMemberBox>
       )}
-    </div>
+    </StContainer>
   );
 }
 
@@ -65,3 +61,35 @@ Member.propTypes = {
   boat: PropTypes.node.isRequired,
   boatId: PropTypes.node.isRequired,
 };
+
+const StContainer = styled.div`
+  display: flex;
+`;
+
+const CrewMemberBox = styled.div`
+  width: 180px;
+  height: 40px;
+  display: flex;
+`;
+
+const Box = styled.div`
+  width: 180px;
+  height: 40px;
+  display: flex;
+`;
+
+const ReleaseBtn = styled.button`
+  width: 80px;
+  height: 40px;
+  margin-left: 46px;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 12px;
+  border: none;
+  background-color: #fff;
+`;
