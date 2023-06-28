@@ -11,14 +11,14 @@ function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
   };
 
   useEffect(() => {
-    // const handler = (event) => {
-    //   if (modalRef.current && !modalRef.current.contains(event.target)) {
-    //     setModalOpen(false);
-    //   }
-    // };
-    // // 빈화면 클릭 모달 off
-    // document.addEventListener("mousedown", handler);
-    // // document.addEventListener('touchstart', handler); // 모바일 대응
+    const handler = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setModalOpen(false);
+      }
+    };
+    // 빈화면 클릭 모달 off
+    document.addEventListener("mousedown", handler);
+    // document.addEventListener('touchstart', handler); // 모바일 대응
   }, [setModalOpen]);
 
   const [cookies] = useCookies(["authorization"]);

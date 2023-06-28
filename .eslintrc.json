@@ -1,16 +1,17 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
-    },
-    "extends": ["airbnb", "prettier", "react-app"],
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module"
-    },
-    "rules": {
-        "import/no-unresolved": 0,
-        "no-unresolved": 0,
-        "import/no-extraneous-dependencies": 0
-    }
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["airbnb", "prettier", "react-app"],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "import/no-unresolved": 0,
+    "no-unresolved": 0,
+    "import/no-extraneous-dependencies": 0,
+    "jsx-a11y/click-events-have-key-events": 0
+  }
 }
