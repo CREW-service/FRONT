@@ -18,7 +18,6 @@ function Alarmdropdown() {
       authorization: cookies.authorization,
     },
   };
-
   const getAlarms = async () => {
     try {
       const { data } = await AuthApi.getalarm(config);

@@ -36,7 +36,7 @@ function Mypage() {
       setIsLoading(false);
     } catch (err) {
       alert(err.response.data.errorMessage);
-      setIsLoading(false);
+      navigate("/");
     }
   };
 
@@ -142,20 +142,7 @@ function Mypage() {
                           isOpen={showModal}
                           onRequestClose={() => setShowModal(false)}
                           contentLabel="Confirmation Modal"
-                          style={{
-                            overlay: {
-                              backgroundColor: "rgba(0, 0, 0, 0.5)",
-                              zIndex: 1000,
-                            },
-                            content: {
-                              width: "328px",
-                              height: "334px",
-                              margin: "auto",
-                              padding: "20px",
-                              borderRadius: "8px",
-                              backgroundColor: "white",
-                            },
-                          }}
+                          style={modalstyles}
                         >
                           <StModalAlert>
                             <p>잠깐!</p>
@@ -461,3 +448,19 @@ const StNoShowingContentsButton = styled.button`
   font-weight: 700;
   line-height: 24px;
 `;
+
+
+const modalstyles = {
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: 1000,
+  },
+  content: {
+    width: "328px",
+    height: "334px",
+    margin: "auto",
+    padding: "20px",
+    borderRadius: "8px",
+    backgroundColor: "white",
+  },
+}
