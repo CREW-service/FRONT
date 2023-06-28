@@ -58,7 +58,9 @@ function Captaindetail({ boat, boatId, renderTriggerHandler }) {
                 setMemberShowModal={setMemberShowModal}
               />
             )}
-            {boat.boat.crewNum}/{boat.boat.maxCrewNum}
+            <CrewNum>
+              {boat.boat.crewNum}/{boat.boat.maxCrewNum}
+            </CrewNum>
           </MaxCrewNum>
           <EndDate>
             <span>모집 기한</span>
@@ -89,8 +91,12 @@ Captaindetail.propTypes = {
 };
 
 const StMemberBox = styled.img`
-  max-width: 100px;
-  max-height: 150px;
+  width: 8%;
+  margin-left: auto;
+`;
+
+const CrewNum = styled.span`
+  margin-left: 10px;
 `;
 
 const StContainer = styled.div`

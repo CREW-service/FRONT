@@ -67,9 +67,10 @@ const StContainer = styled.div`
 `;
 
 const CrewMemberBox = styled.div`
-  width: 180px;
+  width: 90px;
   height: 40px;
   display: flex;
+  flex-direction: column;
 `;
 
 const Box = styled.div`

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import DOMPurify from "dompurify"; // DOMPurify 라이브러리 가져오기
 import Comment from "./Comment/Comment";
 import Member from "./Modal/Member";
+import crewListBtn from "./view_crew_list.png";
 
 function Crewdetail({ boat, boatId, renderTriggerHandler }) {
   const [memberShowModal, setMemberShowModal] = useState(false);
@@ -26,9 +27,11 @@ function Crewdetail({ boat, boatId, renderTriggerHandler }) {
             </Address>
             <MaxCrewNum>
               <span>모집 인원</span>
-              <StMemberBox onClick={memberModalHandler}>
-                {boat.boat.crewNum}/{boat.boat.maxCrewNum}
-              </StMemberBox>
+              <StMemberBox
+                src={crewListBtn}
+                alt="crewList button"
+                onClick={memberModalHandler}
+              />
               {memberShowModal && (
                 <Member
                   boat={boat}
@@ -36,6 +39,9 @@ function Crewdetail({ boat, boatId, renderTriggerHandler }) {
                   renderTriggerHandler={renderTriggerHandler}
                 />
               )}
+              <CrewNum>
+                {boat.boat.crewNum}/{boat.boat.maxCrewNum}
+              </CrewNum>
             </MaxCrewNum>
             <EndDate>
               <span>모집 기한</span>
@@ -67,8 +73,13 @@ Crewdetail.propTypes = {
   renderTriggerHandler: PropTypes.node.isRequired,
 };
 
-const StMemberBox = styled.span`
-  z-index: 9999;
+const StMemberBox = styled.img`
+  width: 8%;
+  margin-left: auto;
+`;
+
+const CrewNum = styled.span`
+  margin-left: 10px;
 `;
 
 const StContainer = styled.div`
