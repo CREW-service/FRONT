@@ -14,7 +14,7 @@ function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
   useEffect(() => {
     const handler = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setModalOpen(false);
+        closeModal();
       }
     };
     // 빈화면 클릭 모달 off
@@ -36,7 +36,7 @@ function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
       };
       const res = await AuthApi.closeBoat(boatId, payload, config);
       alert(res.data.message);
-      // renderTriggerHandler();
+      navigate("/main")
     } catch (err) {
       console.log(err);
     }
@@ -89,9 +89,7 @@ Captainmodal.propTypes = {
 const StContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  width: 156px;
-  height: 172px;
+  align-items: center;
 `;
 
 const IsDoneBtn = styled.button`
@@ -103,22 +101,30 @@ const IsDoneBtn = styled.button`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  padding: 8px 16px;
-  border-radius: 35px;
+  padding: 8px;
   border: none;
-  background-color: #30a2ff;
+  border-radius: 35px;
+  background: var(--primary-blue, #30a2ff);
+
+  color: var(--gr-white, #fff);
+  text-align: center;
+  font-size: 14px;
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
 `;
 
 const EditBtn = styled.button`
   width: 132px;
-  height: 36px;
+
   flex-grow: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  padding: 8px 16px;
+  padding: 8px;
   border-radius: 35px;
   border: none;
   background-color: #fff;
@@ -133,8 +139,16 @@ const DeleteBtn = styled.button`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  padding: 8px 16px;
+  padding: 8px;
   border-radius: 35px;
   border: none;
   background-color: #fff;
+
+  color: var(--red-red, #ea122b);
+  text-align: center;
+  font-size: 14px;
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
 `;

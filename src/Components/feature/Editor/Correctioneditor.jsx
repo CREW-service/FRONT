@@ -140,7 +140,7 @@ function Correctioneditor() {
       );
       alert(res.data.message);
       setRecoilLatLng({ lat: null, lng: null });
-      navigate("/");
+      navigate("/main");
     } catch (err) {
       alert(err.response.data.errorMessage);
     }

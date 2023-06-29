@@ -44,12 +44,12 @@ function Editor() {
       // window.location.href = "/login"; // 로그인 페이지로 이동하는 경우
       // 또는 아래와 같이 접근 차단 메시지를 렌더링하거나 다른 작업을 수행할 수 있습니다.
       alert(alertList.noCookie);
-      navigate("/");
+      navigate("/main");
       return;
     }
     if (recoilLatLng.lat === null || recoilLatLng.lng === null) {
       alert(alertList.markerMiss);
-      navigate("/");
+      navigate("/main");
     }
   }, []);
 
@@ -90,7 +90,7 @@ function Editor() {
   };
 
   const cancelButtonHandler = () => {
-    navigate("/")
+    navigate("/main")
   }
 
   const onSubmitHandler = async () => {
@@ -118,7 +118,7 @@ function Editor() {
       const res = await AuthApi.write(newPost, config);
       alert(res.data.message);
       setRecoilLatLng({ lat: null, lng: null });
-      navigate("/");
+      navigate("/main");
     } catch (err) {
       alert(err.response.data.errorMessage);
     }

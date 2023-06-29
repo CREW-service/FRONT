@@ -43,7 +43,7 @@ function Home() {
 
       setCookie("authorization", `Bearer ${token}`);
       getUserInfo();
-      navigate("/");
+      navigate("/main");
     }
     // 추출한 토큰을 로컬 스토리지에 저장
   }, [navigate]);
