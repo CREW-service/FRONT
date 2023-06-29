@@ -4,19 +4,54 @@ import Kakaologin from "Components/feature/Kakaologin/Kakaologin";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import AuthApi from "shared/api";
+import { currentUserIdAtom } from "Recoil/recoilAtoms";
+import { useRecoilState } from "recoil";
 import ICON from "./drwicon.gif";
 import LOGO from "./CREW_B 1.png";
+
 
 const introContent = `내 주변에서 함께하고 싶은 모임을 만들거나 새로운 모임에 참여해보세요!`;
 
 function Onboarding() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [cookies] = useCookies(["authorization"]);
+  const [cookies, setCookie] = useCookies(["authorization"]);
+  const [currentUserId, setCurrentUserId] = useRecoilState(currentUserIdAtom);
   const navigate = useNavigate()
+
+
+  const getUserInfo = async () => {
+    try {
+      const config = {
+        headers: {
+          // 쿠키를 헤더에 추가
+          authorization: cookies.authorization,
+        },
+      };
+
+      const res = await AuthApi.getCurrentUser(config);
+      // console.log(res);
+      // localStorage.setItem("userId", JSON.stringify(`${res.data.userId}`));
+      setCurrentUserId(res.data.userId);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     if (cookies.authorization) {
       goingMainHandler()
+    }
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+
+    if (token) {
+      // localStorage.setItem("authorization", JSON.stringify(`Bearer ${token}`));
+
+      setCookie("authorization", `Bearer ${token}`);
+      getUserInfo();
+      navigate("/main");
     }
   },[cookies])
 
