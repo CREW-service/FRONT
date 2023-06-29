@@ -115,12 +115,13 @@ const Title = styled.div`
   line-height: 1.33;
   letter-spacing: normal;
   color: #222;
+  width: 328px;
+  height: 50px;
 `;
 
 const CreatedAt = styled.span`
-  /* width: 55px;
-  height: 20px; */
-  margin: 10px 8px 0 8px;
+  display: flex;
+  margin: 0px 16px;
   font-family: Pretendard;
   font-size: 14px;
   font-weight: 500;
@@ -129,12 +130,10 @@ const CreatedAt = styled.span`
   line-height: 1.43;
   letter-spacing: normal;
   color: #222;
+  text-align: center;
 `;
 
 const Captain = styled.span`
-  /* width: 37px;
-  height: 20px; */
-  margin: 10px 8px;
   font-family: Pretendard;
   font-size: 14px;
   font-weight: 500;
@@ -143,6 +142,7 @@ const Captain = styled.span`
   line-height: 1.43;
   letter-spacing: normal;
   color: #222;
+  margin-left: 3px;
 `;
 
 const Box = styled.div`
@@ -214,9 +214,10 @@ const Content = styled.div`
 `;
 
 const StImg = styled.img`
-  width: 25px;
-  height: 25px;
-  margin-left: 186px;
+  width: 20px;
+  height: 20px;
+  margin-left: 180px;
+  justify-content: space-between;
 `;
 
 const captainModalStyles = {};

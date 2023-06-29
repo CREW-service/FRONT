@@ -121,10 +121,11 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
 
   return (
     <StContainer>
+      <StLine>{/* 라인을 위한 div */}</StLine>
       <StInputField>
         <StInputBox
           type="text"
-          placeholder="댓글을 입력하세요"
+          placeholder="댓글을 남겨보세요"
           value={comments}
           onChange={commentChangeHandler}
         />
@@ -137,7 +138,8 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
           {currentUserId === comment.userId ? (
             <StCommnetListField>
               <StCommentUserNic>
-                <span>{comment.nickname}</span>
+                <div>{comment.nickName}</div>
+                <StCommentBox>{comment.commnet}</StCommentBox>
                 <div style={{ position: "relative" }}>
                   <StCommnetModalOpenBtn
                     type="button"
@@ -164,27 +166,37 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
                 </div>
               </StCommentUserNic>
               {isModiy === comment.commentId ? (
-                <>
-                  <input value={modiyValue} onChange={modiyHandler} />
-                  <button type="button">취소</button>
-                  <button
-                    type="button"
-                    onClick={() => saveEditedCommentHandler(comment.commentId)}
-                  >
-                    저장
-                  </button>
-                </>
+                <StCorrectionInputField>
+                  <StCorrectionInput
+                    value={modiyValue}
+                    onChange={modiyHandler}
+                  />
+                  <StCorrctionBtnBox>
+                    <StCancelBtn type="button">취소</StCancelBtn>
+                    <StAddBtn
+                      type="button"
+                      onClick={() =>
+                        saveEditedCommentHandler(comment.commentId)
+                      }
+                    >
+                      저장
+                    </StAddBtn>
+                  </StCorrctionBtnBox>
+                </StCorrectionInputField>
               ) : (
                 <span>{comment.comment}</span>
               )}
-
-              {/* <span>{comment.createAt}</span> */}
+              <StCreatedNum>
+                {new Date(comment.createdAt).toISOString().split("T")[0]}
+              </StCreatedNum>
             </StCommnetListField>
           ) : (
             <StCommnetListField>
-              <span>{comment.nickname}</span>
-              <span>{comment.comment}</span>
-              {/* <span>{comment.createAt}</span> */}
+              <span>{comment.nickName}</span>
+              <StCommentBox>{comment.comment}</StCommentBox>
+              <StCreatedNum>
+                {new Date(comment.createdAt).toISOString().split("T")[0]}
+              </StCreatedNum>
             </StCommnetListField>
           )}
         </StCommnetContainer>
@@ -222,21 +234,61 @@ Comment.propTypes = {
 
 const StContainer = styled.div`
   width: 360px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
-const StInputField = styled.div``;
+const StInputField = styled.div`
+  width: 328px;
+  background-color: #fff;
+  border: 2px solid var(--gr-light, #a2acbd);
 
-const StInputBox = styled.input``;
+  border-radius: 15px;
+  margin: 30px auto;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  overflow: hidden;
+`;
 
-const StInputBtn = styled.button``;
+const StInputBox = styled.input`
+  width: 230px;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0);
+  padding: 12px;
+`;
+
+const StInputBtn = styled.button`
+  width: 70px;
+  height: 80px;
+  padding: 8px;
+  border: none;
+  border-radius: 12px;
+  background: var(--gr-light, #a2acbd);
+  color: var(--gr-white, #fff);
+  font-size: 14px;
+`;
 
 const StCommnetContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
+  width: 328px;
+  margin-bottom: 32px;
+  font-size: 16px;
+  font-family: Pretendard;
 `;
-
+const StCommentBox = styled.div`
+  font-size: 16px;
+`;
+const StCreatedNum = styled.span`
+  color: #9c9c9c;
+  font-size: 14px;
+`;
 const StCommnetModalOpenBtn = styled.button`
   border: 0;
   background-color: #fff;
@@ -259,6 +311,7 @@ const StModalContainer = styled.div`
   width: 100px;
   /* transform: translate(100%, -4%); */
   top: 100%;
+
   right: 0;
   display: flex;
   flex-direction: column;
@@ -267,13 +320,26 @@ const StModalContainer = styled.div`
   border: 1px solid #ccc;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 5px;
+  border-radius: 15px;
 `;
 
-const StCloseModalBtn = styled.button``;
+const StCorrectionBtn = styled.button`
+  background-color: #fff;
+  height: 40px;
+  border: none;
+  margin-bottom: 8px;
+  color: var(--gr-deep, #3e4756);
+  text-align: center;
+  font-size: 14px;
+  font-family: Pretendard;
+  line-height: 20px;
+`;
 
-const StCorrectionBtn = styled.button``;
-
-const StDeleteBtn = styled.button``;
+const StDeleteBtn = styled(StCorrectionBtn)`
+  color: #ea122b;
+  font-weight: 700;
+  margin-bottom: 0;
+`;
 
 const StCommnetListField = styled.div`
   display: flex;
@@ -288,4 +354,68 @@ const StCommentUserNic = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: 0;
+`;
+
+const StLine = styled.div`
+  width: 360px;
+  height: 8px;
+  background: var(--gr-pale, #eff4f8);
+`;
+
+const StCorrectionInputField = styled.div`
+  width: 100%;
+  background-color: #fff;
+  border: 2px solid #a2acbd;
+  border-radius: 15px;
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+
+  padding: 16px 16px 4px 16px;
+`;
+
+const StCorrectionInput = styled.input`
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0);
+  padding: 12px;
+
+  color: var(--gr-black, #222);
+  font-size: 16px;
+  font-family: Pretendard;
+  font-weight: 500;
+  line-height: 24px;
+`;
+
+const StCorrctionBtnBox = styled.div`
+  display: flex;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
+const StCancelBtn = styled.button`
+  border: none;
+  width: 55px;
+  height: 36px;
+  color: #9c9c9c;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-right: 28px;
+`;
+
+const StAddBtn = styled.button`
+  border: none;
+  width: 55px;
+  height: 36px;
+  color: #fff;
+  background-color: #a2acbd;
+  border-radius: 8px;
 `;
