@@ -144,7 +144,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
           {currentUserId === comment.userId ? (
             <StCommnetListField>
               <StCommentUserNic>
-                <div>{comment.nickName}</div>
+                <StNickName>{comment.nickName}</StNickName>
                 <StCommentBox>{comment.commnet}</StCommentBox>
                 <div style={{ position: "relative" }}>
                   <StCommnetModalOpenBtn
@@ -195,7 +195,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
                   </StCorrctionBtnBox>
                 </StCorrectionInputField>
               ) : (
-                <span>{comment.comment}</span>
+                <StNickName>{comment.comment}</StNickName>
               )}
               <StCreatedNum>
                 {new Date(comment.createdAt).toISOString().split("T")[0]}
@@ -203,7 +203,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
             </StCommnetListField>
           ) : (
             <StCommnetListField>
-              <span>{comment.nickName}</span>
+              <StNickName>{comment.nickName}</StNickName>
               <StCommentBox>{comment.comment}</StCommentBox>
               <StCreatedNum>
                 {new Date(comment.createdAt).toISOString().split("T")[0]}
@@ -293,13 +293,7 @@ const StCommnetContainer = styled.div`
   font-size: 16px;
   font-family: Pretendard;
 `;
-const StCommentBox = styled.div`
-  font-size: 16px;
-`;
-const StCreatedNum = styled.span`
-  color: #9c9c9c;
-  font-size: 14px;
-`;
+
 const StCommnetModalOpenBtn = styled.button`
   border: 0;
   background-color: #fff;
@@ -429,4 +423,19 @@ const StAddBtn = styled.button`
   color: #fff;
   background-color: #a2acbd;
   border-radius: 8px;
+`;
+
+const StNickName = styled.span`
+  font-size: 16px;
+  font-weight: 500;
+  font-family: Pretendard;
+  color: #222;
+  margin-bottom: 8px;
+`;
+const StCommentBox = styled(StNickName)``;
+
+const StCreatedNum = styled.span`
+  color: #9c9c9c;
+  font-size: 14px;
+  font-family: Pretendard;
 `;
