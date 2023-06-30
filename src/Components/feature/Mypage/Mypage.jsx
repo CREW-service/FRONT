@@ -36,7 +36,7 @@ function Mypage() {
       setIsLoading(false);
     } catch (err) {
       alert(err.response.data.errorMessage);
-      navigate("/");
+      navigate("/main");
     }
   };
 
@@ -55,7 +55,7 @@ function Mypage() {
   };
 
   const goingHomeHandler = () => {
-    navigate("/");
+    navigate("/main");
   };
 
   const boatDeleteHandler = async (boatId) => {

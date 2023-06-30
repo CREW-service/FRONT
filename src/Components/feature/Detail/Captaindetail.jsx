@@ -14,7 +14,9 @@ function Captaindetail({ boat, boatId, renderTriggerHandler }) {
 
   const [memberShowModal, setMemberShowModal] = useState(false);
   const memberModalHandler = () => {
-    setMemberShowModal(!memberShowModal);
+    if (boat.crew.length > 0) {
+      setMemberShowModal(!memberShowModal);
+    }
   };
 
   // 모달창 노출
@@ -27,17 +29,26 @@ function Captaindetail({ boat, boatId, renderTriggerHandler }) {
       <StContainer>
         <Title>{boat.boat.title}</Title>
         <CreatedAt>
-          <Captain>{boat.boat.captain}</Captain>
-          {new Date(boat.boat.createdAt).toISOString().split("T")[0]}
-          <StImg src={viewBtn} alt="captainDetail button" onClick={showModal} />
-          {modalOpen && (
-            <Captainmodal
-              boat={boat}
-              boatId={boatId}
-              setModalOpen={setModalOpen}
-              style={captainModalStyles}
+          <div>
+            <Captain>{boat.boat.captain}</Captain>
+            {new Date(boat.boat.createdAt).toISOString().split("T")[0]}
+          </div>
+          <div style={{position:"relative"}}>
+            <StImg
+              src={viewBtn}
+              alt="captainDetail button"
+              onClick={showModal}
             />
-          )}
+            {modalOpen && (
+              <StModalBox>
+                <Captainmodal
+                  boat={boat}
+                  boatId={boatId}
+                  setModalOpen={setModalOpen}
+                />
+              </StModalBox>
+            )}
+          </div>
         </CreatedAt>
         <Box>
           <Address>
@@ -56,6 +67,7 @@ function Captaindetail({ boat, boatId, renderTriggerHandler }) {
                 boatId={boatId}
                 boat={boat}
                 setMemberShowModal={setMemberShowModal}
+                renderTriggerHandler={renderTriggerHandler}
               />
             )}
             <CrewNum>
@@ -130,7 +142,9 @@ const CreatedAt = styled.span`
   line-height: 1.43;
   letter-spacing: normal;
   color: #222;
-  text-align: center;
+
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Captain = styled.span`
@@ -214,10 +228,24 @@ const Content = styled.div`
 `;
 
 const StImg = styled.img`
-  width: 20px;
-  height: 20px;
-  margin-left: 180px;
-  justify-content: space-between;
+  width: 25px;
+  height: 25px;
 `;
 
-const captainModalStyles = {};
+const StModalBox = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  background-color: #fff;
+
+  z-index: 9999;
+  top: 100%;
+  right: 0;
+  margin-top: 5px;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+`;

@@ -6,7 +6,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import AuthApi from "shared/api";
 
-function Member({ boat, boatId }) {
+function Member({ boat, boatId, renderTriggerHandler }) {
   const [cookies] = useCookies(["authorization"]);
   const config = {
     headers: {
@@ -14,21 +14,16 @@ function Member({ boat, boatId }) {
       authorization: cookies.authorization,
     },
   };
-  const [personType, setPersonType] = useRecoilState(personTypeAtom);
-
+  const [personType] = useRecoilState(personTypeAtom);
   const dropBoatHandler = async (id) => {
     const removeUser = {
       id,
     };
-
     try {
       const dropBoat = await AuthApi.releaseCrew(boatId, removeUser, config);
-      {
-        console.log("dropBoat", dropBoat);
-      }
+      renderTriggerHandler()
     } catch (err) {
       console.log("droperr", err);
-      alert("내보내기 완료");
     }
   };
 
@@ -36,7 +31,7 @@ function Member({ boat, boatId }) {
     <StContainer>
       {personType === "captain" ? (
         <CrewMemberBox>
-          {boat.crew.map((crewMember) => (
+          {boat.crew.map ((crewMember) => (
             <Box key={crewMember.userId}>
               {crewMember.nickName}
               <ReleaseBtn onClick={() => dropBoatHandler(crewMember.userId)}>
@@ -60,37 +55,55 @@ export default Member;
 Member.propTypes = {
   boat: PropTypes.node.isRequired,
   boatId: PropTypes.node.isRequired,
+  renderTriggerHandler: PropTypes.node.isRequired,
 };
 
 const StContainer = styled.div`
   display: flex;
+  position: relative;
 `;
 
 const CrewMemberBox = styled.div`
-  width: 90px;
-  height: 40px;
+  width: 180px;
   display: flex;
   flex-direction: column;
+
+  position: absolute;
+  background-color: #fff;
+
+  z-index: 9999;
+  /* transform: translate(100%, -4%); */
+  top: 100%;
+  right: 0;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 5px;
 `;
 
 const Box = styled.div`
-  width: 180px;
-  height: 40px;
+  width: 100%;
   display: flex;
+  justify-content: space-between;
 `;
 
 const ReleaseBtn = styled.button`
   width: 80px;
-  height: 40px;
-  margin-left: 46px;
   flex-grow: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   gap: 10px;
-  padding: 16px;
   border-radius: 12px;
   border: none;
   background-color: #fff;
+
+  background: var(--gr-white, #fff);
+
+  color: var(--primary-light-blue, #00c7ff);
+  text-align: center;
+  font-size: 14px;
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
 `;
