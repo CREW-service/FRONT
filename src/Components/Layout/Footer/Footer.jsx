@@ -27,7 +27,7 @@ function Footer() {
 
   return (
     <StContainer>
-      {currentPage === "/" ? (
+      {currentPage === "/main" ? (
         <StIconBox>
           <StImg src={Homeiconactive} alt="홈" />
           <StActiveTxt>홈</StActiveTxt>

@@ -9,7 +9,7 @@ function Header() {
   const navigate = useNavigate();
 
   const onClickLogo = () => {
-    navigate("main");
+    navigate("/main");
   };
 
   return (
