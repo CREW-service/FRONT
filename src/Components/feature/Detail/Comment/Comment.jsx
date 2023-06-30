@@ -252,12 +252,13 @@ const StContainer = styled.div`
 `;
 
 const StInputField = styled.div`
-  width: 328px;
+  width: 332px;
   background-color: #fff;
   border: 2px solid var(--gr-light, #a2acbd);
 
   border-radius: 15px;
   margin: 30px auto;
+  margin-left: 0px;
   display: flex;
   justify-content: space-between;
   text-align: center;
@@ -289,7 +290,7 @@ const StCommnetContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 328px;
-  margin-bottom: 32px;
+  margin: 30px auto
   font-size: 16px;
   font-family: Pretendard;
 `;
@@ -369,7 +370,7 @@ const StLine = styled.div`
 `;
 
 const StCorrectionInputField = styled.div`
-  width: 100%;
+  width: 300px;
   background-color: #fff;
   border: 2px solid #a2acbd;
   border-radius: 15px;
@@ -379,6 +380,7 @@ const StCorrectionInputField = styled.div`
   justify-content: center;
   text-align: center;
   overflow: hidden;
+  /* background-color: var(--gr-pale); */
 
   padding: 16px 16px 4px 16px;
 `;
