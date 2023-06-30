@@ -21,7 +21,7 @@ function Member({ boat, boatId, renderTriggerHandler }) {
     };
     try {
       const dropBoat = await AuthApi.releaseCrew(boatId, removeUser, config);
-      renderTriggerHandler()
+      renderTriggerHandler();
     } catch (err) {
       console.log("droperr", err);
     }
@@ -31,7 +31,7 @@ function Member({ boat, boatId, renderTriggerHandler }) {
     <StContainer>
       {personType === "captain" ? (
         <CrewMemberBox>
-          {boat.crew.map ((crewMember) => (
+          {boat.crew.map((crewMember) => (
             <Box key={crewMember.userId}>
               {crewMember.nickName}
               <ReleaseBtn onClick={() => dropBoatHandler(crewMember.userId)}>
@@ -81,12 +81,14 @@ const CrewMemberBox = styled.div`
   border-radius: 15px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 5px;
+  padding: 24px;
 `;
 
 const Box = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 16px;
 `;
 
 const ReleaseBtn = styled.button`
