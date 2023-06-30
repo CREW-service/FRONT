@@ -119,6 +119,12 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
     }
   };
 
+  // 수정 모달 취소 버튼
+  const cancelEditCommentHandler = () => {
+    setModiyValue(""); // 수정 중인 값을 초기화
+    setIsModiy(null); // 수정 상태를 해제
+  };
+
   return (
     <StContainer>
       <StLine>{/* 라인을 위한 div */}</StLine>
@@ -172,7 +178,12 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
                     onChange={modiyHandler}
                   />
                   <StCorrctionBtnBox>
-                    <StCancelBtn type="button">취소</StCancelBtn>
+                    <StCancelBtn
+                      type="button"
+                      onClick={cancelEditCommentHandler}
+                    >
+                      취소
+                    </StCancelBtn>
                     <StAddBtn
                       type="button"
                       onClick={() =>
