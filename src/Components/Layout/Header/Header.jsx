@@ -29,7 +29,7 @@ export default Header;
 
 const StContainer = styled.div`
   display: flex;
-  width: calc(100% - 40px);
+  width: 100%;
   height: 64px;
   padding: 4px 20px;
   justify-content: center;

@@ -13,16 +13,16 @@ function Footer() {
 
   const getCurrentPage = () => {
     const { pathname } = window.location;
-    setCurrentPage(pathname)
-  }
-  const navigate = useNavigate()
+    setCurrentPage(pathname);
+  };
+  const navigate = useNavigate();
 
   const onClick = (url) => {
-    navigate(url)
-  }
-  
+    navigate(url);
+  };
+
   useEffect(() => {
-    getCurrentPage()
+    getCurrentPage();
   }, []);
 
   return (
@@ -33,7 +33,7 @@ function Footer() {
           <StActiveTxt>홈</StActiveTxt>
         </StIconBox>
       ) : (
-        <StIconBox onClick={()=>onClick("/")}>
+        <StIconBox onClick={() => onClick("/")}>
           <StImg src={Homeicon} alt="홈" />
           <StdefualtTxt>홈</StdefualtTxt>
         </StIconBox>
@@ -44,7 +44,7 @@ function Footer() {
           <StActiveTxt>글쓰기</StActiveTxt>
         </StIconBox>
       ) : (
-        <StIconBox onClick={()=>onClick("/writing")}>
+        <StIconBox onClick={() => onClick("/writing")}>
           <StImg src={Writingicon} alt="글쓰기" />
           <StdefualtTxt>글쓰기</StdefualtTxt>
         </StIconBox>
@@ -55,7 +55,7 @@ function Footer() {
           <StActiveTxt>마이페이지</StActiveTxt>
         </StIconBox>
       ) : (
-        <StIconBox onClick={()=>onClick("/mypage")}>
+        <StIconBox onClick={() => onClick("/mypage")}>
           <StImg src={Mypageicon} alt="마이페이지" />
           <StdefualtTxt>마이페이지</StdefualtTxt>
         </StIconBox>
@@ -68,7 +68,7 @@ export default Footer;
 
 const StContainer = styled.div`
   display: flex;
-  width: calc(100% - 40px);
+  width: 100%;
   height: 64px;
   padding: 4px 20px;
   justify-content: center;

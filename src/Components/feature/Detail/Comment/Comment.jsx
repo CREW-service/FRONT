@@ -371,7 +371,7 @@ const StLine = styled.div`
 `;
 
 const StCorrectionInputField = styled.div`
-  width: 300px;
+  width: 100%;
   background-color: #fff;
   border: 2px solid #a2acbd;
   border-radius: 15px;
