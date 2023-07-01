@@ -21,6 +21,7 @@ function Router() {
         <Route path="/main" element={<Home />} />
       </Routes>
     </BrowserRouter>
+
   );
 }
 
