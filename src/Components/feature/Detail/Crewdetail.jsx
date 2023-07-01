@@ -131,7 +131,7 @@ const Captain = styled.span`
 const Box = styled.div`
   /* width: 328px; */
   min-height: 144px;
-  margin: 23px 0 20px;
+  margin: 21px 16px 48px;
   background-color: #fff;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -184,7 +184,7 @@ const EndDate = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  margin: 20px 0 5px;
+  margin: 40px 16px;
   font-family: Pretendard;
   font-size: 16px;
   font-weight: 500;

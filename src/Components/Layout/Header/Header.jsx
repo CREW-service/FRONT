@@ -15,7 +15,7 @@ function Header() {
   return (
     <StContainer>
       {/* <StMenuBox> */}
-        <Menu />
+      <Menu />
       {/* </StMenuBox> */}
       <StLogobox onClick={onClickLogo}>
         <StLogoImg src={LOGO} alt="LOGO" />
