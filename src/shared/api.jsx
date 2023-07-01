@@ -8,6 +8,8 @@ const api = axios.create({
   },
 });
 
+// axios 인터셉터 활용해서 작업하면  반복되는 헤더 입력 부분을 개선해 볼 수 있다. 
+
 const AuthApi = {
   getCurrentUser: (config) => api.get("/currentuser", { ...config }),
   write: (payload, config) => api.post("/boat/write", payload, { ...config }),

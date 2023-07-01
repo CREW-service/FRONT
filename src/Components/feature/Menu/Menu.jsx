@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import AuthApi from "shared/api";
 import Modal from "react-modal";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +12,7 @@ const logoutUrl = `${process.env.REACT_APP_BACKEND_SERVER_URL}/auth/logout`;
 
 function Menu() {
   const [isLogin, setIsLogin] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(["authorization"]);
+  const [cookies, , removeCookie] = useCookies(["authorization"]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const navigate = useNavigate()

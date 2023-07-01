@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Alarmdropdown from "Components/feature/Alarm/Alarmdropdown";
@@ -14,9 +14,7 @@ function Header() {
 
   return (
     <StContainer>
-      {/* <StMenuBox> */}
       <Menu />
-      {/* </StMenuBox> */}
       <StLogobox onClick={onClickLogo}>
         <StLogoImg src={LOGO} alt="LOGO" />
       </StLogobox>
@@ -41,11 +39,6 @@ const StContainer = styled.div`
 
   /* shadow1-appbar */
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
-`;
-
-const StMenuBox = styled.div`
-  font-size: 46px;
-  color: var(--gr-deep, #3e4756);
 `;
 
 const StLogobox = styled.div`

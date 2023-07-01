@@ -33,7 +33,7 @@ function Footer() {
           <StActiveTxt>홈</StActiveTxt>
         </StIconBox>
       ) : (
-        <StIconBox onClick={()=>onClick("/")}>
+        <StIconBox onClick={()=>onClick("/main")}>
           <StImg src={Homeicon} alt="홈" />
           <StdefualtTxt>홈</StdefualtTxt>
         </StIconBox>
