@@ -3,8 +3,8 @@ import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 import styled from "styled-components";
 import Modal from "react-modal";
-import Alerticon from "./Alerticon.png";
-import Alerthaveicon from "./Alerthaveicon.png";
+import Alerticon from "./alret_ic_1.png";
+import Alerthaveicon from "./alret_ic_2.png";
 
 function Alarmdropdown() {
   const [alarms, setAlarms] = useState([]);
