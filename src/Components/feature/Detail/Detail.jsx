@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 import { personTypeAtom, boatAtom } from "Recoil/recoilAtoms";
-
 import { useRecoilState } from "recoil";
 import Captaindetail from "./Captaindetail";
 import Crewdetail from "./Crewdetail";

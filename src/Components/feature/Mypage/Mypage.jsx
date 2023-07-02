@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { useRecoilState } from "recoil";
 import { boatAtom } from "Recoil/recoilAtoms";
-import writedboaticon from "./writedboaticon.png";
-import defualtpic from "./defualtpic.jpg";
-import Rectangle from "./Rectangle.png";
+import writedboaticon from "imgs/writedboaticon.png";
+import defualtpic from "imgs/defualtpic.jpg";
+import Rectangle from "imgs/Rectangle.png";
 
 Modal.setAppElement("#root");
 

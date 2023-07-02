@@ -50,7 +50,7 @@ function Otherpeople({ boat, renderTriggerHandler }) {
         </MaxCrewNum>
         <EndDate>
           <span>모집 기한</span>
-          <span>{boat.endDate ? boat.endDate : "상시 모집"}</span>
+          <span>{boat.boat.endDate ? boat.boat.endDate : "상시 모집"}</span>
         </EndDate>
       </Box>
       <Content

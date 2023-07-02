@@ -7,8 +7,8 @@ import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 import { currentUserIdAtom } from "Recoil/recoilAtoms";
 import { useRecoilState } from "recoil";
-import ICON from "./drwicon.gif";
-import LOGO from "./CREW_B 1.png";
+import ICON from "imgs/drwicon.gif";
+import LOGO from "imgs/CREW_B 1.png";
 
 
 const introContent = `내 주변에서 함께하고 싶은 모임을 만들거나 새로운 모임에 참여해보세요!`;

@@ -3,8 +3,8 @@ import styled from "styled-components";
 import Modal from "react-modal";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import Kakaologin from "../Kakaologin/Kakaologin";
-import MENUICON from "./menu_ic.png";
+import MENUICON from "imgs/menu_ic.png";
+import Kakaologin from "Components/feature/Kakaologin/Kakaologin";
 
 const logoutUrl = `${process.env.REACT_APP_BACKEND_SERVER_URL}/auth/logout`;
 

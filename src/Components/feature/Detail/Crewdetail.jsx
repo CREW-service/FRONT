@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import DOMPurify from "dompurify"; // DOMPurify 라이브러리 가져오기
+import crewListBtn from "imgs/view_crew_list.png";
 import Comment from "./Comment/Comment";
 import Member from "./Modal/Member";
-import crewListBtn from "./view_crew_list.png";
 
 function Crewdetail({ boat, boatId, renderTriggerHandler }) {
   const [memberShowModal, setMemberShowModal] = useState(false);
@@ -45,7 +45,7 @@ function Crewdetail({ boat, boatId, renderTriggerHandler }) {
             </MaxCrewNum>
             <EndDate>
               <span>모집 기한</span>
-              <span>{boat.endDate ? boat.endDate : "상시 모집"}</span>
+              <span>{boat.boat.endDate ? boat.boat.endDate : "상시 모집"}</span>
             </EndDate>
           </Box>
           <Content

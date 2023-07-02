@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import KakaoBtn from "./login_popup_kakao.png";
+import KakaoBtn from "imgs/login_popup_kakao.png";
 
 function Kakaologin({closeLoginModal}) {
   const loginUrl = `${process.env.REACT_APP_BACKEND_SERVER_URL}/auth/kakao`;

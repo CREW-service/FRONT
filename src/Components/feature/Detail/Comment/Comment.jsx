@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 import PropTypes from "prop-types";
 import { styled } from "styled-components";
-import MORE_IC from "./more_ic.png";
+import MORE_IC from "imgs/more_ic.png";
 // import Commentmodal from "../Modal/Commentmodal";
 
 function Comment({ boat, boatId, renderTriggerHandler }) {

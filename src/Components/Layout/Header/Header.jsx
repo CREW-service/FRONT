@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Alarmdropdown from "Components/feature/Alarm/Alarmdropdown";
 import Menu from "Components/feature/Menu/Menu";
-import LOGO from "./logo.png";
+import LOGO from "imgs/logo.png";
 
 function Header() {
   const navigate = useNavigate();
