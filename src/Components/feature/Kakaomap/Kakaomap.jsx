@@ -196,7 +196,7 @@ function Kakaomap() {
 export default Kakaomap;
 
 const StMapContainer = styled.div`
-  width: calc(100% - 40px);
+  width: 100%;
   height: 670px;
   margin: 0 auto;
   padding: 0px 20px;

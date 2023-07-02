@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Homeicon from "./Homeicondefualt.png";
-import Homeiconactive from "./Homeiconactive.png";
-import Writingicon from "./Writingicon.png";
-import Writingiconactive from "./Writingiconactive.png";
-import Mypageicon from "./Mypageicon.png";
-import Mypageiconactive from "./Mypageiconactive.png";
+import Homeicon from "./home_ic.png";
+import Homeiconactive from "./home_ic_C.png";
+import Writingicon from "./edit_ic.png";
+import Writingiconactive from "./edit_ic_C.png";
+import Mypageicon from "./mypage_ic.png";
+import Mypageiconactive from "./mypage_ic_C.png";
 
 function Footer() {
   const [currentPage, setCurrentPage] = useState("");
@@ -30,34 +30,28 @@ function Footer() {
       {currentPage === "/main" ? (
         <StIconBox>
           <StImg src={Homeiconactive} alt="홈" />
-          <StActiveTxt>홈</StActiveTxt>
         </StIconBox>
       ) : (
-        <StIconBox onClick={()=>onClick("/main")}>
+        <StIconBox onClick={() => onClick("/main")}>
           <StImg src={Homeicon} alt="홈" />
-          <StdefualtTxt>홈</StdefualtTxt>
         </StIconBox>
       )}
       {currentPage === "/writing" ? (
         <StIconBox>
           <StImg src={Writingiconactive} alt="글쓰기" />
-          <StActiveTxt>글쓰기</StActiveTxt>
         </StIconBox>
       ) : (
         <StIconBox onClick={() => onClick("/writing")}>
           <StImg src={Writingicon} alt="글쓰기" />
-          <StdefualtTxt>글쓰기</StdefualtTxt>
         </StIconBox>
       )}
       {currentPage === "/mypage" ? (
         <StIconBox>
           <StImg src={Mypageiconactive} alt="마이페이지" />
-          <StActiveTxt>마이페이지</StActiveTxt>
         </StIconBox>
       ) : (
         <StIconBox onClick={() => onClick("/mypage")}>
           <StImg src={Mypageicon} alt="마이페이지" />
-          <StdefualtTxt>마이페이지</StdefualtTxt>
         </StIconBox>
       )}
     </StContainer>
@@ -84,8 +78,6 @@ const StContainer = styled.div`
 
 const StIconBox = styled.div`
   display: flex;
-  width: 52px;
-  height: 62px;
   padding: 4px 12px;
   flex-direction: column;
   justify-content: center;
@@ -93,20 +85,7 @@ const StIconBox = styled.div`
   gap: 2px;
   flex-shrink: 0;
 `;
-const StImg = styled.img``;
-
-const StActiveTxt = styled.p`
-  color: var(--primary-blue, #30a2ff);
-  text-align: center;
-  font-size: 12px;
-  font-family: Pretendard;
-  line-height: 20px;
-`;
-
-const StdefualtTxt = styled.p`
-  color: var(--gr-deep, #3e4756);
-  text-align: center;
-  font-size: 12px;
-  font-family: Pretendard;
-  line-height: 20px;
+const StImg = styled.img`
+  width: 52px;
+  height: 62px;
 `;
