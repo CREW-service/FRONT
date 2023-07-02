@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 import styled from "styled-components";
-import Modal from "react-modal";
 import Alerticon from "./alret_ic_1.png";
 import Alerthaveicon from "./alret_ic_2.png";
 
@@ -45,7 +44,7 @@ function Alarmdropdown() {
   }, [alarms]);
 
   const modalHandler = () => {
-    setShowModal(true);
+    setShowModal(!showModal);
   };
 
   const alarmReadHandler = async (alarmId) => {
@@ -70,29 +69,26 @@ function Alarmdropdown() {
               src={haveAlarms ? Alerthaveicon : Alerticon}
               alt="알림 아이콘"
             />
-          </StAlarmButton>
-          <Modal
-            isOpen={showModal}
-            onRequestClose={() => setShowModal(false)}
-            contentLabel="알림 목록"
-            style={modalStyles} // 모달 스타일 적용
-          >
-            <div>
-              {alarms.map((alarm) => (
-                <StAlarmTextBox
-                  key={alarm.alarmId}
-                  isRead={alarm.isRead} // isRead 값을 전달
-                >
-                  <StAlarmText
-                    type="button"
-                    onClick={() => alarmReadHandler(alarm.alarmId)}
+            {showModal && (
+            <StModalOverlay>
+              <StModalContainer>
+                {alarms.map((alarm) => (
+                  <StAlarmTextBox
+                    key={alarm.alarmId}
+                    isRead={alarm.isRead}
                   >
-                    {alarm.message}
-                  </StAlarmText>
-                </StAlarmTextBox>
-              ))}
-            </div>
-          </Modal>
+                    <StAlarmText
+                      type="button"
+                      onClick={() => alarmReadHandler(alarm.alarmId)}
+                    >
+                      {alarm.message}
+                    </StAlarmText>
+                  </StAlarmTextBox>
+                ))}
+              </StModalContainer>
+            </StModalOverlay>
+          )}
+          </StAlarmButton>
         </div>
       )}
     </div>
@@ -111,31 +107,29 @@ const StAlarmButton = styled.button`
   height: 44px;
 `;
 
-const modalStyles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0)",
-    zIndex: 1000, // Added z-index property
-  },
-  content: {
-    position: "absolute",
-    top: "8%",
-    left: "35%",
-    // transform: "translate(-50%, -50%)",
-    border: "none",
-    borderRadius: "12px",
-    boxShadow: "0px 8px 10px 0px rgba(0, 0, 0, 0.20)",
-    background: "white",
-    width: "210px",
-    maxHeight: "280px",
-    overflowY: "auto",
-    padding: "16px",
-  },
-};
+const StModalOverlay = styled.div`
+  position: absolute;
+  top: 115%;
+  /* left: 100%; */
+  right: -75%;
+  /* bottom: 0; */
+  background-color: rgba(255, 255, 255, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 228px;
+  z-index: 1000;
+`;
+
+const StModalContainer = styled.div`
+  border-radius: 10px;
+  width: 210px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 16px;
+  background: #FFF;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
+`;
 
 const StAlarmTextBox = styled.div`
   margin: 8px 0 4px 0;

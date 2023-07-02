@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom";
 import Kakaologin from "../Kakaologin/Kakaologin";
 import MENUICON from "./menu_ic.png";
 
-Modal.setAppElement("#root"); // 접근성을 위해 앱의 루트 요소 설정
-
 const logoutUrl = `${process.env.REACT_APP_BACKEND_SERVER_URL}/auth/logout`;
 
 function Menu() {
@@ -33,11 +31,7 @@ function Menu() {
   }, [cookies]);
 
   const handleButtonClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
+    setIsModalOpen(!isModalOpen);
   };
 
   const openLoginModal = () => {
@@ -53,28 +47,24 @@ function Menu() {
     <div>
       <StMenuButton type="button" onClick={handleButtonClick}>
         <StImg src={MENUICON} alt="알림 아이콘" />
+        {isModalOpen && (
+        <StModalOverlay>
+          <StModalContainer>
+            {isLogin ? (
+              <StModalButton type="button" onClick={logOutHandler}>
+                로그아웃
+              </StModalButton>
+            ) : (
+              <StModalButton type="button" onClick={openLoginModal}>
+                로그인
+              </StModalButton>
+            )}
+            <StModalButton type="button">설정</StModalButton>
+          </StModalContainer>
+        </StModalOverlay>
+      )}
       </StMenuButton>
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel="메뉴"
-        style={modalStyles} // 모달 스타일 적용
-      >
-        {/* 모달 내용 */}
-        <StModalContainer>
-          {isLogin ? (
-            <StModalButton type="button" onClick={logOutHandler}>
-              로그아웃
-            </StModalButton>
-          ) : (
-            <StModalButton type="button" onClick={openLoginModal}>
-              로그인
-            </StModalButton>
-          )}
-          <StModalButton type="button">설정</StModalButton>
-        </StModalContainer>
-      </Modal>
-
+      
       <Modal
         isOpen={isLoginModalOpen}
         onRequestClose={closeLoginModal}
@@ -100,6 +90,21 @@ const StImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: contain;
+  position: relative;
+`;
+
+const StModalOverlay = styled.div`
+  position: absolute;
+  top: 115%;
+  left: -60%;
+  /* right: 100%; */
+  /* bottom: 0; */
+  background-color: rgba(255, 255, 255, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 228px;
+  z-index: 1000;
 `;
 
 const loginModalStyes = {
@@ -123,36 +128,16 @@ const loginModalStyes = {
     zIndex: 1000, // Added z-index property
   },
 };
-const modalStyles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0)",
-    zIndex: 1000, // Added z-index property
-  },
-  content: {
-    position: "absolute",
-    top: "9%",
-    left: "14%",
-    // transform: "translate(-50%, -50%)",
-    border: "none",
-    borderRadius: "0px 10px 10px 0px",
-    background: "#FFF",
-    boxShadow: "0px 0px 6px 0px rgba(0, 0, 0, 0.20)",
-    width: "228px",
-    maxHeight: "623px",
-    overflowY: "auto",
-    padding: "16px",
-  },
-};
+
 
 const StModalContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
+
+  background: #FFF;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
+  height: 658px;
 `;
 
 const StModalButton = styled.button`

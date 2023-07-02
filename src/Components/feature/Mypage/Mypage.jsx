@@ -277,7 +277,8 @@ const StWritedBoatBox = styled.div`
   line-height: 24px;
 
   margin: 16px auto;
-
+  margin-right: 2px;
+  margin-left: 2px;
   padding: 28px auto 40px 20px;
   border-radius: 12px;
   border: 1px solid var(--primary-p-blue, #b1dcff);
@@ -452,15 +453,15 @@ const StNoShowingContentsButton = styled.button`
 
 const modalstyles = {
   overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
     zIndex: 1000,
   },
   content: {
     width: "328px",
-    height: "334px",
+    height: "400px",
     margin: "auto",
     padding: "20px",
     borderRadius: "8px",
-    backgroundColor: "white",
+    backgroundColor: "#fff",
   },
 }

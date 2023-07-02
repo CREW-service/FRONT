@@ -16,7 +16,7 @@ const introContent = `내 주변에서 함께하고 싶은 모임을 만들거�
 function Onboarding() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cookies, setCookie] = useCookies(["authorization"]);
-  const [currentUserId, setCurrentUserId] = useRecoilState(currentUserIdAtom);
+  const [, setCurrentUserId] = useRecoilState(currentUserIdAtom);
   const navigate = useNavigate()
 
 
@@ -47,8 +47,6 @@ function Onboarding() {
     const token = urlParams.get("token");
 
     if (token) {
-      // localStorage.setItem("authorization", JSON.stringify(`Bearer ${token}`));
-
       setCookie("authorization", `Bearer ${token}`);
       getUserInfo();
       navigate("/main");
