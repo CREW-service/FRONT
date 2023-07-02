@@ -197,7 +197,7 @@ export default Kakaomap;
 
 const StMapContainer = styled.div`
   width: 100%;
-  min-height: 656px;
+  height: 656px;
   margin: 0 auto;
   padding: 0px 20px;
 `;
