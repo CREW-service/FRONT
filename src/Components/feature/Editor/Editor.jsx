@@ -207,7 +207,7 @@ export default Editor;
 // 디자인 영역
 const StContainer = styled.div`
   margin: 0 auto;
-  width: 100%;
+  width: 95%;
 `;
 
 const StEditorContainer = styled.div`
@@ -224,7 +224,7 @@ const StTextField = styled.div`
   width: 360px;
   height: 56px;
   align-items: center;
-  gap: 20px;
+
 `;
 
 const StSpanText = styled.span`
@@ -239,7 +239,7 @@ const StInputField = styled.input`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  gap: 10px;
+  
   border-radius: 4px;
   border: solid 2px #eff4f8;
   background-color: #fff;
@@ -253,7 +253,7 @@ const StInputNumberBox = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  gap: 10px;
+  
 `;
 
 const StInputNumberField = styled.input`
@@ -264,7 +264,7 @@ const StInputNumberField = styled.input`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  gap: 10px;
+ 
   border-radius: 4px;
   border: solid 2px #eff4f8;
   background-color: #fff;
@@ -288,7 +288,7 @@ const StSelectBox = styled.select`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  gap: 10px;
+
   border-radius: 4px;
   border: solid 2px #eff4f8;
   background-color: #fff;
@@ -317,7 +317,7 @@ const StCancelButton = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  
   margin: 68px 16px 40px;
   padding: 16px 40px;
   border: 0;
@@ -345,7 +345,7 @@ const StSubmitButton = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+
   margin: 68px 16px 40px;
   padding: 16px 40px;
   border: 0;

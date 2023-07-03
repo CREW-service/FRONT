@@ -95,16 +95,16 @@ const StImg = styled.img`
 
 const StModalOverlay = styled.div`
   position: absolute;
-  top: 115%;
+  top: 117%;
   left: -60%;
   /* right: 100%; */
   /* bottom: 0; */
-  background-color: rgba(255, 255, 255, 0);
+  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 228px;
-  z-index: 1000;
+  /* z-index: 500; */
 `;
 
 const loginModalStyes = {
@@ -136,12 +136,13 @@ const StModalContainer = styled.div`
   /* justify-content: center; */
 
   background: #FFF;
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
-  height: 658px;
+  /* box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2); */
+  height: 656px;
+  z-index: 500;
 `;
 
 const StModalButton = styled.button`
-  padding: 14px 73px;
+  padding: 20px 73px;
   background: #fff;
   border: 0;
 
@@ -154,7 +155,7 @@ const StModalButton = styled.button`
   font-weight: 500;
   line-height: 28px;
 
-  border-bottom: 1px solid #f1f1f1;
+  /* border-top: 1px solid #989797; */
 `;
 
 export default Menu;

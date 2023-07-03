@@ -157,6 +157,7 @@ const Captain = styled.span`
   letter-spacing: normal;
   color: #222;
   margin-left: 3px;
+  margin-right: 16px;
 `;
 
 const Box = styled.div`

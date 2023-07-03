@@ -8,68 +8,59 @@ const api = axios.create({
   },
 });
 
+api.interceptors.request.use(
+  (config) => {
+    const cookies = document.cookie.split("=")[1].split("%20").join(" ");
 
-// api.interceptors.request.use(
-//   config => {
-//     const token = localStorage.getItem("coopToken");
-//     if (token) {
-//       // config.headers["authorization"] = `Bearer ${token}`;
-//       return config;
-//     }
-//     return config;
-//   },
-//   error => 
-//    error
-//   ,
-// );
+    if (cookies) {
+      const copyConfig = { ...config };
+      copyConfig.headers.authorization = cookies;
+      return copyConfig;
+    }
+    return config;
+  },
+  (error) => error
+);
 
-// axios 인터셉터 활용해서 작업하면  반복되는 헤더 입력 부분을 개선해 볼 수 있다. 
+// axios 인터셉터 활용해서 작업하면  반복되는 헤더 입력 부분을 개선해 볼 수 있다.
 
 const AuthApi = {
-  getCurrentUser: (config) => api.get("/currentuser", { ...config }),
+  getCurrentUser: () => api.get("/currentuser"),
 
-  write: (payload, config) => api.post("/boat/write", payload, { ...config }),
+  write: (payload) => api.post("/boat/write", payload),
 
   getBoatList: () => api.get("/boat/map"),
 
-  getBoatDetail: (payload, config) =>
-    api.get(`/boat/${payload}`, { ...config }),
+  getBoatDetail: (payload) => api.get(`/boat/${payload}`),
 
-  joinBoat: (payload, config) =>
-    api.post(`/boat/${payload}/join`, 1, { ...config }),
+  joinBoat: (payload) => api.post(`/boat/${payload}/join`, 1),
 
-  correctionBoat: (payload, config) =>
-    api.put(`/boat/${payload}`, payload, { ...config }),
+  correctionBoat: (payload) => api.put(`/boat/${payload}`, payload),
 
-  deleteBoat: (boatId, payload, config) =>
-    api.patch(`/boat/${boatId}/delete`, payload, { ...config }),
+  deleteBoat: (boatId, payload) => api.patch(`/boat/${boatId}/delete`, payload),
 
-  comment: (boatId, payload, config) =>
-    api.post(`/boat/${boatId}/comment`, payload, { ...config }),
+  comment: (boatId, payload) => api.post(`/boat/${boatId}/comment`, payload),
 
-  deleteComment: (boatId, commentId, payload, config) =>
-    api.patch(`/boat/${boatId}/comment/${commentId}`, payload, { ...config }),
+  deleteComment: (boatId, commentId, payload) =>
+    api.patch(`/boat/${boatId}/comment/${commentId}`, payload),
 
-  getMyInfo: (config) => api.get("/mypage", { ...config }),
+  getMyInfo: () => api.get("/mypage"),
 
-  getalarm: (config) => api.get("/alarm", { ...config }),
+  getalarm: () => api.get("/alarm"),
 
-  releaseCrew: (boatId, payload, config) =>
-    api.post(`/boat/${boatId}/release`, payload, { ...config }),
+  releaseCrew: (boatId, payload) =>
+    api.post(`/boat/${boatId}/release`, payload),
 
-  closeBoat: (boatId, payload, config) =>
-    api.patch(`/boat/${boatId}`, payload, { ...config }),
+  closeBoat: (boatId, payload) => api.patch(`/boat/${boatId}`, payload),
 
-  correctionWrite: (boatId, payload, config) =>
-    api.put(`/boat/${boatId}`, payload, { ...config }),
+  correctionWrite: (boatId, payload) => api.put(`/boat/${boatId}`, payload),
 
-  alarmRead: (alarmId, config) =>
-    api.put(`/alarm/${alarmId}`, 1, { ...config }),
+  alarmRead: (alarmId) => api.put(`/alarm/${alarmId}`, 1),
 
-  correctionComment: (boatId, commentId, payload, config) =>
-    api.put(`/boat/${boatId}/comment/${commentId}`, payload, { ...config }),
-    
-    logOut: () => api.get("/auth/logout")
+  correctionComment: (boatId, commentId, payload) =>
+    api.put(`/boat/${boatId}/comment/${commentId}`, payload),
+
+  logOut: () => api.get("/auth/logout"),
 };
 
 export default AuthApi;

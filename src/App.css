@@ -49,21 +49,21 @@ table {
 	border-spacing: 0;
 }
 .detailtitle {
+	margin-top: 5px;
 	overflow: hidden;
 	color: var(--gr-black, #222);
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	font-size: 14px;
+	font-size: 22px;
 	font-family: Pretendard;
 	font-weight: 700;
-	line-height: 20px;
+	/* line-height: 20px; */
 }
 .detaillink {
 	display: flex;
-	height: 40px;
+	/* height: 40px; */
 	justify-content: center;
 	align-items: center;
-	gap: 10px;
 	flex-shrink: 0;
     background: var(--gr-white, #FFF);
 
@@ -77,9 +77,9 @@ table {
 	text-decoration: none;
 }
 .marker {
-	gap: 10px;
-	padding: 5px 5px 5px 5px;
-	width: 200px;
+	
+	padding: 10px 15px 10px 15px;
+	width: 280px;
 	background: #FFF;
 	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.20);
 }
@@ -87,10 +87,21 @@ table {
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-start;
+
+	margin-top: 10px;
 }
 .bAddr {
 	padding: 5px 5px 5px 5px;
-	width: 200px;
+	width: 280px;
 	background: #FFF;
 	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.20);
+}
+
+.body {
+	margin-top: 10px;
+}
+
+.detaillink {
+	margin-top: 18px;
+	margin-bottom: 10px;
 }

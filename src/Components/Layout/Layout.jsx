@@ -25,7 +25,7 @@ const StLayoutBox = styled.div`
   width: 360px;
   min-height: 800px;
   margin: 0 auto;
-  border: solid 1px #30a2ff;
-  border-radius: 15px;
+  border: solid 5px #30a2ff;
+  border-radius: 30px;
   overflow: hidden;
 `;

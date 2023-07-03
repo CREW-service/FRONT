@@ -75,7 +75,7 @@ function Detail() {
     );
   }
 
-  return <div>{componentToRender}</div>;
+  return <div style={{width:"95%", margin:"0 auto"}}>{componentToRender}</div>;
 }
 
 export default Detail;

@@ -33,10 +33,7 @@ function Alarmdropdown() {
   useEffect(() => {
     if (!cookies.authorization) return; // 쿠키에 authorization이 없으면 아무 동작도 하지 않음
     getAlarms();
-  }, []);
-
-  useEffect(() => {
-    if (alarms.length > 0) {
+    if (alarms?.length > 0) {
       setHaveAlarms(true);
     } else {
       setHaveAlarms(false);

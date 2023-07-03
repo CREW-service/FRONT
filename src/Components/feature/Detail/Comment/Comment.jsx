@@ -13,6 +13,8 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
   const [comments, setComments] = useState([]);
   const [selectedComment, setSeletedComment] = useState(null);
   const [cookies] = useCookies(["authorization"]);
+  const [isCommentsEmpty, setIsCommentsEmpty] = useState(true);
+
 
   const [modiyValue, setModiyValue] = useState("");
   const [isModiy, setIsModiy] = useState(null);
@@ -40,6 +42,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
 
   const commentChangeHandler = (event) => {
     setComments(event.target.value);
+    setIsCommentsEmpty(event.target.value.trim() === '');
   };
 
   const modiyHandler = (event) => {
@@ -135,7 +138,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
           value={comments}
           onChange={commentChangeHandler}
         />
-        <StInputBtn type="button" onClick={commentInputHandler}>
+        <StInputBtn type="button" onClick={commentInputHandler} className={isCommentsEmpty ? 'empty' : ''}>
           저장
         </StInputBtn>
       </StInputField>
@@ -244,7 +247,7 @@ Comment.propTypes = {
 };
 
 const StContainer = styled.div`
-  width: 360px;
+  width: 100%;
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -252,13 +255,13 @@ const StContainer = styled.div`
 `;
 
 const StInputField = styled.div`
-  width: 332px;
+  width: 95%;
   background-color: #fff;
   border: 2px solid var(--gr-light, #a2acbd);
 
   border-radius: 15px;
   margin: 30px auto;
-  margin-left: 13px;
+  /* margin-left: 13px; */
   display: flex;
   justify-content: space-between;
   text-align: center;
@@ -275,14 +278,19 @@ const StInputBox = styled.input`
 `;
 
 const StInputBtn = styled.button`
-  width: 70px;
-  height: 80px;
+  width: 65px;
+  height: 55px;
   padding: 8px;
   border: none;
   border-radius: 12px;
-  background: var(--gr-light, #a2acbd);
+  background: var(--gr-light, #30a2ff);
   color: var(--gr-white, #fff);
   font-size: 14px;
+
+  &.empty {
+    background-color: #a2acbd;
+    /* 비어있는 입력을 나타내기 위한 추가 스타일을 지정합니다. */
+  }
 `;
 
 const StCommnetContainer = styled.div`
@@ -424,7 +432,7 @@ const StAddBtn = styled.button`
   width: 55px;
   height: 36px;
   color: #fff;
-  background-color: #a2acbd;
+  background-color: #30a2ff;
   border-radius: 8px;
 `;
 

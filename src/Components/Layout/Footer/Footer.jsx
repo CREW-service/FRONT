@@ -64,11 +64,9 @@ const StContainer = styled.div`
   display: flex;
   width: 100%;
   height: 64px;
-  padding: 4px 20px;
-  justify-content: center;
+  /* padding: 4px 20px; */
+  justify-content: space-around;
   align-items: center;
-  gap: 68px;
-  flex-shrink: 0;
 
   background: var(--gr-white, #fff);
 
@@ -82,7 +80,6 @@ const StIconBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2px;
   flex-shrink: 0;
 `;
 const StImg = styled.img`

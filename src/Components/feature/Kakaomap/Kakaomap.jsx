@@ -44,7 +44,7 @@ function Kakaomap() {
   const [, setMarkerPosition] = useRecoilState(markerPositionAtom); // 마커 위치 좌표 상태
   const [, setMarkerAddress] = useRecoilState(markerAddressAtom); // 마커 주소 상태
   const [, setRecoilLatLng] = useRecoilState(recoilLatLngAtom); // 위도와 경도를 저장하는 상태
-  
+
   useEffect(() => {
     const initializeMap = async () => {
       // 위치 정보 가져오기
@@ -52,6 +52,7 @@ function Kakaomap() {
 
       // 지도 컨테이너 요소를 가져옵니다.
       const mapContainer = document.getElementById("map");
+      
       const mapOptions = {
         center: defaultPosition, // 위치 정보를 기반으로한 중심 좌표
         level: 6, // 지도의 확대 레벨
@@ -60,14 +61,13 @@ function Kakaomap() {
 
       // 카카오 지도 객체를 생성합니다.
       const map = new kakao.maps.Map(mapContainer, mapOptions);
-
+      
       // 확대 축소 컨트롤을 생성하고 지도에 추가합니다.
       const zoomControl = new kakao.maps.ZoomControl();
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
       boatList.forEach((boat) => {
         const content = `<div class="wrap marker"> 
-                          <div class="info"> 
                             <div class="title detailtitle">
                               ${boat.title}
                             </div>
@@ -87,13 +87,14 @@ function Kakaomap() {
                                   ${boat.endDate ? boat.endDate : "상시 모집"}
                                 </div>
                               </div>
-                                <div class="">
-                                  <a class="detaillink" href="/boat/${boat.boatId}">
+                                <div class="godetail">
+                                  <a class="detaillink" href="/boat/${
+                                    boat.boatId
+                                  }">
                                     자세히 보기
                                   </a>
                                 </div>
                             </div>
-                          </div>
                         </div>`;
 
         const imageSize = new kakao.maps.Size(24, 35);
@@ -153,7 +154,7 @@ function Kakaomap() {
               const content = `<div class="bAddr">이 위치에 모임을 생성할까요?</div>
               <div></div>`;
 
-              const getAddress = `${result[0].address.region_1depth_name} ${result[0].address.region_2depth_name} ${result[0].address.region_3depth_name}`
+              const getAddress = `${result[0].address.region_1depth_name} ${result[0].address.region_2depth_name} ${result[0].address.region_3depth_name}`;
               marker.setPosition(mouseEvent.latLng);
               // marker.setMap(map);
 
@@ -167,7 +168,7 @@ function Kakaomap() {
               setMarkerPosition(mouseEvent.latLng);
               // 마커 주소 업데이트
               setMarkerAddress(getAddress);
-              
+
               const lat = mouseEvent.latLng.getLat();
               const lng = mouseEvent.latLng.getLng();
               setRecoilLatLng({ lat, lng });
@@ -182,10 +183,6 @@ function Kakaomap() {
     initializeMap();
   }, [boatList]);
 
-  // useEffect(()=>{
-  //   console.log(markerPosition)
-  // },[markerPosition])
-
   return (
     <StMapContainer id="map">
       {isLoading && <div>Loading...</div>}
@@ -198,6 +195,4 @@ export default Kakaomap;
 const StMapContainer = styled.div`
   width: 100%;
   height: 656px;
-  margin: 0 auto;
-  padding: 0px 20px;
 `;
