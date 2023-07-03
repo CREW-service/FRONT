@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 import styled from "styled-components";
 import Modal from "react-modal";
+
 import Alerticon from "./Alerticon.png";
 import Alerthaveicon from "./Alerthaveicon.png";
 
@@ -18,6 +19,7 @@ function Alarmdropdown() {
       authorization: cookies.authorization,
     },
   };
+
   const getAlarms = async () => {
     try {
       const { data } = await AuthApi.getalarm(config);
