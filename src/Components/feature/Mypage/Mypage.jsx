@@ -20,7 +20,7 @@ function Mypage() {
   const navigate = useNavigate();
   const [randerTriger, setRanderTriger] = useState(false);
   const [haveBoat, setHaveBoat] = useState(false);
-
+  const [selectId, setSelectId] = useState(null);
   const [, setBoat] = useRecoilState(boatAtom);
 
   const config = {
@@ -58,6 +58,11 @@ function Mypage() {
     navigate("/main");
   };
 
+  const modalButtonHandler = (boatId) => {
+    setSelectId(boatId);
+    setShowModal(true);
+  };
+
   const boatDeleteHandler = async (boatId) => {
     const toDay = new Date().toISOString().split("T")[0];
     const deletedAt = {
@@ -66,6 +71,7 @@ function Mypage() {
     try {
       const res = await AuthApi.deleteBoat(boatId, deletedAt, config);
       alert(res.data.message);
+      setShowModal(!showModal);
       setRanderTriger(!randerTriger);
     } catch (err) {
       alert(err.response.data.errorMessage);
@@ -85,7 +91,7 @@ function Mypage() {
       const { data } = await AuthApi.getBoatDetail(id, config);
       // console.log("data", data);
       setBoat(data);
-      navigate("/CorrectionWriting")
+      navigate("/CorrectionWriting");
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching post:", error);
@@ -133,39 +139,10 @@ function Mypage() {
                         </StModiyButton>
                         <StDeleteButton
                           type="button"
-                          onClick={() => setShowModal(true)}
+                          onClick={() => modalButtonHandler(boats.boatId)}
                         >
                           삭제
                         </StDeleteButton>
-                        {/* Modal */}
-                        <Modal
-                          isOpen={showModal}
-                          onRequestClose={() => setShowModal(false)}
-                          contentLabel="Confirmation Modal"
-                          style={modalstyles}
-                        >
-                          <StModalAlert>
-                            <p>잠깐!</p>
-                            <p>해당 글을 삭제할 경우 복구할 수 없습니다.</p>
-                          </StModalAlert>
-                          <StModalContent>
-                            작성한 글을 삭제하시겠습니까?
-                          </StModalContent>
-                          <StModalButtonBox>
-                            <StModalCancelButton
-                              type="button"
-                              onClick={() => setShowModal(false)}
-                            >
-                              취소
-                            </StModalCancelButton>
-                            <StModalDeleteButton
-                              type="button"
-                              onClick={() => boatDeleteHandler(boats.boatId)}
-                            >
-                              삭제
-                            </StModalDeleteButton>
-                          </StModalButtonBox>
-                        </Modal>
                       </StModiyButtonBox>
                     </div>
                   ))}
@@ -206,6 +183,33 @@ function Mypage() {
               </StNoShowingContent>
             </div>
           )}
+          {/* Modal */}
+          <Modal
+            isOpen={showModal}
+            onRequestClose={() => setShowModal(false)}
+            contentLabel="Confirmation Modal"
+            style={modalstyles}
+          >
+            <StModalAlert>
+              <p>잠깐!</p>
+              <p>해당 글을 삭제할 경우 복구할 수 없습니다.</p>
+            </StModalAlert>
+            <StModalContent>작성한 글을 삭제하시겠습니까?</StModalContent>
+            <StModalButtonBox>
+              <StModalCancelButton
+                type="button"
+                onClick={() => setShowModal(false)}
+              >
+                취소
+              </StModalCancelButton>
+              <StModalDeleteButton
+                type="button"
+                onClick={() => boatDeleteHandler(selectId)}
+              >
+                삭제
+              </StModalDeleteButton>
+            </StModalButtonBox>
+          </Modal>
         </StContainer>
       )}
     </div>
@@ -450,7 +454,6 @@ const StNoShowingContentsButton = styled.button`
   line-height: 24px;
 `;
 
-
 const modalstyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.3)",
@@ -464,4 +467,4 @@ const modalstyles = {
     borderRadius: "8px",
     backgroundColor: "#fff",
   },
-}
+};

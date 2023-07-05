@@ -10,7 +10,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const cookies = document.cookie.split("=")[1].split("%20").join(" ");
+    const cookies = document.cookie ? document.cookie.split("=")[1].split("%20").join(" ") : null;
 
     if (cookies) {
       const copyConfig = { ...config };

@@ -38,19 +38,19 @@ function Onboarding() {
     }
   };
 
-  useEffect(() => {
+  useEffect( () => {
     if (cookies.authorization) {
       goingMainHandler()
     }
     
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
-
     if (token) {
-      setCookie("authorization", `Bearer ${token}`);
+      setCookie ("authorization", `Bearer ${token}`);
       getUserInfo();
       navigate("/main");
     }
+    
   },[cookies])
 
   const closeLoginModal = () => {

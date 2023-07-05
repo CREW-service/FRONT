@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import MENUICON from "imgs/menu_ic.png";
 import Kakaologin from "Components/feature/Kakaologin/Kakaologin";
 
-const logoutUrl = `${process.env.REACT_APP_BACKEND_SERVER_URL}/auth/logout`;
+// const logoutUrl = `${process.env.REACT_APP_BACKEND_SERVER_URL}/auth/logout`;
 
 function Menu() {
   const [isLogin, setIsLogin] = useState(false);
@@ -17,7 +17,7 @@ function Menu() {
 
   const logOutHandler = async () => {
       removeCookie("authorization"); // Remove the 'authorization' cookie
-      navigate(logoutUrl)
+      navigate("/")
       // alert("로그아웃 했습니다.")
       // setIsModalOpen(false)
   };
