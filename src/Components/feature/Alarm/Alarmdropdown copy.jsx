@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import Modal from "react-modal";
-
 import { currentUserIdAtom } from "Recoil/recoilAtoms";
 import { useRecoilState } from "recoil";
-
-import styled from "styled-components";
-import { io } from "socket.io-client";
 import AuthApi from "shared/api";
-
+import styled from "styled-components";
+import Modal from "react-modal";
+import { io } from "socket.io-client";
 import Alerticon from "./Alerticon.png";
 import Alerthaveicon from "./Alerthaveicon.png";
 
@@ -20,16 +17,17 @@ function Alarmdropdown() {
   const [showModal, setShowModal] = useState(false);
   const [currentUserId, setCurrentUserId] = useRecoilState(currentUserIdAtom);
 
-  const getAlarms = async () => {
-    try {
-      const { data } = await AuthApi.getalarm(config);
-      setAlarms(data.alarms);
+  const URL = process.env.REACT_APP_BACKEND_SERVER_URL;
 
-      setIsLoading(false);
-    } catch (err) {
-      console.log("alarmerr", err);
-    }
-  };
+  const socket = io.connect(URL, {
+    transports: ["websocket"],
+    withCredentials: true,
+  });
+
+  socket.on("currentUserId", (currentUserId) => {
+    // 유저 ID 전달
+    setUserId(currentUserId);
+  });
 
   const config = {
     headers: {
@@ -37,20 +35,23 @@ function Alarmdropdown() {
     },
   };
 
-  const URL = process.env.REACT_APP_BACKEND_SERVER_URL;
+  const getAlarms = async () => {
+    try {
+      const { data } = await AuthApi.getalarm(config);
+      setAlarms(data.alarms);
+      // console.log(data);
+      setIsLoading(false);
+      // console.log(data.alarms);
+    } catch (err) {
+      console.log("alarmerr", err);
+      // setIsLoading(false);
+    }
+  };
 
-  const socket = io.connect(URL, {
-    transports: ["websocket"],
-    withCredentials: true,
-    extraHeaders: {
-      Authorization: `Bearer ${config.headers.authorization}`,
-    },
-  });
-
-  socket.on("currentUserId", () => {
-    // 유저 ID 전달
-    setCurrentUserId(currentUserId);
-  });
+  useEffect(() => {
+    if (!cookies.authorization) return; // 쿠키에 authorization이 없으면 아무 동작도 하지 않음
+    getAlarms();
+  }, []);
 
   useEffect(() => {
     if (alarms.length > 0) {
@@ -62,6 +63,15 @@ function Alarmdropdown() {
 
   const modalHandler = () => {
     setShowModal(true);
+  };
+
+  const alarmReadHandler = async (alarmId) => {
+    try {
+      const res = await AuthApi.alarmRead(alarmId, config);
+      getAlarms();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -90,7 +100,12 @@ function Alarmdropdown() {
                   key={alarm.alarmId}
                   isRead={alarm.isRead} // isRead 값을 전달
                 >
-                  <StAlarmText type="button">{alarm.message}</StAlarmText>
+                  <StAlarmText
+                    type="button"
+                    onClick={() => alarmReadHandler(alarm.alarmId)}
+                  >
+                    {alarm.message}
+                  </StAlarmText>
                 </StAlarmTextBox>
               ))}
             </div>
