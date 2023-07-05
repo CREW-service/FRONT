@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
-import AuthApi from "shared/api";
 import styled from "styled-components";
 import Alerticon from "imgs/alret_ic_1.png";
 import Alerthaveicon from "imgs/alret_ic_2.png";
-import { io } from "socket.io-client";
+import io from "socket.io-client";
 
 const cookies = document.cookie.split("=")[1].split("%20").join(" ");
 
 const socket = io(process.env.REACT_APP_BACKEND_SERVER_URL, {
+  // transports: ["websocket"],
+  withCredentials: true,
   extraHeaders: {
-    authorization: cookies.authorization || "",
+    authorization: cookies || "",
   },
 });
 
@@ -20,57 +20,72 @@ function Alarmdropdown() {
   const [haveAlarms, setHaveAlarms] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const haveAlarmHandler = () => {
+    if (alarms.length > 0) {
+      setHaveAlarms(true);
+    } else {
+      setHaveAlarms(false);
+    }
+  };
+
   useEffect(() => {
     socket.on("connect", () => {
       socket.emit("alarms");
     });
 
-    socket.on("guest", (data) => {
-      setAlarms(data);
+    // socket.on("guest", (data) => {
+    //   setAlarms(data);
+    // });
+
+    socket.on("alarmList", async (data) => {
+      setAlarms(data.data);
+      setIsLoading(false);
     });
 
-    socket.on("user", async (data) => {
-      setAlarms(data);
-    });
+    haveAlarmHandler();
 
     return () => {
       socket.disconnect();
     };
-  }, []);
-  console.log(alarms);
+  }, [alarms]);
 
   const modalHandler = () => {
     setShowModal(!showModal);
   };
 
-  // const alarmReadHandler = async (alarmId) => {
-  //   try {
-  //     const res = await AuthApi.alarmRead(alarmId, config);
-  //     getAlarms();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const alarmReadHandler = async (alarmId) => {
+    socket.emit("alarmRead", alarmId);
+
+    haveAlarmHandler();
+
+    // try {
+    //   const res = await AuthApi.alarmRead(alarmId, config);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+  };
 
   return (
     <div>
       {isLoading ? (
         <StAlarmButton type="button">
-          <StImg src={Alerticon} alt="알림 아이콘" />
+          <StImg src={Alerticon} alt="로딩중" />
         </StAlarmButton>
       ) : (
         <div>
           <StAlarmButton type="button" onClick={modalHandler}>
-            <StImg src={alarms ? Alerthaveicon : Alerticon} alt="알림 아이콘" />
+            <StImg
+              src={haveAlarms ? Alerthaveicon : Alerticon}
+              alt="알림 아이콘"
+            />
             {showModal && (
               <StModalOverlay>
                 <StModalContainer>
-                  {alarms.map((alarm) => (
+                  {alarms?.map((alarm) => (
                     <StAlarmTextBox key={alarm.alarmId} isRead={alarm.isRead}>
                       <StAlarmText
                         type="button"
-                        // onClick={() => alarmReadHandler(alarm.alarmId)}
-                        onClick={alarm.alarmId}
+                        onClick={() => alarmReadHandler(alarm.alarmId)}
                       >
                         {alarm.message}
                       </StAlarmText>

@@ -106,7 +106,7 @@ function Mypage() {
           <StLayoutBox />
           <StPofileBox>
             <StPropic />
-            <StNickNameBox>{myInfo.user.nickName}</StNickNameBox>
+            <StNickNameBox>{myInfo?.user.nickName}</StNickNameBox>
           </StPofileBox>
           <StSubTitleBox>나의 보트들</StSubTitleBox>
           {haveBoat ? (
@@ -117,7 +117,7 @@ function Mypage() {
                   <span style={{ marginLeft: "8px" }}>내가 만든 보트</span>
                 </StWritedBoatTitle>
                 <StWritedBoatList>
-                  {myInfo.writedBoats.map((boats) => (
+                  {myInfo?.writedBoats.map((boats) => (
                     <div key={boats.boatId}>
                       <StMyBoatTitle
                         onClick={() => goingBoatHandler(boats.boatId)}
