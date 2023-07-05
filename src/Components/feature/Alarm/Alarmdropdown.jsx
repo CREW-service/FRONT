@@ -4,54 +4,53 @@ import AuthApi from "shared/api";
 import styled from "styled-components";
 import Alerticon from "imgs/alret_ic_1.png";
 import Alerthaveicon from "imgs/alret_ic_2.png";
+import { io } from "socket.io-client";
+
+const cookies = document.cookie.split("=")[1].split("%20").join(" ");
+
+const socket = io(process.env.REACT_APP_BACKEND_SERVER_URL, {
+  extraHeaders: {
+    authorization: cookies.authorization || "",
+  },
+});
 
 function Alarmdropdown() {
   const [alarms, setAlarms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [cookies] = useCookies(["authorization"]);
   const [haveAlarms, setHaveAlarms] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const config = {
-    headers: {
-      authorization: cookies.authorization,
-    },
-  };
-  const getAlarms = async () => {
-    try {
-      const { data } = await AuthApi.getalarm(config);
-      setAlarms(data.alarms);
-      // console.log(data);
-      setIsLoading(false);
-      // console.log(data.alarms);
-    } catch (err) {
-      console.log("alarmerr", err);
-      // setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    if (!cookies.authorization) return; // 쿠키에 authorization이 없으면 아무 동작도 하지 않음
-    getAlarms();
-    if (alarms?.length > 0) {
-      setHaveAlarms(true);
-    } else {
-      setHaveAlarms(false);
-    }
-  }, [alarms]);
+    socket.on("connect", () => {
+      socket.emit("alarms");
+    });
+
+    socket.on("guest", (data) => {
+      setAlarms(data);
+    });
+
+    socket.on("user", async (data) => {
+      setAlarms(data);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+  console.log(alarms);
 
   const modalHandler = () => {
     setShowModal(!showModal);
   };
 
-  const alarmReadHandler = async (alarmId) => {
-    try {
-      const res = await AuthApi.alarmRead(alarmId, config);
-      getAlarms();
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const alarmReadHandler = async (alarmId) => {
+  //   try {
+  //     const res = await AuthApi.alarmRead(alarmId, config);
+  //     getAlarms();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div>
@@ -62,29 +61,24 @@ function Alarmdropdown() {
       ) : (
         <div>
           <StAlarmButton type="button" onClick={modalHandler}>
-            <StImg
-              src={haveAlarms ? Alerthaveicon : Alerticon}
-              alt="알림 아이콘"
-            />
+            <StImg src={alarms ? Alerthaveicon : Alerticon} alt="알림 아이콘" />
             {showModal && (
-            <StModalOverlay>
-              <StModalContainer>
-                {alarms.map((alarm) => (
-                  <StAlarmTextBox
-                    key={alarm.alarmId}
-                    isRead={alarm.isRead}
-                  >
-                    <StAlarmText
-                      type="button"
-                      onClick={() => alarmReadHandler(alarm.alarmId)}
-                    >
-                      {alarm.message}
-                    </StAlarmText>
-                  </StAlarmTextBox>
-                ))}
-              </StModalContainer>
-            </StModalOverlay>
-          )}
+              <StModalOverlay>
+                <StModalContainer>
+                  {alarms.map((alarm) => (
+                    <StAlarmTextBox key={alarm.alarmId} isRead={alarm.isRead}>
+                      <StAlarmText
+                        type="button"
+                        // onClick={() => alarmReadHandler(alarm.alarmId)}
+                        onClick={alarm.alarmId}
+                      >
+                        {alarm.message}
+                      </StAlarmText>
+                    </StAlarmTextBox>
+                  ))}
+                </StModalContainer>
+              </StModalOverlay>
+            )}
           </StAlarmButton>
         </div>
       )}
@@ -124,7 +118,7 @@ const StModalContainer = styled.div`
   max-height: 280px;
   overflow-y: auto;
   padding: 16px;
-  background: #FFF;
+  background: #fff;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
 `;
 
