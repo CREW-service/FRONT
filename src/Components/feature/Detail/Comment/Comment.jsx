@@ -15,7 +15,6 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
   const [cookies] = useCookies(["authorization"]);
   const [isCommentsEmpty, setIsCommentsEmpty] = useState(true);
 
-
   const [modiyValue, setModiyValue] = useState("");
   const [isModiy, setIsModiy] = useState(null);
   const modalRef = useRef(null);
@@ -42,7 +41,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
 
   const commentChangeHandler = (event) => {
     setComments(event.target.value);
-    setIsCommentsEmpty(event.target.value.trim() === '');
+    setIsCommentsEmpty(event.target.value.trim() === "");
   };
 
   const modiyHandler = (event) => {
@@ -138,7 +137,11 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
           value={comments}
           onChange={commentChangeHandler}
         />
-        <StInputBtn type="button" onClick={commentInputHandler} className={isCommentsEmpty ? 'empty' : ''}>
+        <StInputBtn
+          type="button"
+          onClick={commentInputHandler}
+          className={isCommentsEmpty ? "empty" : ""}
+        >
           저장
         </StInputBtn>
       </StInputField>
@@ -268,13 +271,16 @@ const StInputField = styled.div`
   overflow: hidden;
 `;
 
-const StInputBox = styled.input`
+const StInputBox = styled.textarea`
   width: 230px;
   height: 100%;
   border: none;
   outline: none;
   background-color: rgba(255, 255, 255, 0);
   padding: 12px;
+  resize: none;
+  overflow: hidden;
+  line-height: 1.3;
 `;
 
 const StInputBtn = styled.button`
@@ -394,7 +400,7 @@ const StCorrectionInputField = styled.div`
   padding: 16px 16px 8px 16px;
 `;
 
-const StCorrectionInput = styled.input`
+const StCorrectionInput = styled.textarea`
   width: 100%;
   height: 100%;
   border: none;
@@ -407,6 +413,9 @@ const StCorrectionInput = styled.input`
   font-family: Pretendard;
   font-weight: 500;
   line-height: 24px;
+  resize: none;
+  overflow: hidden;
+  line-height: 1.3;
 `;
 
 const StCorrctionBtnBox = styled.div`
@@ -442,8 +451,11 @@ const StNickName = styled.span`
   font-family: Pretendard;
   color: #222;
   margin-bottom: 8px;
+  white-space: pre-line;
 `;
-const StCommentBox = styled(StNickName)``;
+const StCommentBox = styled(StNickName)`
+  white-space: pre-line;
+`;
 
 const StCreatedNum = styled.span`
   color: #9c9c9c;

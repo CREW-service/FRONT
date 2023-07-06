@@ -43,7 +43,7 @@ const StContainer = styled.div`
 
 const StLogobox = styled.div`
   width: 86px;
-  height: 22px;
+  height: 31px;
   flex-grow: 0;
   font-family: ELAND Nice;
   font-size: 28px;

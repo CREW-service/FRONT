@@ -5,8 +5,10 @@ import Alerticon from "imgs/alret_ic_1.png";
 import Alerthaveicon from "imgs/alret_ic_2.png";
 import io from "socket.io-client";
 
-const cookies = document.cookie?.split("=")[1].split("%20").join(" ");
-
+const cookies =
+  typeof document !== "undefined"
+    ? document.cookie?.split("=")[1]?.split("%20")?.join(" ")
+    : "";
 const socket = io(process.env.REACT_APP_BACKEND_SERVER_URL, {
   // transports: ["websocket"],
   withCredentials: true,
@@ -52,9 +54,9 @@ function Alarmdropdown() {
         socket.emit("alarms");
       });
     }
-  
+
     socket.emit("alarmRead", alarmId);
-  
+
     socket.on("alarmList", async (data) => {
       setAlarms(data.data);
     });
