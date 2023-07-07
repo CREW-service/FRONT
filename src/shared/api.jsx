@@ -29,7 +29,7 @@ const AuthApi = {
 
   write: (payload) => api.post("/boat/write", payload),
 
-  getBoatList: () => api.get("/boat/map"),
+  getBoatList: (Bounds) => api.get("/boat/map",{params: {Bounds}}),
 
   getBoatDetail: (payload) => api.get(`/boat/${payload}`),
 
