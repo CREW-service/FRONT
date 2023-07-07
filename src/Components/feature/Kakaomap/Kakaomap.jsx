@@ -157,12 +157,12 @@ function Kakaomap() {
     // 클릭한 좌표에 생성할 인포 윈도우
     const infowindow = new kakao.maps.InfoWindow({});
 
-    const bounds = map.getBounds();
-    const swLatLng = bounds.getSouthWest();
-    const neLatLng = bounds.getNorthEast();
+    let bounds = map.getBounds();
+    let swLatLng = bounds.getSouthWest();
+    let neLatLng = bounds.getNorthEast();
 
-    const [swLat, swLng] = [swLatLng.getLat(), swLatLng.getLng()];
-    const [neLat, neLng] = [neLatLng.getLat(), neLatLng.getLng()];
+    let [swLat, swLng] = [swLatLng.getLat(), swLatLng.getLng()];
+    let [neLat, neLng] = [neLatLng.getLat(), neLatLng.getLng()];
 
     getBoatList({
       swLatLng: [swLat, swLng],
@@ -170,6 +170,13 @@ function Kakaomap() {
     });
 
     kakao.maps.event.addListener(map, "center_changed", () => {
+      bounds = map.getBounds();
+      swLatLng = bounds.getSouthWest();
+      neLatLng = bounds.getNorthEast();
+
+      [swLat, swLng] = [swLatLng.getLat(), swLatLng.getLng()];
+      [neLat, neLng] = [neLatLng.getLat(), neLatLng.getLng()];
+      
       getBoatList({
         swLatLng: [swLat, swLng],
         neLatLng: [neLat, neLng],
