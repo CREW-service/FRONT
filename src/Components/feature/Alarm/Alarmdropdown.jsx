@@ -10,7 +10,6 @@ const cookies =
     ? document.cookie?.split("=")[1]?.split("%20")?.join(" ")
     : "";
 const socket = io(process.env.REACT_APP_BACKEND_SERVER_URL, {
-  // transports: ["websocket"],
   withCredentials: true,
   extraHeaders: {
     authorization: cookies || "",
@@ -19,10 +18,8 @@ const socket = io(process.env.REACT_APP_BACKEND_SERVER_URL, {
 
 function Alarmdropdown() {
   const [alarms, setAlarms] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
   const [haveAlarms, setHaveAlarms] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  // const [cookies] = useCookies(["authorization"]);
 
   const haveAlarmHandler = () => {
     alarms.length > 0 ? setHaveAlarms(true) : setHaveAlarms(false);

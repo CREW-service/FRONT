@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
+import AuthApi from "shared/api";
 import {
   markerPositionAtom,
   markerAddressAtom,
@@ -40,148 +41,184 @@ const imageSrc =
 
 function Kakaomap() {
   const [isLoading, setIsLoarding] = useState(true);
-  const [boatList] = useRecoilState(boatListAtom); // 보트 리스트를 가져오기 위함
+  const [boatList, setBoatList] = useRecoilState(boatListAtom); // 보트 리스트를 가져오기 위함
   const [, setMarkerPosition] = useRecoilState(markerPositionAtom); // 마커 위치 좌표 상태
   const [, setMarkerAddress] = useRecoilState(markerAddressAtom); // 마커 주소 상태
   const [, setRecoilLatLng] = useRecoilState(recoilLatLngAtom); // 위도와 경도를 저장하는 상태
 
-  useEffect(() => {
-    const initializeMap = async () => {
-      // 위치 정보 가져오기
-      const defaultPosition = await getLocation();
+  const getBoatList = async (Bounds) => {
+    try {
+      const { data } = await AuthApi.getBoatList(Bounds);
+      // console.log(data);
+      setBoatList(data.boats);
+    } catch (error) {
+      console.error("Error fetching post:", error);
+    }
+  };
 
-      // 지도 컨테이너 요소를 가져옵니다.
-      const mapContainer = document.getElementById("map");
-      
-      const mapOptions = {
-        center: defaultPosition, // 위치 정보를 기반으로한 중심 좌표
-        level: 6, // 지도의 확대 레벨
-        mapTypeId: kakao.maps.MapTypeId.ROADMAP, // 지도종류
-      };
+  const initializeMap = async () => {
+    // 위치 정보 가져오기
+    const defaultPosition = await getLocation();
 
-      // 카카오 지도 객체를 생성합니다.
-      const map = new kakao.maps.Map(mapContainer, mapOptions);
-      
-      // 확대 축소 컨트롤을 생성하고 지도에 추가합니다.
-      const zoomControl = new kakao.maps.ZoomControl();
-      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+    // 지도 컨테이너 요소를 가져옵니다.
+    const mapContainer = document.getElementById("map");
 
-      boatList.forEach((boat) => {
-        const content = `<div class="wrap marker"> 
-                            <div class="title detailtitle">
-                              ${boat.title}
-                            </div>
-                            <div class="body">
-                              <div class="desc">
-                                <div>
-                                  모집 인원:
-                                </div>
-                                <div>
-                                  ${boat.crewNum}/${boat.maxCrewNum}
-                                </div>
-                              </div>
-                              <div class="desc">
-                                <div>모집 마감:
-                                </div>
-                                <div>
-                                  ${boat.endDate ? boat.endDate : "상시 모집"}
-                                </div>
-                              </div>
-                                <div class="godetail">
-                                  <a class="detaillink" href="/boat/${
-                                    boat.boatId
-                                  }">
-                                    자세히 보기
-                                  </a>
-                                </div>
-                            </div>
-                        </div>`;
-
-        const imageSize = new kakao.maps.Size(24, 35);
-        const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-        const marker = new kakao.maps.Marker({
-          map,
-          position: new kakao.maps.LatLng(
-            Number(boat.latitude),
-            Number(boat.longitude)
-          ),
-          title: boat.title,
-          image: markerImage,
-        });
-
-        const infowindow = new kakao.maps.InfoWindow({
-          content,
-        });
-
-        marker.addListener("click", () => {
-          document.querySelectorAll(".marker").forEach((item) => {
-            item.parentElement.parentElement.remove();
-          });
-          infowindow.open(map, marker);
-        });
-
-        map.addListener("click", () => {
-          infowindow.close();
-        });
-      });
-
-      // 클릭한 좌표에 생성할 마커 생성
-      const marker = new kakao.maps.Marker({
-        map,
-      });
-
-      // 클릭한 좌표에 생성할 인포 윈도우
-      const infowindow = new kakao.maps.InfoWindow({});
-
-      // 지도 클릭 이벤트를 등록합니다.
-      kakao.maps.event.addListener(map, "click", (mouseEvent) => {
-        // 주소-좌표 변환 객체를 생성합니다.
-        const geocoder = new kakao.maps.services.Geocoder();
-
-        // 클릭한 위치의 좌표를 이용하여 법정동 상세 주소 정보를 요청합니다.
-        geocoder.coord2Address(
-          mouseEvent.latLng.getLng(),
-          mouseEvent.latLng.getLat(),
-          (result, status) => {
-            if (status === kakao.maps.services.Status.OK) {
-              // let detailAddr = result[0].road_address
-              //   ? `<div>도로명주소 : ${result[0].road_address.address_name}</div>`
-              //   : "";
-              // detailAddr += `<div>지번 주소 : ${result[0].address.address_name}</div>`;
-
-              // 글 작성 등 메뉴 표시
-              const content = `<div class="bAddr">이 위치에 모임을 생성할까요?</div>
-              <div></div>`;
-
-              const getAddress = `${result[0].address.region_1depth_name} ${result[0].address.region_2depth_name} ${result[0].address.region_3depth_name}`;
-              marker.setPosition(mouseEvent.latLng);
-              // marker.setMap(map);
-
-              infowindow.close();
-              kakao.maps.event.addListener(marker, "click", () => {
-                infowindow.setContent(content);
-                infowindow.open(map, marker);
-              });
-
-              // 마커 위치 좌표 업데이트
-              setMarkerPosition(mouseEvent.latLng);
-              // 마커 주소 업데이트
-              setMarkerAddress(getAddress);
-
-              const lat = mouseEvent.latLng.getLat();
-              const lng = mouseEvent.latLng.getLng();
-              setRecoilLatLng({ lat, lng });
-            }
-          }
-        );
-      });
-
-      setIsLoarding(false);
+    const mapOptions = {
+      center: defaultPosition, // 위치 정보를 기반으로한 중심 좌표
+      level: 6, // 지도의 확대 레벨
+      mapTypeId: kakao.maps.MapTypeId.ROADMAP, // 지도종류
     };
 
+    // 카카오 지도 객체를 생성합니다.
+    const map = new kakao.maps.Map(mapContainer, mapOptions);
+
+    // 확대 축소 컨트롤을 생성하고 지도에 추가합니다.
+    const zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+    boatList.forEach((boat) => {
+      const content = `<div class="wrap marker"> 
+                          <div class="title detailtitle">
+                            ${boat.title}
+                          </div>
+                          <div class="body">
+                            <div class="desc">
+                              <div>
+                                모집 인원:
+                              </div>
+                              <div>
+                                ${boat.crewNum}/${boat.maxCrewNum}
+                              </div>
+                            </div>
+                            <div class="desc">
+                              <div>모집 마감:
+                              </div>
+                              <div>
+                                ${boat.endDate ? boat.endDate : "상시 모집"}
+                              </div>
+                            </div>
+                              <div class="godetail">
+                                <a class="detaillink" href="/boat/${
+                                  boat.boatId
+                                }">
+                                  자세히 보기
+                                </a>
+                              </div>
+                          </div>
+                      </div>`;
+
+      const imageSize = new kakao.maps.Size(24, 35);
+      const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+      const marker = new kakao.maps.Marker({
+        map,
+        position: new kakao.maps.LatLng(
+          Number(boat.latitude),
+          Number(boat.longitude)
+        ),
+        title: boat.title,
+        image: markerImage,
+      });
+
+      const infowindow = new kakao.maps.InfoWindow({
+        content,
+      });
+
+      // 지도의 현재 중심좌표를 얻어옵니다
+      // const center = map.getCenter();
+
+      // 지도의 현재 레벨을 얻어옵니다
+      // const level = map.getLevel();
+
+      // 지도타입을 얻어옵니다
+      // const mapTypeId = map.getMapTypeId();
+
+      // console.log(
+      //   `지도의 남서쪽 좌표는 ${swLatLng.getLat()}, ${swLatLng.getLng()} 북동쪽 좌표는 ${neLatLng.getLat()}, ${neLatLng.getLng()}`
+      // );
+
+      marker.addListener("click", () => {
+        document.querySelectorAll(".marker").forEach((item) => {
+          item.parentElement.parentElement.remove();
+        });
+        infowindow.open(map, marker);
+      });
+
+      map.addListener("click", () => {
+        infowindow.close();
+      });
+    });
+
+    // 클릭한 좌표에 생성할 마커 생성
+    const marker = new kakao.maps.Marker({
+      map,
+    });
+
+    // 클릭한 좌표에 생성할 인포 윈도우
+    const infowindow = new kakao.maps.InfoWindow({});
+
+    const bounds = map.getBounds();
+    const swLatLng = bounds.getSouthWest();
+    const neLatLng = bounds.getNorthEast();
+
+    const [swLat, swLng] = [swLatLng.getLat(), swLatLng.getLng()];
+    const [neLat, neLng] = [neLatLng.getLat(), neLatLng.getLng()];
+
+    getBoatList({
+      swLatLng: [swLat, swLng],
+      neLatLng: [neLat, neLng],
+    });
+
+    kakao.maps.event.addListener(map, "center_changed", () => {
+      getBoatList({
+        swLatLng: [swLat, swLng],
+        neLatLng: [neLat, neLng],
+      });
+    });
+
+    // 지도 클릭 이벤트를 등록합니다.
+    kakao.maps.event.addListener(map, "click", (mouseEvent) => {
+      // 주소-좌표 변환 객체를 생성합니다.
+      const geocoder = new kakao.maps.services.Geocoder();
+
+      // 클릭한 위치의 좌표를 이용하여 법정동 상세 주소 정보를 요청합니다.
+      geocoder.coord2Address(
+        mouseEvent.latLng.getLng(),
+        mouseEvent.latLng.getLat(),
+        (result, status) => {
+          if (status === kakao.maps.services.Status.OK) {
+            // 글 작성 등 메뉴 표시
+            const content = `<div class="bAddr">이 위치에 모임을 생성할까요?</div>
+            <div></div>`;
+
+            const getAddress = `${result[0].address.region_1depth_name} ${result[0].address.region_2depth_name} ${result[0].address.region_3depth_name}`;
+            marker.setPosition(mouseEvent.latLng);
+
+            infowindow.close();
+            kakao.maps.event.addListener(marker, "click", () => {
+              infowindow.setContent(content);
+              infowindow.open(map, marker);
+            });
+
+            // 마커 위치 좌표 업데이트
+            setMarkerPosition(mouseEvent.latLng);
+            // 마커 주소 업데이트
+            setMarkerAddress(getAddress);
+
+            const lat = mouseEvent.latLng.getLat();
+            const lng = mouseEvent.latLng.getLng();
+            setRecoilLatLng({ lat, lng });
+          }
+        }
+      );
+    });
+
+    setIsLoarding(false);
+  };
+
+  useEffect(() => {
     initializeMap();
-  }, [boatList]);
+  }, []);
 
   return (
     <StMapContainer id="map">
