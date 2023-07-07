@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useRecoilState } from "recoil";
 import AuthApi from "shared/api";
 import {
@@ -7,7 +7,7 @@ import {
   recoilLatLngAtom,
   boatListAtom,
 } from "Recoil/recoilAtoms";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 const { kakao } = window;
 
@@ -47,16 +47,20 @@ function Kakaomap() {
   const [, setRecoilLatLng] = useRecoilState(recoilLatLngAtom); // 위도와 경도를 저장하는 상태
 
   const getBoatList = async (Bounds) => {
+    setIsLoarding(true);
     try {
       const { data } = await AuthApi.getBoatList(Bounds);
       // console.log(data);
       setBoatList(data.boats);
+      console.log(data.boats);
+      setIsLoarding(false);
     } catch (error) {
       console.error("Error fetching post:", error);
+      setIsLoarding(false);
     }
   };
 
-  const initializeMap = async () => {
+  const initializeMap = useCallback(async () => {
     // 위치 정보 가져오기
     const defaultPosition = await getLocation();
 
@@ -76,79 +80,6 @@ function Kakaomap() {
     const zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-    boatList.forEach((boat) => {
-      const content = `<div class="wrap marker"> 
-                          <div class="title detailtitle">
-                            ${boat.title}
-                          </div>
-                          <div class="body">
-                            <div class="desc">
-                              <div>
-                                모집 인원:
-                              </div>
-                              <div>
-                                ${boat.crewNum}/${boat.maxCrewNum}
-                              </div>
-                            </div>
-                            <div class="desc">
-                              <div>모집 마감:
-                              </div>
-                              <div>
-                                ${boat.endDate ? boat.endDate : "상시 모집"}
-                              </div>
-                            </div>
-                              <div class="godetail">
-                                <a class="detaillink" href="/boat/${
-                                  boat.boatId
-                                }">
-                                  자세히 보기
-                                </a>
-                              </div>
-                          </div>
-                      </div>`;
-
-      const imageSize = new kakao.maps.Size(24, 35);
-      const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-      const marker = new kakao.maps.Marker({
-        map,
-        position: new kakao.maps.LatLng(
-          Number(boat.latitude),
-          Number(boat.longitude)
-        ),
-        title: boat.title,
-        image: markerImage,
-      });
-
-      const infowindow = new kakao.maps.InfoWindow({
-        content,
-      });
-
-      // 지도의 현재 중심좌표를 얻어옵니다
-      // const center = map.getCenter();
-
-      // 지도의 현재 레벨을 얻어옵니다
-      // const level = map.getLevel();
-
-      // 지도타입을 얻어옵니다
-      // const mapTypeId = map.getMapTypeId();
-
-      // console.log(
-      //   `지도의 남서쪽 좌표는 ${swLatLng.getLat()}, ${swLatLng.getLng()} 북동쪽 좌표는 ${neLatLng.getLat()}, ${neLatLng.getLng()}`
-      // );
-
-      marker.addListener("click", () => {
-        document.querySelectorAll(".marker").forEach((item) => {
-          item.parentElement.parentElement.remove();
-        });
-        infowindow.open(map, marker);
-      });
-
-      map.addListener("click", () => {
-        infowindow.close();
-      });
-    });
-
     // 클릭한 좌표에 생성할 마커 생성
     const marker = new kakao.maps.Marker({
       map,
@@ -164,22 +95,79 @@ function Kakaomap() {
     let [swLat, swLng] = [swLatLng.getLat(), swLatLng.getLng()];
     let [neLat, neLng] = [neLatLng.getLat(), neLatLng.getLng()];
 
-    getBoatList({
-      swLatLng: [swLat, swLng],
-      neLatLng: [neLat, neLng],
+    await getBoatList({
+      swLatLng: [Number(swLat), Number(swLng)],
+      neLatLng: [Number(neLat), Number(neLng)],
     });
 
-    kakao.maps.event.addListener(map, "center_changed", () => {
+    kakao.maps.event.addListener(map, "center_changed", async () => {
       bounds = map.getBounds();
       swLatLng = bounds.getSouthWest();
       neLatLng = bounds.getNorthEast();
 
       [swLat, swLng] = [swLatLng.getLat(), swLatLng.getLng()];
       [neLat, neLng] = [neLatLng.getLat(), neLatLng.getLng()];
-      
-      getBoatList({
-        swLatLng: [swLat, swLng],
-        neLatLng: [neLat, neLng],
+
+      await getBoatList({
+        swLatLng: [Number(swLat), Number(swLng)],
+        neLatLng: [Number(neLat), Number(neLng)],
+      });
+
+      boatList?.forEach((boat) => {
+        const content = `<div class="wrap marker"> 
+                              <div class="title detailtitle">
+                                ${boat.title}
+                              </div>
+                              <div class="body">
+                                <div class="desc">
+                                  <div>
+                                    모집 인원:
+                                  </div>
+                                  <div>
+                                    ${boat.crewNum}/${boat.maxCrewNum}
+                                  </div>
+                                </div>
+                                <div class="desc">
+                                  <div>모집 마감:
+                                  </div>
+                                  <div>
+                                    ${boat.endDate ? boat.endDate : "상시 모집"}
+                                  </div>
+                                </div>
+                                  <div class="godetail">
+                                    <a class="detaillink" href="/boat/${
+                                      boat.boatId
+                                    }">
+                                      자세히 보기
+                                    </a>
+                                  </div>
+                              </div>
+                          </div>`;
+
+        const imageSize = new kakao.maps.Size(24, 35);
+        const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+        const marker2 = new kakao.maps.Marker({
+          map,
+          position: new kakao.maps.LatLng(boat.latitude, boat.longitude),
+          title: boat.title,
+          image: markerImage,
+        });
+
+        const infowindow2 = new kakao.maps.InfoWindow({
+          content,
+        });
+
+        marker2.addListener("click", () => {
+          document.querySelectorAll(".marker").forEach((item) => {
+            item.parentElement.parentElement.remove();
+          });
+          infowindow2.open(map, marker2);
+        });
+
+        map.addListener("click", () => {
+          infowindow2.close();
+        });
       });
     });
 
@@ -196,7 +184,7 @@ function Kakaomap() {
           if (status === kakao.maps.services.Status.OK) {
             // 글 작성 등 메뉴 표시
             const content = `<div class="bAddr">이 위치에 모임을 생성할까요?</div>
-            <div></div>`;
+              <div></div>`;
 
             const getAddress = `${result[0].address.region_1depth_name} ${result[0].address.region_2depth_name} ${result[0].address.region_3depth_name}`;
             marker.setPosition(mouseEvent.latLng);
@@ -219,9 +207,7 @@ function Kakaomap() {
         }
       );
     });
-
-    setIsLoarding(false);
-  };
+  }, [boatList]);
 
   useEffect(() => {
     initializeMap();

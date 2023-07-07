@@ -12,7 +12,10 @@ export const markerAddressAtom = atom({
 
 export const recoilLatLngAtom = atom({
   key: "recoilLatLng",
-  default: { lat: null, lng: null },
+  default: {
+    lat: null,
+    lng: null,
+  },
 });
 
 export const boatListAtom = atom({

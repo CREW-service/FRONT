@@ -1,8 +1,8 @@
 import React from "react";
-import Kakaomap from "../Kakaomap/Kakaomap";
+import Kakaomaprefact from "../Kakaomap/Kakaomaprefact";
 
 function Boatlist() {
   
-  return <Kakaomap />;
+  return <Kakaomaprefact/>
 }
 export default Boatlist;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
+import AuthApi from "shared/api";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import MENUICON from "imgs/menu_ic.png";
@@ -13,13 +14,18 @@ function Menu() {
   const [cookies, , removeCookie] = useCookies(["authorization"]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const logOutHandler = async () => {
+    try {
+      const { data } = await AuthApi.logOut();
       removeCookie("authorization"); // Remove the 'authorization' cookie
-      navigate("/")
-      // alert("로그아웃 했습니다.")
-      // setIsModalOpen(false)
+      alert("로그아웃 했습니다.");
+      navigate("/");
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching post:", error);
+    }
   };
 
   useEffect(() => {
@@ -48,23 +54,23 @@ function Menu() {
       <StMenuButton type="button" onClick={handleButtonClick}>
         <StImg src={MENUICON} alt="알림 아이콘" />
         {isModalOpen && (
-        <StModalOverlay>
-          <StModalContainer>
-            {isLogin ? (
-              <StModalButton type="button" onClick={logOutHandler}>
-                로그아웃
-              </StModalButton>
-            ) : (
-              <StModalButton type="button" onClick={openLoginModal}>
-                로그인
-              </StModalButton>
-            )}
-            <StModalButton type="button">설정</StModalButton>
-          </StModalContainer>
-        </StModalOverlay>
-      )}
+          <StModalOverlay>
+            <StModalContainer>
+              {isLogin ? (
+                <StModalButton type="button" onClick={logOutHandler}>
+                  로그아웃
+                </StModalButton>
+              ) : (
+                <StModalButton type="button" onClick={openLoginModal}>
+                  로그인
+                </StModalButton>
+              )}
+              <StModalButton type="button">설정</StModalButton>
+            </StModalContainer>
+          </StModalOverlay>
+        )}
       </StMenuButton>
-      
+
       <Modal
         isOpen={isLoginModalOpen}
         onRequestClose={closeLoginModal}
@@ -72,7 +78,7 @@ function Menu() {
         style={loginModalStyes}
       >
         {/* 새로운 모달 내용 */}
-        <Kakaologin closeLoginModal={closeLoginModal}/>
+        <Kakaologin closeLoginModal={closeLoginModal} />
       </Modal>
     </div>
   );
@@ -129,13 +135,12 @@ const loginModalStyes = {
   },
 };
 
-
 const StModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
 
-  background: #FFF;
+  background: #fff;
   /* box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2); */
   height: 656px;
   z-index: 500;
