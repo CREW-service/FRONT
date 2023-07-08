@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { markerAddressAtom, recoilLatLngAtom } from "Recoil/recoilAtoms";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import MYLOCATION from "imgs/Vector.png"
 
 const { kakao } = window;
 
@@ -139,7 +140,7 @@ function Kakaomaprefact() {
   };
 
   return (
-    <div
+    <div id="map wwwwaaaaaappppp"
       style={{
         width: "100%",
         height: "100%",
@@ -210,9 +211,9 @@ function Kakaomaprefact() {
           </MapMarker>
         ))}
         <StOverLayButtonDiv className="category">
-          <button type="button" onClick={mapMoveMyLocationHandler}>
-            내 위치
-          </button>
+          <StMyLocationButton type="button" onClick={mapMoveMyLocationHandler}>
+            <img src={MYLOCATION} alt="내 위치"/>
+          </StMyLocationButton>
         </StOverLayButtonDiv>
       </Map>
     </div>
@@ -234,7 +235,7 @@ const StOverLayButtonDiv = styled.div`
   overflow: hidden;
   top: 10px;
   left: 10px;
-  z-index: 1000;
+  z-index: 500;
   border: 1px solid black;
   font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
   font-size: 12px;
@@ -245,3 +246,8 @@ const StOverLayButtonDiv = styled.div`
   justify-content: center;
   flex-wrap: wrap;
 `;
+
+const StMyLocationButton = styled.button`
+  background-color: transparent;
+  border: 0;
+`
