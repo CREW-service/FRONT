@@ -13,7 +13,7 @@ export default Boatlist;
 
 const StContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
 
   flex: 1; /* 나머지 공간을 가득 채우도록 함 */
 `;

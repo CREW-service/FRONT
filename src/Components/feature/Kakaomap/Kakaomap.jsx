@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import { markerAddressAtom, recoilLatLngAtom } from "Recoil/recoilAtoms";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import MYLOCATION from "imgs/Vector.png"
+import MYLOCATION from "imgs/Vector.png";
 
 const { kakao } = window;
 
@@ -18,11 +18,20 @@ function Kakaomaprefact() {
 
   const [getMapState, setGetMapState] = useState({
     center: {
-      lat: 33.450701,
-      lng: 126.570667,
+      lat: null,
+      lng: null,
     },
     isPanto: true,
   });
+
+  const getDefaultLocation = () => {
+    // 기본 좌표를 설정합니다 (예: 서울 시청 좌표)
+    const defaultLocation = {
+      lat: 37.566779082667516, // 위도
+      lng: 126.97826742400407, // 경도
+    };
+    return defaultLocation;
+  };
 
   const getLocation = () =>
     new Promise((resolve, reject) => {
@@ -37,11 +46,13 @@ function Kakaomaprefact() {
             resolve(location);
           },
           (err) => {
-            reject(new Error(err.message));
+            // 위치 정보 사용을 거부한 경우 기본 좌표 사용
+            resolve(getDefaultLocation());
           }
         );
       } else {
-        reject(new Error("geolocation을 사용할 수 없어요..."));
+        // 위치 정보를 사용할 수 없는 경우 기본 좌표 사용
+        resolve(getDefaultLocation());
       }
     });
 
@@ -100,6 +111,10 @@ function Kakaomaprefact() {
   const handleMapLoad = async () => {
     const location = await getLocation();
     setGetMapState({ center: location });
+    if (location === getDefaultLocation()) {
+      // 위치정보 사용을 거부한 경우, 기본 좌표로 지도를 초기화합니다.
+      mapRef.current?.setCenter(new kakao.maps.LatLng(location.lat, location.lng));
+    }
   };
 
   const handletileLoaded = async () => {
@@ -140,7 +155,8 @@ function Kakaomaprefact() {
   };
 
   return (
-    <div id="map wwwwaaaaaappppp"
+    <div
+      id="map wwwwaaaaaappppp"
       style={{
         width: "100%",
         height: "100%",
@@ -212,7 +228,7 @@ function Kakaomaprefact() {
         ))}
         <StOverLayButtonDiv className="category">
           <StMyLocationButton type="button" onClick={mapMoveMyLocationHandler}>
-            <img src={MYLOCATION} alt="내 위치"/>
+            <img src={MYLOCATION} alt="내 위치" />
           </StMyLocationButton>
         </StOverLayButtonDiv>
       </Map>
@@ -250,4 +266,4 @@ const StOverLayButtonDiv = styled.div`
 const StMyLocationButton = styled.button`
   background-color: transparent;
   border: 0;
-`
+`;

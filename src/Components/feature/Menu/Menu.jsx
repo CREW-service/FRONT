@@ -14,6 +14,8 @@ function Menu() {
   const [cookies, , removeCookie] = useCookies(["authorization"]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isOutsideClicked, setIsOutsideClicked] = useState(false);
+
   const navigate = useNavigate();
 
   const logOutHandler = async () => {
@@ -27,6 +29,19 @@ function Menu() {
       console.error("Error fetching post:", error);
     }
   };
+
+  const handleOutsideClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setIsOutsideClicked(true);
+    }
+  };
+
+  useEffect(() => {
+    if (isOutsideClicked) {
+      closeLoginModal();
+      setIsOutsideClicked(false);
+    }
+  }, [isOutsideClicked]);
 
   useEffect(() => {
     if (!cookies.authorization) {
@@ -54,7 +69,7 @@ function Menu() {
       <StMenuButton type="button" onClick={handleButtonClick}>
         <StImg src={MENUICON} alt="알림 아이콘" />
         {isModalOpen && (
-          <StModalOverlay>
+          <StModalOverlay isOpen={isModalOpen} onClick={handleOutsideClick}>
             <StModalContainer>
               {isLogin ? (
                 <StModalButton type="button" onClick={logOutHandler}>
@@ -110,7 +125,10 @@ const StModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
   width: 228px;
-  /* z-index: 500; */
+  z-index: 700;
+
+  /* 클릭 이벤트 처리 */
+  pointer-events: ${({ isOpen }) => (isOpen ? "auto" : "none")};
 `;
 
 const loginModalStyes = {
@@ -142,7 +160,7 @@ const StModalContainer = styled.div`
 
   background: #fff;
   /* box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2); */
-  height: 656px;
+  height: 100%;
   z-index: 800;
 `;
 

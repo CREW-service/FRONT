@@ -30,8 +30,8 @@ const StLayoutBox = styled.div`
   width: 100%;
   min-height: 100vh; /* 최소 높이를 뷰포트 높이로 설정하여 Footer가 항상 맨 아래에 위치하도록 함 */
   margin: 0 auto;
-  border: solid 5px #30a2ff;
-  border-radius: 30px;
+  /* border: solid 5px #30a2ff;
+  border-radius: 30px; */
   overflow: hidden;
   height: 100vh;
 
