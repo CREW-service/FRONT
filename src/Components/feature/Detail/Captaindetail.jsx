@@ -33,7 +33,7 @@ function Captaindetail({ boat, boatId, renderTriggerHandler }) {
             <Captain>{boat.boat.captain}</Captain>
             {new Date(boat.boat.createdAt).toISOString().split("T")[0]}
           </div>
-          <div style={{position:"relative"}}>
+          <div style={{ position: "relative" }}>
             <StImg
               src={viewBtn}
               alt="captainDetail button"
@@ -118,7 +118,7 @@ const StContainer = styled.div`
 `;
 
 const Title = styled.div`
-  margin: 32px 16px;
+  margin: 32px 0 16px 0;
   font-family: Pretendard;
   font-size: 24px;
   font-weight: bold;
@@ -133,7 +133,7 @@ const Title = styled.div`
 
 const CreatedAt = styled.span`
   display: flex;
-  margin: 0px 16px;
+  margin: 10px 0 0 8px;
   font-family: Pretendard;
   font-size: 14px;
   font-weight: 500;
@@ -148,6 +148,7 @@ const CreatedAt = styled.span`
 `;
 
 const Captain = styled.span`
+  margin: 10px 8px 0 0;
   font-family: Pretendard;
   font-size: 14px;
   font-weight: 500;

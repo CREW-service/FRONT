@@ -89,7 +89,7 @@ const StContainer = styled.div`
 `;
 
 const Title = styled.div`
-  margin: 32px 16px;
+  margin: 32px 0 16px 0;
   font-family: Pretendard;
   font-size: 24px;
   font-weight: bold;
@@ -103,7 +103,7 @@ const Title = styled.div`
 const CreatedAt = styled.span`
   /* width: 55px;
   height: 20px; */
-  margin: 10px 8px 0 8px;
+  margin: 10px 0 0 8px;
   font-family: Pretendard;
   font-size: 14px;
   font-weight: 500;
@@ -117,7 +117,7 @@ const CreatedAt = styled.span`
 const Captain = styled.span`
   /* width: 37px;
   height: 20px; */
-  margin: 10px 8px;
+  margin: 10px 8px 0 0;
   font-family: Pretendard;
   font-size: 14px;
   font-weight: 500;

@@ -81,10 +81,13 @@ const StContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+
+  min-height: calc(100vh - 128px); 
+  box-sizing: border-box;
 `;
 
 const Title = styled.div`
-  margin: 32px 16px;
+  margin: 32px 0 16px 0;
   font-family: Pretendard;
   font-size: 24px;
   font-weight: bold;
@@ -98,7 +101,7 @@ const Title = styled.div`
 const CreatedAt = styled.span`
   /* width: 55px;
   height: 20px; */
-  margin: 10px 8px 0 8px;
+  margin: 10px 0 0 8px;
   font-family: Pretendard;
   font-size: 14px;
   font-weight: 500;
@@ -112,7 +115,7 @@ const CreatedAt = styled.span`
 const Captain = styled.span`
   /* width: 37px;
   height: 20px; */
-  margin: 10px 8px;
+  margin: 10px 8px 0 0;
   font-family: Pretendard;
   font-size: 14px;
   font-weight: 500;
@@ -178,6 +181,7 @@ const EndDate = styled.div`
 `;
 
 const Content = styled.div`
+  flex:1;
   width: 100%;
   margin: 20px 0 5px;
   font-family: Pretendard;
