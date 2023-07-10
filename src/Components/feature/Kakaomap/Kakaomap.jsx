@@ -113,7 +113,9 @@ function Kakaomaprefact() {
     setGetMapState({ center: location });
     if (location === getDefaultLocation()) {
       // 위치정보 사용을 거부한 경우, 기본 좌표로 지도를 초기화합니다.
-      mapRef.current?.setCenter(new kakao.maps.LatLng(location.lat, location.lng));
+      mapRef.current?.setCenter(
+        new kakao.maps.LatLng(location.lat, location.lng)
+      );
     }
   };
 
@@ -183,7 +185,14 @@ function Kakaomaprefact() {
           <MapMarker position={recoilLatLng} onClick={markerClickHandler}>
             {/* MapMarker의 자식을 넣어줌으로 해당 자식이 InfoWindow로 만들어지게 합니다 */}
             {/* 인포윈도우에 표출될 내용으로 HTML 문자열이나 React Component가 가능합니다 */}
-            <StInfowindowContainer>이곳에 모임 만들기</StInfowindowContainer>
+
+            <StInfowindowContainer className="wrap marker">
+              <span>여기에 모임 만들기</span>
+              <span>아래 글쓰기 버튼을 눌러보세요!</span>
+            </StInfowindowContainer>
+            {/* <StInfowindowContainer>
+              아래 글쓰기 버튼을 눌러보세요!
+            </StInfowindowContainer> */}
           </MapMarker>
         )}
         <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} />
@@ -239,11 +248,12 @@ function Kakaomaprefact() {
 export default Kakaomaprefact;
 
 const StInfowindowContainer = styled.div`
-  padding: 5px 0 0 5px;
+  margin: o auto;
+  background-color: #fff;
   color: #222;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const StOverLayButtonDiv = styled.div`

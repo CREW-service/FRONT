@@ -348,7 +348,7 @@ const StCorrectionBtn = styled.button`
   height: 40px;
   border: none;
   margin-bottom: 8px;
-  color: var(--gr-deep, #3e4756);
+  color: var(--gr-deep, #a2acbd);
   text-align: center;
   font-size: 14px;
   font-family: Pretendard;
@@ -378,7 +378,7 @@ const StCommentUserNic = styled.div`
 `;
 
 const StLine = styled.div`
-  width: 360px;
+  width: 100%;
   height: 8px;
   background: var(--gr-pale, #eff4f8);
   margin: 40px 0;
