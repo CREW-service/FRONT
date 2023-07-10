@@ -130,7 +130,10 @@ function Kakaomaprefact() {
   }, []);
 
   const markerClickHandler = () => {
-    setRecoilLatLng(null);
+    setRecoilLatLng({
+      lat: null,
+      lng: null,
+    });
   };
 
   const boatClickHandler = (boatId) => {

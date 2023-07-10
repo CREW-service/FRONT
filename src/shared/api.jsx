@@ -10,12 +10,13 @@ const api = axios.create({
   },
 });
 
-const getCookieValue = (cookieName) => {
-  const name = `${cookieName  }=`;
+// authorization 쿠키의 값을 가져옴
+const getAuthorizationCookieValue = () => {
+  const name = "authorization=";
   const decodedCookie = decodeURIComponent(document.cookie);
   const cookieArray = decodedCookie.split(";");
 
-  for (let i = 0; i < cookieArray.length; i+=1) {
+  for (let i = 0; i < cookieArray.length; i += 1) {
     let cookie = cookieArray[i];
     while (cookie.charAt(0) === " ") {
       cookie = cookie.substring(1);
@@ -27,16 +28,11 @@ const getCookieValue = (cookieName) => {
   return null;
 };
 
-// authorization 쿠키의 값을 가져옴
-const authorizationCookieValue = getCookieValue("authorization");
 
 
 api.interceptors.request.use(
   (config) => {
-    // const cookies = document.cookie
-    //   ? document.cookie.split("=")[1].split("%20").join(" ")
-    //   : null;
-
+    const authorizationCookieValue = getAuthorizationCookieValue();
     if (authorizationCookieValue) {
       const copyConfig = { ...config };
       copyConfig.headers.authorization = authorizationCookieValue;
@@ -46,6 +42,7 @@ api.interceptors.request.use(
   },
   (error) => error
 );
+
 
 // axios 인터셉터 활용해서 작업하면  반복되는 헤더 입력 부분을 개선해 볼 수 있다.
 

@@ -47,7 +47,7 @@ function Editor() {
       navigate("/main");
       return;
     }
-    if (recoilLatLng.lat === null || recoilLatLng.lng === null) {
+    if (recoilLatLng?.lat === null || recoilLatLng?.lng === null) {
       alert(alertList.markerMiss);
       navigate("/main");
     }
@@ -58,9 +58,9 @@ function Editor() {
     let newValue = value;
 
     if (name === "recruitmentCount") {
-      // 값이 2보다 작으면 2로, 10보다 크면 10으로 설정합니다.
-      const parsedValue = parseInt(value, 10);
-      newValue = Math.min(Math.max(parsedValue, 2), 10);
+      // 값이 2보다 작으면 2로, 20보다 크면 20으로 설정합니다.
+      const parsedValue = parseInt(value, 20);
+      newValue = Math.min(Math.max(parsedValue, 2), 20);
     } else {
       newValue = type === "checkbox" ? checked : value;
     }
@@ -81,7 +81,7 @@ function Editor() {
   function handleIncrement() {
     setState((prevState) => ({
       ...prevState,
-      recruitmentCount: Math.min(prevState.recruitmentCount + 1, 10),
+      recruitmentCount: Math.min(prevState.recruitmentCount + 1, 20),
     }));
   }
 

@@ -3,13 +3,15 @@ import styled from "styled-components";
 import Alerticon from "imgs/alret_ic_1.png";
 import Alerthaveicon from "imgs/alret_ic_2.png";
 import io from "socket.io-client";
+import { useLocation } from "react-router-dom";
 
-const getCookieValue = (cookieName) => {
-  const name = `${cookieName  }=`;
+// authorization 쿠키의 값을 가져옴
+const getAuthorizationCookieValue = () => {
+  const name = "authorization=";
   const decodedCookie = decodeURIComponent(document.cookie);
   const cookieArray = decodedCookie.split(";");
 
-  for (let i = 0; i < cookieArray.length; i+=1) {
+  for (let i = 0; i < cookieArray.length; i += 1) {
     let cookie = cookieArray[i];
     while (cookie.charAt(0) === " ") {
       cookie = cookie.substring(1);
@@ -20,14 +22,12 @@ const getCookieValue = (cookieName) => {
   }
   return null;
 };
+// const authorizationCookieValue = getAuthorizationCookieValue();
 
-// authorization 쿠키의 값을 가져옴
-const authorizationCookieValue = getCookieValue("authorization");
-
-const socket = io(process.env.REACT_APP_BACKEND_SERVER_URL, {
+const socket = io (process.env.REACT_APP_BACKEND_SERVER_URL, {
   withCredentials: true,
   extraHeaders: {
-    authorization: authorizationCookieValue || "",
+    authorization: getAuthorizationCookieValue() || "",
   },
 });
 
@@ -36,8 +36,12 @@ function Alarmdropdown() {
   const [haveAlarms, setHaveAlarms] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const location = useLocation();
+
   const haveAlarmHandler = () => {
-    alarms.length > 0 ? setHaveAlarms(true) : setHaveAlarms(false);
+    const result = alarms.length > 0;
+
+    return result;
   };
 
   useEffect(() => {
@@ -46,14 +50,23 @@ function Alarmdropdown() {
     });
 
     socket.on("alarmList", async (data) => {
-      setAlarms(data.data);
+      const alarm = await data.data;
+      setAlarms(alarm);
     });
 
-    haveAlarmHandler();
+    const fetchAlarmData = async () => {
+      socket.emit("alarms");
+    };
 
-    // return () => {
-    //   socket.disconnect();
-    // };
+    fetchAlarmData();
+
+    return () => {
+      socket.off("alarmList");
+    };
+  }, [location]);
+
+  useEffect(() => {
+    setHaveAlarms(haveAlarmHandler());
   }, [alarms]);
 
   const modalHandler = () => {
@@ -72,15 +85,13 @@ function Alarmdropdown() {
     socket.on("alarmList", async (data) => {
       setAlarms(data.data);
     });
-
-    haveAlarmHandler();
   };
 
   return (
     <div>
       <StAlarmButton type="button" onClick={modalHandler}>
         <StImg src={haveAlarms ? Alerthaveicon : Alerticon} alt="알림 아이콘" />
-        {showModal && haveAlarms ?(
+        {showModal && haveAlarms ? (
           <StModalOverlay>
             <StModalContainer>
               {alarms?.map((alarm) => (
@@ -95,7 +106,7 @@ function Alarmdropdown() {
               ))}
             </StModalContainer>
           </StModalOverlay>
-        ):null}
+        ) : null}
       </StAlarmButton>
     </div>
   );
@@ -114,7 +125,7 @@ const StAlarmButton = styled.button`
 `;
 
 const StModalOverlay = styled.div`
-margin-top: 5px;
+  margin-top: 5px;
   position: absolute;
   top: 115%;
   /* left: 100%; */
@@ -136,6 +147,8 @@ const StModalContainer = styled.div`
   padding: 16px;
   background: #fff;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column-reverse;
 `;
 
 const StAlarmTextBox = styled.div`
