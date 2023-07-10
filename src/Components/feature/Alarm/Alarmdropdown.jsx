@@ -40,8 +40,6 @@ function Alarmdropdown() {
     alarms.length > 0 ? setHaveAlarms(true) : setHaveAlarms(false);
   };
 
-  
-
   useEffect(() => {
     socket.on("connect", async () => {
       socket.emit("alarms");
@@ -82,7 +80,7 @@ function Alarmdropdown() {
     <div>
       <StAlarmButton type="button" onClick={modalHandler}>
         <StImg src={haveAlarms ? Alerthaveicon : Alerticon} alt="알림 아이콘" />
-        {showModal && (
+        {showModal && haveAlarms ?(
           <StModalOverlay>
             <StModalContainer>
               {alarms?.map((alarm) => (
@@ -97,7 +95,7 @@ function Alarmdropdown() {
               ))}
             </StModalContainer>
           </StModalOverlay>
-        )}
+        ):null}
       </StAlarmButton>
     </div>
   );
@@ -116,6 +114,7 @@ const StAlarmButton = styled.button`
 `;
 
 const StModalOverlay = styled.div`
+margin-top: 5px;
   position: absolute;
   top: 115%;
   /* left: 100%; */
