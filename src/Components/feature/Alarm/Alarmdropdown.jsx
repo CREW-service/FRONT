@@ -1,18 +1,33 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-// import { useCookies } from "react-cookie";
 import Alerticon from "imgs/alret_ic_1.png";
 import Alerthaveicon from "imgs/alret_ic_2.png";
 import io from "socket.io-client";
 
-const cookies =
-  typeof document !== "undefined"
-    ? document.cookie?.split("=")[1]?.split("%20")?.join(" ")
-    : "";
+const getCookieValue = (cookieName) => {
+  const name = `${cookieName  }=`;
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(";");
+
+  for (let i = 0; i < cookieArray.length; i+=1) {
+    let cookie = cookieArray[i];
+    while (cookie.charAt(0) === " ") {
+      cookie = cookie.substring(1);
+    }
+    if (cookie.indexOf(name) === 0) {
+      return cookie.substring(name.length, cookie.length);
+    }
+  }
+  return null;
+};
+
+// authorization 쿠키의 값을 가져옴
+const authorizationCookieValue = getCookieValue("authorization");
+
 const socket = io(process.env.REACT_APP_BACKEND_SERVER_URL, {
   withCredentials: true,
   extraHeaders: {
-    authorization: cookies || "",
+    authorization: authorizationCookieValue || "",
   },
 });
 
@@ -24,6 +39,8 @@ function Alarmdropdown() {
   const haveAlarmHandler = () => {
     alarms.length > 0 ? setHaveAlarms(true) : setHaveAlarms(false);
   };
+
+  
 
   useEffect(() => {
     socket.on("connect", async () => {

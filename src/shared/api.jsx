@@ -1,4 +1,6 @@
 import axios from "axios";
+// import { useCookies } from "react-cookie";
+
 
 // 싱글톤 패턴으로 axios 인스터스를 생성
 const api = axios.create({
@@ -8,13 +10,36 @@ const api = axios.create({
   },
 });
 
+const getCookieValue = (cookieName) => {
+  const name = `${cookieName  }=`;
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(";");
+
+  for (let i = 0; i < cookieArray.length; i+=1) {
+    let cookie = cookieArray[i];
+    while (cookie.charAt(0) === " ") {
+      cookie = cookie.substring(1);
+    }
+    if (cookie.indexOf(name) === 0) {
+      return cookie.substring(name.length, cookie.length);
+    }
+  }
+  return null;
+};
+
+// authorization 쿠키의 값을 가져옴
+const authorizationCookieValue = getCookieValue("authorization");
+
+
 api.interceptors.request.use(
   (config) => {
-    const cookies = document.cookie ? document.cookie.split("=")[1].split("%20").join(" ") : null;
+    // const cookies = document.cookie
+    //   ? document.cookie.split("=")[1].split("%20").join(" ")
+    //   : null;
 
-    if (cookies) {
+    if (authorizationCookieValue) {
       const copyConfig = { ...config };
-      copyConfig.headers.authorization = cookies;
+      copyConfig.headers.authorization = authorizationCookieValue;
       return copyConfig;
     }
     return config;
@@ -29,7 +54,7 @@ const AuthApi = {
 
   write: (payload) => api.post("/boat/write", payload),
 
-  getBoatList: (Bounds) => api.get("/boat/map",{params: {Bounds}}),
+  getBoatList: (Bounds) => api.get("/boat/map", { params: { Bounds } }),
 
   getBoatDetail: (payload) => api.get(`/boat/${payload}`),
 
