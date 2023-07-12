@@ -9,7 +9,7 @@ function Alarmdropdown() {
   const [alarms, setAlarms] = useState([]);
   const [haveAlarms, setHaveAlarms] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const socket = useSocket()
+  const socket = useSocket();
 
   const location = useLocation();
 
@@ -27,6 +27,10 @@ function Alarmdropdown() {
     socket.on("alarmList", async (data) => {
       const alarm = await data.data;
       setAlarms(alarm);
+    });
+
+    socket.on("newAlarm", async () => {
+      socket.emit("alarms");
     });
 
     const fetchAlarmData = async () => {
