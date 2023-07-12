@@ -221,7 +221,7 @@ export default Mypage;
 const StContainer = styled.div``;
 
 const StLayoutBox = styled.div`
-  width: 360px;
+  width: 100%;
   height: 84px;
   flex-shrink: 0;
   background: var(--gr-pale, #eff4f8);
@@ -252,7 +252,7 @@ const StNickNameBox = styled.div`
 `;
 
 const StSubTitleBox = styled.div`
-  width: 360px;
+  width: 100%;
   height: 64px;
   flex-shrink: 0;
   margin-top: 48px;

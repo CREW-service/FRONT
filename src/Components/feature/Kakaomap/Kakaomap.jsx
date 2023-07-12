@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import { markerAddressAtom, recoilLatLngAtom } from "Recoil/recoilAtoms";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import MYLOCATION from "imgs/Vector.png";
+import MYLOCATION from "imgs/Location.svg";
 
 const { kakao } = window;
 
@@ -262,10 +262,10 @@ const StInfowindowContainer = styled.div`
 const StOverLayButtonDiv = styled.div`
   position: absolute;
   overflow: hidden;
-  top: 10px;
-  left: 10px;
+  top: 2%;
+  left: 5%;
   z-index: 500;
-  border: 1px solid black;
+  border: 0;
   font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
   font-size: 12px;
   text-align: center;
@@ -274,6 +274,7 @@ const StOverLayButtonDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   flex-wrap: wrap;
+  background-color: transparent;
 `;
 
 const StMyLocationButton = styled.button`

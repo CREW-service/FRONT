@@ -5,7 +5,6 @@ import Alerthaveicon from "imgs/alret_ic_2.png";
 import useSocket from "Hooks/useSocket";
 import { useLocation } from "react-router-dom";
 
-
 function Alarmdropdown() {
   const [alarms, setAlarms] = useState([]);
   const [haveAlarms, setHaveAlarms] = useState(false);

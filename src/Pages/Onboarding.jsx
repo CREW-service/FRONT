@@ -8,10 +8,10 @@ import AuthApi from "shared/api";
 import { currentUserIdAtom } from "Recoil/recoilAtoms";
 import { useRecoilState } from "recoil";
 import ICON from "imgs/drwicon.gif";
-import LOGO from "imgs/CREW_B 1.png";
+// import LOGO from "imgs/CREW_B 1.png";
+import LOGO from "imgs/B_LOGO.svg";
 
-const introContent = `내 주변에서 함께하고 싶은 모임을 만들거나 \n
-새로운 모임에 참여해보세요!`;
+const introContent = `내 주변에서 함께하고 싶은 모임을 만들거나 새로운 모임에 참여해보세요!`;
 
 function Onboarding() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,10 +29,9 @@ function Onboarding() {
       };
 
       const res = await AuthApi.getCurrentUser(config);
-      // console.log(res);
-      // localStorage.setItem("userId", JSON.stringify(`${res.data.userId}`));
       setCurrentUserId(res.data.userId);
     } catch (err) {
+      // 로그인한 유저 정보를 받아오지 못했음
       console.log(err);
     }
   };
@@ -115,11 +114,12 @@ const StICONImg = styled.img`
 
 const StLOGOImg = styled.img`
   width: 250px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 `;
 
 const StContentTxt = styled.span`
-  /* width: 250px; */
+  text-align: center;
+  width: 258px;
   margin-bottom: 104px;
   line-height: 15px;
 
