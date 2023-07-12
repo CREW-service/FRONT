@@ -2,39 +2,15 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Alerticon from "imgs/alret_ic_1.png";
 import Alerthaveicon from "imgs/alret_ic_2.png";
-import io from "socket.io-client";
+import useSocket from "Hooks/useSocket";
 import { useLocation } from "react-router-dom";
 
-// authorization 쿠키의 값을 가져옴
-const getAuthorizationCookieValue = () => {
-  const name = "authorization=";
-  const decodedCookie = decodeURIComponent(document.cookie);
-  const cookieArray = decodedCookie.split(";");
-
-  for (let i = 0; i < cookieArray.length; i += 1) {
-    let cookie = cookieArray[i];
-    while (cookie.charAt(0) === " ") {
-      cookie = cookie.substring(1);
-    }
-    if (cookie.indexOf(name) === 0) {
-      return cookie.substring(name.length, cookie.length);
-    }
-  }
-  return null;
-};
-// const authorizationCookieValue = getAuthorizationCookieValue();
-
-const socket = io (process.env.REACT_APP_BACKEND_SERVER_URL, {
-  withCredentials: true,
-  extraHeaders: {
-    authorization: getAuthorizationCookieValue() || "",
-  },
-});
 
 function Alarmdropdown() {
   const [alarms, setAlarms] = useState([]);
   const [haveAlarms, setHaveAlarms] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const socket = useSocket()
 
   const location = useLocation();
 
