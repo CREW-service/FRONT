@@ -25,72 +25,66 @@ function Captaindetail({ boat, boatId, renderTriggerHandler }) {
   };
 
   return (
-    <div>
-      <StContainer>
-        <Title>{boat.boat.title}</Title>
-        <CreatedAt>
-          <div>
-            <Captain>{boat.boat.captain}</Captain>
-            {new Date(boat.boat.createdAt).toISOString().split("T")[0]}
-          </div>
-          <div style={{ position: "relative" }}>
-            <StImg
-              src={viewBtn}
-              alt="captainDetail button"
-              onClick={showModal}
-            />
-            {modalOpen && (
-              <StModalBox>
-                <Captainmodal
-                  boat={boat}
-                  boatId={boatId}
-                  setModalOpen={setModalOpen}
-                />
-              </StModalBox>
-            )}
-          </div>
-        </CreatedAt>
-        <Box>
-          <Address>
-            <span>지역</span>
-            <span>{boat.boat.address}</span>
-          </Address>
-          <MaxCrewNum>
-            <span>모집 인원</span>
-            <StMemberBox
-              src={crewListBtn}
-              alt="crewList button"
-              onClick={memberModalHandler}
-            />
-            {memberShowModal && (
-              <Member
-                boatId={boatId}
+    <StContainer>
+      <Title>{boat.boat.title}</Title>
+      <CreatedAt>
+        <div>
+          <Captain>{boat.boat.captain}</Captain>
+          {new Date(boat.boat.createdAt).toISOString().split("T")[0]}
+        </div>
+        <div style={{ position: "relative" }}>
+          <StImg src={viewBtn} alt="captainDetail button" onClick={showModal} />
+          {modalOpen && (
+            <StModalBox>
+              <Captainmodal
                 boat={boat}
-                setMemberShowModal={setMemberShowModal}
-                renderTriggerHandler={renderTriggerHandler}
+                boatId={boatId}
+                setModalOpen={setModalOpen}
               />
-            )}
-            <CrewNum>
-              {boat.boat.crewNum}/{boat.boat.maxCrewNum}
-            </CrewNum>
-          </MaxCrewNum>
-          <EndDate>
-            <span>모집 기한</span>
-            <span>{boat.boat.endDate ? boat.boat.endDate : "상시 모집"}</span>
-          </EndDate>
-        </Box>
-        <Content
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(boat.boat.content),
-          }}
-        />
-      </StContainer>
+            </StModalBox>
+          )}
+        </div>
+      </CreatedAt>
+      <Box>
+        <Address>
+          <span>지역</span>
+          <span>{boat.boat.address}</span>
+        </Address>
+        <MaxCrewNum>
+          <span>모집 인원</span>
+          <StMemberBox
+            src={crewListBtn}
+            alt="crewList button"
+            onClick={memberModalHandler}
+          />
+          {memberShowModal && (
+            <Member
+              boatId={boatId}
+              boat={boat}
+              setMemberShowModal={setMemberShowModal}
+              renderTriggerHandler={renderTriggerHandler}
+            />
+          )}
+          <CrewNum>
+            {boat.boat.crewNum}/{boat.boat.maxCrewNum}
+          </CrewNum>
+        </MaxCrewNum>
+        <EndDate>
+          <span>모집 기한</span>
+          <span>{boat.boat.endDate ? boat.boat.endDate : "상시 모집"}</span>
+        </EndDate>
+      </Box>
+      <Content
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(boat.boat.content),
+        }}
+      />
       <Comment
         boat={boat}
         boatId={boatId}
         renderTriggerHandler={renderTriggerHandler}
       />
-    </div>
+    </StContainer>
   );
 }
 
@@ -103,12 +97,15 @@ Captaindetail.propTypes = {
 };
 
 const StMemberBox = styled.img`
-  width: 8%;
+  width: 32px;
+  height: 32px;
   margin-left: auto;
 `;
 
 const CrewNum = styled.span`
   margin-left: 10px;
+  display: flex;
+  align-items: center;
 `;
 
 const StContainer = styled.div`

@@ -12,56 +12,51 @@ function Crewdetail({ boat, boatId, renderTriggerHandler }) {
     setMemberShowModal(!memberShowModal);
   };
   return (
-    <div>
-      <div>
-        <StContainer>
-          <Title>{boat.boat.title}</Title>
-          <CreatedAt>
-            <Captain>{boat.boat.captain}</Captain>
-            {new Date(boat.boat.createdAt).toISOString().split("T")[0]}
-          </CreatedAt>
-          <Box>
-            <Address>
-              <span>지역</span>
-              <span>{boat.boat.address}</span>
-            </Address>
-            <MaxCrewNum>
-              <span>모집 인원</span>
-              <StMemberBox
-                src={crewListBtn}
-                alt="crewList button"
-                onClick={memberModalHandler}
-              />
-              {memberShowModal && (
-                <Member
-                  boat={boat}
-                  setMemberShowModal={setMemberShowModal}
-                  renderTriggerHandler={renderTriggerHandler}
-                />
-              )}
-              <CrewNum>
-                {boat.boat.crewNum}/{boat.boat.maxCrewNum}
-              </CrewNum>
-            </MaxCrewNum>
-            <EndDate>
-              <span>모집 기한</span>
-              <span>{boat.boat.endDate ? boat.boat.endDate : "상시 모집"}</span>
-            </EndDate>
-          </Box>
-          <Content
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(boat.boat.content),
-            }}
+    <StContainer>
+      <Title>{boat.boat.title}</Title>
+      <CreatedAt>
+        <Captain>{boat.boat.captain}</Captain>
+        {new Date(boat.boat.createdAt).toISOString().split("T")[0]}
+      </CreatedAt>
+      <Box>
+        <Address>
+          <span>지역</span>
+          <span>{boat.boat.address}</span>
+        </Address>
+        <MaxCrewNum>
+          <span>모집 인원</span>
+          <StMemberBox
+            src={crewListBtn}
+            alt="crewList button"
+            onClick={memberModalHandler}
           />
-        </StContainer>
-
-        <Comment
-          boat={boat}
-          boatId={boatId}
-          renderTriggerHandler={renderTriggerHandler}
-        />
-      </div>
-    </div>
+          {memberShowModal && (
+            <Member
+              boat={boat}
+              setMemberShowModal={setMemberShowModal}
+              renderTriggerHandler={renderTriggerHandler}
+            />
+          )}
+          <CrewNum>
+            {boat.boat.crewNum}/{boat.boat.maxCrewNum}
+          </CrewNum>
+        </MaxCrewNum>
+        <EndDate>
+          <span>모집 기한</span>
+          <span>{boat.boat.endDate ? boat.boat.endDate : "상시 모집"}</span>
+        </EndDate>
+      </Box>
+      <Content
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(boat.boat.content),
+        }}
+      />
+      <Comment
+        boat={boat}
+        boatId={boatId}
+        renderTriggerHandler={renderTriggerHandler}
+      />
+    </StContainer>
   );
 }
 

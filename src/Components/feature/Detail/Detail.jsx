@@ -33,7 +33,6 @@ function Detail() {
       // console.log("data", data);
       setBoat(data);
       setPersonType(data.personType);
-      console.log("data", data);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching post:", error);
@@ -75,7 +74,9 @@ function Detail() {
     );
   }
 
-  return <div style={{width:"95%", margin:"0 auto"}}>{componentToRender}</div>;
+  return (
+    <div style={{ width: "95%", margin: "0 auto" }}>{componentToRender}</div>
+  );
 }
 
 export default Detail;

@@ -129,7 +129,7 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
 
   return (
     <StContainer>
-      <StLine>{/* 라인을 위한 div */}</StLine>
+      <StLine />
       <StInputField>
         <StInputBox
           type="text"
@@ -272,7 +272,7 @@ const StInputField = styled.div`
 `;
 
 const StInputBox = styled.textarea`
-  width: 230px;
+  width: 100%;
   height: 100%;
   border: none;
   outline: none;

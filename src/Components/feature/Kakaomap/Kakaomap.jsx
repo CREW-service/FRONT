@@ -161,7 +161,7 @@ function Kakaomaprefact() {
 
   return (
     <div
-      id="map wwwwaaaaaappppp"
+      id="map"
       style={{
         width: "100%",
         height: "100%",

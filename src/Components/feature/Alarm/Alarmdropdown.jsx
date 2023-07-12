@@ -21,7 +21,7 @@ function Alarmdropdown() {
 
   useEffect(() => {
     socket.on("connect", async () => {
-      socket.emit("alarms");
+      // socket.emit("alarms");
     });
 
     socket.on("alarmList", async (data) => {
@@ -29,9 +29,9 @@ function Alarmdropdown() {
       setAlarms(alarm);
     });
 
-    socket.on("newAlarm", async () => {
-      socket.emit("alarms");
-    });
+    // socket.on("newAlarm", async () => {
+    //   socket.emit("alarms");
+    // });
 
     const fetchAlarmData = async () => {
       socket.emit("alarms");

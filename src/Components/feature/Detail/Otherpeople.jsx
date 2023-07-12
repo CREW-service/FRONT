@@ -21,9 +21,6 @@ function Otherpeople({ boat, renderTriggerHandler }) {
       const res = await AuthApi.joinBoat(id, config);
       alert(res.data.message);
       renderTriggerHandler();
-      {
-        console.log("res", res);
-      }
     } catch (err) {
       // console.log("Error:", error);
       alert(err.response.data.errorMessage);
@@ -82,7 +79,7 @@ const StContainer = styled.div`
   flex-direction: column;
   align-items: stretch;
 
-  min-height: calc(100vh - 128px); 
+  min-height: calc(100vh - 128px);
   box-sizing: border-box;
 `;
 
@@ -181,7 +178,7 @@ const EndDate = styled.div`
 `;
 
 const Content = styled.div`
-  flex:1;
+  flex: 1;
   width: 100%;
   margin: 20px 0 5px;
   font-family: Pretendard;
