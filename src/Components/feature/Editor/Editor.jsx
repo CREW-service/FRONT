@@ -90,8 +90,8 @@ function Editor() {
   };
 
   const cancelButtonHandler = () => {
-    navigate("/main")
-  }
+    navigate("/main");
+  };
 
   const onSubmitHandler = async () => {
     if (!state.recruitmentTitle || !bodyContents || !state.recruitmentCount) {
@@ -151,7 +151,7 @@ function Editor() {
         </StTextField>
         <StTextField>
           <StSpanText>상시 모집:</StSpanText>
-          <input
+          <StInputCheakBox
             type="checkbox"
             name="isIndefiniteRecruitment"
             checked={state.isIndefiniteRecruitment}
@@ -193,7 +193,9 @@ function Editor() {
       </StEditorContainer>
       {/* 버튼 */}
       <StEditorBtnBox>
-        <StCancelButton type="button" onClick={cancelButtonHandler}>취소</StCancelButton>
+        <StCancelButton type="button" onClick={cancelButtonHandler}>
+          취소
+        </StCancelButton>
         <StSubmitButton type="button" onClick={onSubmitHandler}>
           저장
         </StSubmitButton>
@@ -221,50 +223,58 @@ const StEditorContainer = styled.div`
 
 const StTextField = styled.div`
   display: flex;
-  width: 360px;
+  width: 100%;
   height: 56px;
   align-items: center;
-
 `;
 
 const StSpanText = styled.span`
-  height: 24px;
-  width: 70px;
+  height: 40px;
+  width: 80px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: center; */
 `;
 const StInputField = styled.input`
-  width: 265px;
+  width: 100%;
   height: 40px;
   flex-grow: 0;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  
+
   border-radius: 4px;
   border: solid 2px #eff4f8;
   background-color: #fff;
 `;
 
 const StInputNumberBox = styled.div`
-  width: 265px;
+  width: 100%;
   height: 40px;
   flex-grow: 0;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  
 `;
 
+const StInputCheakBox = styled.input`
+  height: 40px;
+  width: 40px;
+`
+
 const StInputNumberField = styled.input`
-  width: 250px;
+  width: 100%;
   height: 40px;
   flex-grow: 0;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
- 
+
   border-radius: 4px;
   border: solid 2px #eff4f8;
   background-color: #fff;
@@ -281,7 +291,7 @@ const StInputNumberField = styled.input`
 `;
 
 const StSelectBox = styled.select`
-  width: 265px;
+  width: 100%;
   height: 40px;
   flex-grow: 0;
   display: flex;
@@ -295,10 +305,16 @@ const StSelectBox = styled.select`
 `;
 
 const StCounterButton = styled.button`
+  width: 40px;
+  height: 40px;
   background-color: #fff;
   color: #1f67a1;
   font-size: 38px;
   border: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   cursor: pointer;
 `;
@@ -317,7 +333,7 @@ const StCancelButton = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  
+
   margin: 68px 16px 40px;
   padding: 16px 40px;
   border: 0;
