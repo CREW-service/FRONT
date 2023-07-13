@@ -21,7 +21,7 @@ function Alarmdropdown() {
 
   useEffect(() => {
     socket.on("connect", async () => {
-      // socket.emit("alarms");
+      socket.emit("alarms");
     });
 
     socket.on("alarmList", async (data) => {
@@ -42,7 +42,7 @@ function Alarmdropdown() {
     return () => {
       socket.off("alarmList");
     };
-  }, [location]);
+  },);
 
   useEffect(() => {
     setHaveAlarms(haveAlarmHandler());
@@ -61,9 +61,9 @@ function Alarmdropdown() {
 
     socket.emit("alarmRead", alarmId);
 
-    socket.on("alarmList", async (data) => {
-      setAlarms(data.data);
-    });
+    // socket.on("alarmList", async (data) => {
+    //   setAlarms(data.data);
+    // });
   };
 
   return (
