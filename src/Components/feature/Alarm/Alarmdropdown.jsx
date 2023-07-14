@@ -19,34 +19,34 @@ function Alarmdropdown() {
     return result;
   };
 
-  useEffect(() => {
-    socket.on("connect", async () => {
-      socket.emit("alarms");
-    });
+  // useEffect(() => {
+  //   socket.on("connect", async () => {
+  //     socket.emit("alarms");
+  //   });
 
-    socket.on("alarmList", async (data) => {
-      const alarm = await data.data;
-      setAlarms(alarm);
-    });
+  //   socket.on("alarmList", async (data) => {
+  //     const alarm = await data.data;
+  //     setAlarms(alarm);
+  //   });
 
-    // socket.on("newAlarm", async () => {
-    //   socket.emit("alarms");
-    // });
+  //   // socket.on("newAlarm", async () => {
+  //   //   socket.emit("alarms");
+  //   // });
 
-    const fetchAlarmData = async () => {
-      socket.emit("alarms");
-    };
+  //   const fetchAlarmData = async () => {
+  //     socket.emit("alarms");
+  //   };
 
-    fetchAlarmData();
+  //   fetchAlarmData();
 
-    return () => {
-      socket.off("alarmList");
-    };
-  },);
+  //   return () => {
+  //     socket.off("alarmList");
+  //   };
+  // },);
 
-  useEffect(() => {
-    setHaveAlarms(haveAlarmHandler());
-  }, [alarms]);
+  // useEffect(() => {
+  //   setHaveAlarms(haveAlarmHandler());
+  // }, [alarms]);
 
   const modalHandler = () => {
     setShowModal(!showModal);
@@ -69,8 +69,9 @@ function Alarmdropdown() {
   return (
     <div>
       <StAlarmButton type="button" onClick={modalHandler}>
-        <StImg src={haveAlarms ? Alerthaveicon : Alerticon} alt="알림 아이콘" />
-        {showModal && haveAlarms ? (
+        <StImg src={Alerticon} alt="알림 아이콘" />
+        {/* <StImg src={haveAlarms ? Alerthaveicon : Alerticon} alt="알림 아이콘" /> */}
+        {/* {showModal && haveAlarms ? (
           <StModalOverlay>
             <StModalContainer>
               {alarms?.map((alarm) => (
@@ -85,7 +86,7 @@ function Alarmdropdown() {
               ))}
             </StModalContainer>
           </StModalOverlay>
-        ) : null}
+        ) : null} */}
       </StAlarmButton>
     </div>
   );
