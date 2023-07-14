@@ -285,7 +285,7 @@ const StInputBox = styled.textarea`
 
 const StInputBtn = styled.button`
   width: 65px;
-  height: 55px;
+  height: 65px;
   padding: 8px;
   border: none;
   border-radius: 12px;
@@ -303,7 +303,7 @@ const StCommnetContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 328px;
+  width: 95%;
   margin: 20px auto;
   font-size: 16px;
   font-family: Pretendard;
@@ -433,12 +433,12 @@ const StCancelBtn = styled.button`
   color: #9c9c9c;
   background-color: #fff;
   border-radius: 8px;
-  margin-right: 28px;
+  margin-right: 8px;
 `;
 
 const StAddBtn = styled.button`
   border: none;
-  width: 55px;
+  width: 65px;
   height: 36px;
   color: #fff;
   background-color: #30a2ff;
