@@ -9,6 +9,7 @@ import { boatAtom } from "Recoil/recoilAtoms";
 import writedboaticon from "imgs/writedboaticon.png";
 import defualtpic from "imgs/defualtpic.jpg";
 import Rectangle from "imgs/Rectangle.png";
+import LOADING from "imgs/loading.gif"
 
 Modal.setAppElement("#root");
 
@@ -106,7 +107,7 @@ function Mypage() {
   return (
     <div>
       {isLoading ? (
-        <div>Loading...</div>
+        <div><img src="LOADING" alt="Loading..." /></div>
       ) : (
         <StContainer>
           <StLayoutBox />

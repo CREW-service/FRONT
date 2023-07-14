@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
 import { personTypeAtom, boatAtom } from "Recoil/recoilAtoms";
 import { useRecoilState } from "recoil";
+import LOADING from "imgs/loading.gif"
 import Captaindetail from "./Captaindetail";
 import Crewdetail from "./Crewdetail";
 import Otherpeople from "./Otherpeople";
@@ -51,7 +52,7 @@ function Detail() {
   let componentToRender;
 
   if (isLoading) {
-    componentToRender = <div>Loading...</div>;
+    componentToRender = <div><img src="LOADING" alt="loading,,," /></div>;
   } else if (personType === "captain") {
     componentToRender = (
       <Captaindetail
