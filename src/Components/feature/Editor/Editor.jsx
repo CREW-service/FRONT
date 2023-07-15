@@ -56,18 +56,15 @@ function Editor() {
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
     let newValue = value;
-  
+
     if (name === "recruitmentCount") {
       // 값이 2보다 작으면 2로, 20보다 크면 20으로 설정합니다.
       const parsedValue = parseInt(value, 20);
       newValue = Math.min(Math.max(parsedValue, 2), 20);
-    } else if (name === "isIndefiniteRecruitment") {
-      // 상시 모집 체크 박스가 변경되었을 때, recruitmentDeadline 값을 빈 문자열로 설정합니다.
-      newValue = checked ? "" : state.recruitmentDeadline;
     } else {
       newValue = type === "checkbox" ? checked : value;
     }
-  
+
     setState((prevState) => ({
       ...prevState,
       [name]: newValue,
@@ -102,12 +99,17 @@ function Editor() {
       return;
     }
 
+    // 상시 모집인 경우 endDate 값을 null로 설정, 그렇지 않은 경우 빈 문자열("")로 설정
+    const endDate = state.isIndefiniteRecruitment
+      ? null
+      : state.recruitmentDeadline;
+
     const newPost = {
       title: state.recruitmentTitle,
       content: bodyContents,
       keyword: state.recruitmentType,
       maxCrewNum: state.recruitmentCount,
-      endDate: state.recruitmentDeadline,
+      endDate,
       address: markerAddress[0],
       latitude: String(recoilLatLng.lat),
       longitude: String(recoilLatLng.lng),
@@ -267,7 +269,7 @@ const StInputNumberBox = styled.div`
 const StInputCheakBox = styled.input`
   height: 40px;
   width: 40px;
-`
+`;
 
 const StInputNumberField = styled.input`
   width: 100%;
