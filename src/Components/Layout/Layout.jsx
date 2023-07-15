@@ -29,7 +29,7 @@ const StLayoutBox = styled.div`
   flex-direction: column;
   justify-content: space-between; /* Header와 Footer 사이에 공간을 균등하게 배분 */
   align-items: center;
-  max-width: 360px;
+  max-width: 1100px;
   width: 100%;
   min-height: 100vh; /* 최소 높이를 뷰포트 높이로 설정하여 Footer가 항상 맨 아래에 위치하도록 함 */
   margin: 0 auto;
@@ -38,7 +38,7 @@ const StLayoutBox = styled.div`
   overflow: hidden;
   height: 100vh;
 
-  @media (max-width: 680px) {
+  @media (max-width: 1100px) {
     max-width: 100%;
     border-width: 2px;
     border-radius: 15px;
