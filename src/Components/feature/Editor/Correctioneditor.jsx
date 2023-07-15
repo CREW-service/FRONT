@@ -24,12 +24,8 @@ const alertList = {
 
 function Correctioneditor() {
   const [boat, setBoat] = useRecoilState(boatAtom);
-  let endDate = null;
-  if (boat.boat.endDate) {
-    endDate = false;
-  } else {
-    endDate = true;
-  }
+  const endDate = !!(!boat.boat.endDate || boat.boat.endDate === "");
+
   const initialState = {
     recruitmentTitle: boat.boat.title,
     recruitmentCount: boat.boat.maxCrewNum,
@@ -85,7 +81,7 @@ function Correctioneditor() {
       ...prevState,
       [name]: newValue,
     }));
-  };
+  }
 
   const handleDecrement = () => {
     setState((prevState) => ({

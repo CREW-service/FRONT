@@ -6,6 +6,8 @@ import styled from "styled-components";
 import AuthApi from "shared/api";
 
 function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
+  
+
   const modalRef = useRef(null);
   const closeModal = () => {
     setModalOpen(false);
