@@ -117,7 +117,7 @@ function Correctioneditor() {
       return;
     }
 
-    // 상시 모집인 경우 endDate 값을 null로 설정, 그렇지 않은 경우 빈 문자열("")로 설정
+    // 상시 모집인 경우 endDate 값을 null로 설정
     const newEndDate = state.isIndefiniteRecruitment
       ? null
       : state.recruitmentDeadline;
