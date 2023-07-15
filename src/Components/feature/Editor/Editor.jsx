@@ -1,10 +1,8 @@
-/* eslint-disable react/jsx-no-bind */
 import React, { useState, useEffect } from "react";
 import AuthApi from "shared/api";
 import { useCookies } from "react-cookie";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-// styled...
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { markerAddressAtom, recoilLatLngAtom } from "Recoil/recoilAtoms";
@@ -53,7 +51,7 @@ function Editor() {
     }
   }, []);
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     let newValue = value;
 
@@ -71,14 +69,14 @@ function Editor() {
     }));
   }
 
-  function handleDecrement() {
+  const handleDecrement = () => {
     setState((prevState) => ({
       ...prevState,
       recruitmentCount: Math.max(prevState.recruitmentCount - 1, 2),
     }));
   }
 
-  function handleIncrement() {
+  const handleIncrement = () => {
     setState((prevState) => ({
       ...prevState,
       recruitmentCount: Math.min(prevState.recruitmentCount + 1, 20),
