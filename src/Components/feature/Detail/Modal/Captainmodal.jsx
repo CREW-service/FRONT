@@ -55,7 +55,7 @@ function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
       };
       const res = await AuthApi.deleteBoat(boatId, newDeleteData, config);
       alert(res.data.message);
-      renderTriggerHandler();
+      navigate("/main");
     } catch (err) {
       console.log(err);
     }
