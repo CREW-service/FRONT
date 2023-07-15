@@ -119,7 +119,7 @@ function Correctioneditor() {
 
     // 상시 모집인 경우 endDate 값을 null로 설정
     const newEndDate = state.isIndefiniteRecruitment
-      ? null
+      ? ""
       : state.recruitmentDeadline;
 
     const correctionPost = {
