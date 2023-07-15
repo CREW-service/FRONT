@@ -22,7 +22,7 @@ function Header() {
       <StLogobox onClick={onClickLogo}>
         <StLogoImg src={LOGO} alt="LOGO" />
       </StLogobox>
-      <React.Suspense fallback={<div></div>}>
+      <React.Suspense fallback={<div/>}>
         <LazyAlarmdropdown />
       </React.Suspense>
     </StContainer>
