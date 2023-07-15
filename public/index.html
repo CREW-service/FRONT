@@ -9,6 +9,20 @@
       name="description"
       content="새로운 친구가 필요할때? 같이 놀 사람이 필요할때?CREW에서 찾아보세요!"
     />
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-181HY05CQY"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-181HY05CQY");
+    </script>
     <!-- <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" /> -->
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -26,7 +40,10 @@
     -->
 
     <!-- 카카오 맵 사용을 위한 스크립트 -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%REACT_APP_KAKAO_APP_KEY%&libraries=services"></script>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%REACT_APP_KAKAO_APP_KEY%&libraries=services"
+    ></script>
 
     <title>Team CREW</title>
   </head>
