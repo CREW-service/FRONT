@@ -3,20 +3,46 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import DOMPurify from "dompurify"; // DOMPurify 라이브러리 가져오기
 import crewListBtn from "imgs/view_crew_list.png";
+import viewBtn from "imgs/view_cap.png";
+import Crewmodal from "./Modal/Crewmodal";
 import Comment from "./Comment/Comment";
 import Member from "./Modal/Member";
 
 function Crewdetail({ boat, boatId, renderTriggerHandler }) {
+  const [modalOpen, setModalOpen] = useState(false);
+
   const [memberShowModal, setMemberShowModal] = useState(false);
   const memberModalHandler = () => {
-    setMemberShowModal(!memberShowModal);
+    if (boat.crew.length > 0) {
+      setMemberShowModal(!memberShowModal);
+    }
   };
+
+  // 모달창 노출
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
   return (
     <StContainer>
       <Title>{boat.boat.title}</Title>
       <CreatedAt>
-        <Captain>{boat.boat.captain}</Captain>
-        {new Date(boat.boat.createdAt).toISOString().split("T")[0]}
+        <div>
+          <Captain>{boat.boat.captain}</Captain>
+          {new Date(boat.boat.createdAt).toISOString().split("T")[0]}
+        </div>
+        <div style={{ position: "relative" }}>
+          <StImg src={viewBtn} alt="crewdetail button" onClick={showModal} />
+          {modalOpen && (
+            <StModalBox>
+              <Crewmodal
+                boat={boat}
+                boatId={boatId}
+                setModalOpen={setModalOpen}
+              />
+            </StModalBox>
+          )}
+        </div>
       </CreatedAt>
       <Box>
         <Address>
@@ -84,7 +110,7 @@ const StContainer = styled.div`
 `;
 
 const Title = styled.div`
-  margin: 32px 0 16px 0;
+  margin: 32px 5px 16px 0;
   font-family: Pretendard;
   font-size: 24px;
   font-weight: bold;
@@ -96,8 +122,7 @@ const Title = styled.div`
 `;
 
 const CreatedAt = styled.span`
-  /* width: 55px;
-  height: 20px; */
+  display: flex;
   margin: 10px 0 0 8px;
   font-family: Pretendard;
   font-size: 14px;
@@ -107,11 +132,34 @@ const CreatedAt = styled.span`
   line-height: 1.43;
   letter-spacing: normal;
   color: #222;
+
+  display: flex;
+  justify-content: space-between;
+`;
+const StImg = styled.img`
+  width: 25px;
+  height: 25px;
+`;
+
+const StModalBox = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  background-color: #fff;
+
+  z-index: 9999;
+  top: 100%;
+  right: 0;
+  margin-top: 5px;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const Captain = styled.span`
-  /* width: 37px;
-  height: 20px; */
   margin: 10px 8px 0 0;
   font-family: Pretendard;
   font-size: 14px;
@@ -121,6 +169,8 @@ const Captain = styled.span`
   line-height: 1.43;
   letter-spacing: normal;
   color: #222;
+  margin-left: 3px;
+  margin-right: 16px;
 `;
 
 const Box = styled.div`
