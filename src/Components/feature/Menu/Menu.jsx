@@ -38,7 +38,7 @@ function Menu() {
   };
 
   const handleClick = () => {
-    window.open('http://7z0w1.channel.io', '_blank');
+    window.open('http://7z0w1.channel.io', '_blank', 'rel="noopener noreferrer"');
   };
 
   useEffect(() => {
