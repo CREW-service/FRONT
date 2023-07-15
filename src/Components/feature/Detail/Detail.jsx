@@ -52,7 +52,7 @@ function Detail() {
   let componentToRender;
 
   if (isLoading) {
-    componentToRender = <div><img src="LOADING" alt="loading,,," /></div>;
+    componentToRender = <div><img src={LOADING} alt="loading,,," /></div>;
   } else if (personType === "captain") {
     componentToRender = (
       <Captaindetail

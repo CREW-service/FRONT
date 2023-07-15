@@ -107,7 +107,7 @@ function Mypage() {
   return (
     <div>
       {isLoading ? (
-        <div><img src="LOADING" alt="Loading..." /></div>
+        <div><img src={LOADING} alt="Loading..." /></div>
       ) : (
         <StContainer>
           <StLayoutBox />
