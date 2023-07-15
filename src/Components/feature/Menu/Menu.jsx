@@ -37,6 +37,10 @@ function Menu() {
     }
   };
 
+  const handleClick = () => {
+    window.open('http://7z0w1.channel.io', '_blank');
+  };
+
   useEffect(() => {
     if (isOutsideClicked) {
       closeLoginModal();
@@ -81,7 +85,7 @@ function Menu() {
                   로그인
                 </StModalButton>
               )}
-              <StModalButton type="button">설정</StModalButton>
+              <StModalButton type="button" onClick={handleClick}>문의하기</StModalButton>
             </StModalContainer>
           </StModalOverlay>
         )}

@@ -8,7 +8,7 @@ import { useRecoilState } from "recoil";
 import { markerAddressAtom, recoilLatLngAtom } from "Recoil/recoilAtoms";
 import { useNavigate } from "react-router-dom";
 
-const recruitmentTypeList = ["같이 해요", "같이 먹어요", "같이 사요"];
+const recruitmentTypeList = ["같이 해요", "같이 먹어요", "같이 사요", "같이 놀아요", "같이 가요", "나눔해요"];
 const alertList = {
   noCookie: "로그인 정보가 올바르지 않습니다.",
   missingInfo: "필수 정보가 누락되었습니다.",
