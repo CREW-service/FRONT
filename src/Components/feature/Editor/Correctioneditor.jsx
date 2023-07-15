@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-bind */
 import React, { useState, useEffect } from "react";
 import AuthApi from "shared/api";
 import { useCookies } from "react-cookie";
@@ -70,10 +69,10 @@ function Correctioneditor() {
     setBodyContent(boat.boat.content);
   }, []);
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     let newValue = value;
-  
+
     if (name === "recruitmentCount") {
       // 값이 2보다 작으면 2로, 20보다 크면 20으로 설정합니다.
       const parsedValue = parseInt(value, 20);
@@ -81,26 +80,26 @@ function Correctioneditor() {
     } else {
       newValue = type === "checkbox" ? checked : value;
     }
-  
+
     setState((prevState) => ({
       ...prevState,
       [name]: newValue,
     }));
-  }
+  };
 
-  function handleDecrement() {
+  const handleDecrement = () => {
     setState((prevState) => ({
       ...prevState,
       recruitmentCount: Math.max(prevState.recruitmentCount - 1, 2),
     }));
-  }
+  };
 
-  function handleIncrement() {
+  const handleIncrement = () => {
     setState((prevState) => ({
       ...prevState,
       recruitmentCount: Math.min(prevState.recruitmentCount + 1, 20),
     }));
-  }
+  };
 
   const onChangeBodyHandler = (contents) => {
     setBodyContent(contents);
@@ -115,7 +114,6 @@ function Correctioneditor() {
       alert(alertList.missingInfo);
       return;
     }
-
 
     // 상시 모집인 경우 endDate 값을 null로 설정, 그렇지 않은 경우 빈 문자열("")로 설정
     const newEndDate = state.isIndefiniteRecruitment
@@ -294,7 +292,7 @@ const StInputNumberBox = styled.div`
 const StInputCheakBox = styled.input`
   height: 40px;
   width: 40px;
-`
+`;
 
 const StInputNumberField = styled.input`
   width: 100%;
