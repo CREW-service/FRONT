@@ -1,9 +1,13 @@
-import React from "react";
+import React, { lazy } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Alarmdropdown from "Components/feature/Alarm/Alarmdropdown";
+
 import Menu from "Components/feature/Menu/Menu";
 import LOGO from "imgs/logo.png";
+
+const LazyAlarmdropdown = lazy(() =>
+  import("Components/feature/Alarm/Alarmdropdown")
+);
 
 function Header() {
   const navigate = useNavigate();
@@ -18,7 +22,9 @@ function Header() {
       <StLogobox onClick={onClickLogo}>
         <StLogoImg src={LOGO} alt="LOGO" />
       </StLogobox>
-      <Alarmdropdown />
+      <React.Suspense fallback={<div></div>}>
+        <LazyAlarmdropdown />
+      </React.Suspense>
     </StContainer>
   );
 }
