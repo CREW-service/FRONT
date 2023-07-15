@@ -25,7 +25,6 @@ const alertList = {
 
 function Correctioneditor() {
   const [boat, setBoat] = useRecoilState(boatAtom);
-  console.log("boat", boat);
   let endDate = null;
   if (boat.boat.endDate) {
     endDate = false;
