@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Alerticon from "imgs/alret_ic_1.png";
 import Alerthaveicon from "imgs/alret_ic_2.png";
-import useSocket from "Hooks/useSocket";
 import { isLoginAtom } from "Recoil/recoilAtoms";
 import { useRecoilValue } from "recoil";
-import { useLocation } from "react-router-dom";
 
 import { io } from "socket.io-client";
 
@@ -13,7 +11,6 @@ const getAuthorizationCookieValue = () => {
   const name = "authorization=";
   const decodedCookie = decodeURIComponent(document.cookie);
   const cookieArray = decodedCookie.split(";");
-
 
   for (let i = 0; i < cookieArray.length; i += 1) {
     let cookie = cookieArray[i];
@@ -47,12 +44,16 @@ function Alarmdropdown() {
     return result;
   };
 
-
   useEffect(() => {
+    if(!isLogin) {
+      setAlarms([])
+    }
+
     if(isLogin&&!socket.connected){
       socket.on("connect", async () => {
         socket.emit("alarms");
       });
+
       socket.on("alarmList", async (data) => {
         const alarm = await data.data;
         setAlarms(alarm);
@@ -60,10 +61,9 @@ function Alarmdropdown() {
     }
 
     return () => {
-      socket.off("alarmList");
+      socket.off("disconnect");
     };
   },[isLogin]);
-
 
   useEffect(() => {
     setHaveAlarms(haveAlarmHandler());

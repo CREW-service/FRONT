@@ -13,8 +13,8 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />} >
-          <Route path="/" index element={<Onboarding />} />
+        <Route path="/" index element={<Onboarding />} />
+        <Route path="/" element={<Layout />}>
           <Route path="/boat/:id" element={<Boat />} />
           <Route path="/writing" element={<Writing />} />
           <Route path="/correctionwriting" element={<CorrectionWriting />} />
@@ -24,7 +24,6 @@ function Router() {
         </Route>
       </Routes>
     </BrowserRouter>
-
   );
 }
 
