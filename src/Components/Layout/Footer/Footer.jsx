@@ -1,6 +1,6 @@
-import React, {  useState } from "react";
+import React, {  useEffect, useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Homeicon from "imgs/home_ic.png";
 import Homeiconactive from "imgs/home_ic_C.png";
 import Writingicon from "imgs/edit_ic.png";
@@ -10,13 +10,16 @@ import Mypageiconactive from "imgs/mypage_ic_C.png";
 
 function Footer() {
   const [currentPage, setCurrentPage] = useState("");
- 
+  const {pathname} = useLocation();
   const navigate = useNavigate();
 
   const onClick = (url) => {
-    setCurrentPage(url);
     navigate(url);
   };
+
+  useEffect(()=>{
+    setCurrentPage(pathname)
+  },[pathname])
 
   return (
     <StContainer>
