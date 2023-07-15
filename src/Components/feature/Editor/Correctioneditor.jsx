@@ -26,15 +26,21 @@ function Correctioneditor() {
   const [boat, setBoat] = useRecoilState(boatAtom);
   const endDate = !!(!boat.boat.endDate || boat.boat.endDate === "");
 
-  const initialState = {
+  // const initialState = {
+  //   recruitmentTitle: boat.boat.title,
+  //   recruitmentCount: boat.boat.maxCrewNum,
+  //   recruitmentDeadline: boat.boat.endDate,
+  //   recruitmentType: boat.boat.keyword,
+  //   isIndefiniteRecruitment: endDate,
+  // };
+
+  const [state, setState] = useState({
     recruitmentTitle: boat.boat.title,
     recruitmentCount: boat.boat.maxCrewNum,
     recruitmentDeadline: boat.boat.endDate,
     recruitmentType: boat.boat.keyword,
     isIndefiniteRecruitment: endDate,
-  };
-
-  const [state, setState] = useState(initialState);
+  });
   const [bodyContents, setBodyContent] = useState("");
   const [cookies] = useCookies(["authorization"]);
   const markerAddress = useRecoilState(markerAddressAtom);
