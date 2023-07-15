@@ -1,15 +1,12 @@
-import Layout from "Components/Layout/Layout";
 import Kakaologin from "Components/feature/Kakaologin/Kakaologin";
 import React from "react";
 import styled from "styled-components";
 
 function Signin() {
   return (
-    <Layout>
       <StContainer>
         <Kakaologin />
       </StContainer>
-    </Layout>
   );
 }
 

@@ -1,6 +1,7 @@
 import io from "socket.io-client";
 
 function useSocket() {
+
   // authorization 쿠키의 값을 가져옴
   const getAuthorizationCookieValue = () => {
     const name = "authorization=";

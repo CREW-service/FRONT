@@ -37,3 +37,8 @@ export const boatAtom = atom({
   key: "boat",
   default: "",
 });
+
+export const isLoginAtom = atom({
+  key: "isLogin",
+  default: false,
+});

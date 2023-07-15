@@ -5,8 +5,8 @@ import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import AuthApi from "shared/api";
-import { currentUserIdAtom } from "Recoil/recoilAtoms";
-import { useRecoilState } from "recoil";
+import { currentUserIdAtom, isLoginAtom } from "Recoil/recoilAtoms";
+import { useRecoilState, useSetRecoilState} from "recoil";
 import ICON from "imgs/drwicon.gif";
 // import LOGO from "imgs/CREW_B 1.png";
 import LOGO from "imgs/B_LOGO.svg";
@@ -17,6 +17,7 @@ function Onboarding() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cookies, setCookie] = useCookies(["authorization"]);
   const [, setCurrentUserId] = useRecoilState(currentUserIdAtom);
+  const setIsLogin = useSetRecoilState(isLoginAtom);
   const navigate = useNavigate();
 
   const getUserInfo = async () => {
@@ -32,7 +33,6 @@ function Onboarding() {
       setCurrentUserId(res.data.userId);
     } catch (err) {
       // 로그인한 유저 정보를 받아오지 못했음
-      console.log(err);
     }
   };
 
@@ -46,9 +46,10 @@ function Onboarding() {
     if (token) {
       setCookie("authorization", `Bearer ${token}`);
       getUserInfo();
+      setIsLogin(true);
       navigate("/main");
     }
-  }, [cookies]);
+  });
 
   const closeLoginModal = () => {
     setIsModalOpen(false);

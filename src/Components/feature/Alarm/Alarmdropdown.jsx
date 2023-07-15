@@ -3,50 +3,71 @@ import styled from "styled-components";
 import Alerticon from "imgs/alret_ic_1.png";
 import Alerthaveicon from "imgs/alret_ic_2.png";
 import useSocket from "Hooks/useSocket";
+import { isLoginAtom } from "Recoil/recoilAtoms";
+import { useRecoilValue } from "recoil";
 import { useLocation } from "react-router-dom";
+
+import { io } from "socket.io-client";
+
+const getAuthorizationCookieValue = () => {
+  const name = "authorization=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(";");
+
+
+  for (let i = 0; i < cookieArray.length; i += 1) {
+    let cookie = cookieArray[i];
+    while (cookie.charAt(0) === " ") {
+      cookie = cookie.substring(1);
+    }
+    if (cookie.indexOf(name) === 0) {
+      return cookie.substring(name.length, cookie.length);
+    }
+  }
+  return null;
+};
+
+const socket = io(process.env.REACT_APP_BACKEND_SERVER_URL, {
+  withCredentials: true,
+  extraHeaders: {
+    authorization: getAuthorizationCookieValue() || "",
+  },
+});
 
 function Alarmdropdown() {
   const [alarms, setAlarms] = useState([]);
   const [haveAlarms, setHaveAlarms] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const socket = useSocket();
-
-  const location = useLocation();
-
+  const recoilIsLogin = useRecoilValue(isLoginAtom);
+  const isLogin = recoilIsLogin || !!getAuthorizationCookieValue();
+  // const socket = useSocket();
+  
   const haveAlarmHandler = () => {
     const result = alarms.length > 0;
-
     return result;
   };
 
-  // useEffect(() => {
-  //   socket.on("connect", async () => {
-  //     socket.emit("alarms");
-  //   });
 
-  //   socket.on("alarmList", async (data) => {
-  //     const alarm = await data.data;
-  //     setAlarms(alarm);
-  //   });
+  useEffect(() => {
+    if(isLogin&&!socket.connected){
+      socket.on("connect", async () => {
+        socket.emit("alarms");
+      });
+      socket.on("alarmList", async (data) => {
+        const alarm = await data.data;
+        setAlarms(alarm);
+      });
+    }
 
-  //   // socket.on("newAlarm", async () => {
-  //   //   socket.emit("alarms");
-  //   // });
+    return () => {
+      socket.off("alarmList");
+    };
+  },[isLogin]);
 
-  //   const fetchAlarmData = async () => {
-  //     socket.emit("alarms");
-  //   };
 
-  //   fetchAlarmData();
-
-  //   return () => {
-  //     socket.off("alarmList");
-  //   };
-  // },);
-
-  // useEffect(() => {
-  //   setHaveAlarms(haveAlarmHandler());
-  // }, [alarms]);
+  useEffect(() => {
+    setHaveAlarms(haveAlarmHandler());
+  }, [alarms]);
 
   const modalHandler = () => {
     setShowModal(!showModal);
@@ -61,17 +82,13 @@ function Alarmdropdown() {
 
     socket.emit("alarmRead", alarmId);
 
-    // socket.on("alarmList", async (data) => {
-    //   setAlarms(data.data);
-    // });
   };
 
   return (
     <div>
       <StAlarmButton type="button" onClick={modalHandler}>
-        <StImg src={Alerticon} alt="알림 아이콘" />
-        {/* <StImg src={haveAlarms ? Alerthaveicon : Alerticon} alt="알림 아이콘" /> */}
-        {/* {showModal && haveAlarms ? (
+        <StImg src={haveAlarms ? Alerthaveicon : Alerticon} alt="알림 아이콘" />
+        {showModal && haveAlarms ? (
           <StModalOverlay>
             <StModalContainer>
               {alarms?.map((alarm) => (
@@ -86,7 +103,7 @@ function Alarmdropdown() {
               ))}
             </StModalContainer>
           </StModalOverlay>
-        ) : null} */}
+        ) : null}
       </StAlarmButton>
     </div>
   );

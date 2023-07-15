@@ -7,18 +7,21 @@ import MyPage from "Pages/MyPage";
 import Signin from "Pages/Signin";
 import CorrectionWriting from "Pages/CorrectionWriting";
 import Onboarding from "Pages/Onboarding";
+import Layout from "Components/Layout/Layout";
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Onboarding />} />
-        <Route path="/boat/:id" element={<Boat />} />
-        <Route path="/writing" element={<Writing />} />
-        <Route path="/correctionwriting" element={<CorrectionWriting />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/main" element={<Home />} />
+        <Route path="/" element={<Layout />} >
+          <Route path="/" index element={<Onboarding />} />
+          <Route path="/boat/:id" element={<Boat />} />
+          <Route path="/writing" element={<Writing />} />
+          <Route path="/correctionwriting" element={<CorrectionWriting />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/main" element={<Home />} />
+        </Route>
       </Routes>
     </BrowserRouter>
 

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { Outlet } from "react-router-dom";
 import Header from "./Header/Header";
 import Body from "./Body/Body";
 import Footer from "./Footer/Footer";
@@ -9,7 +10,9 @@ function Layout({ children }) {
   return (
     <StLayoutBox className="content">
       <Header />
-      <Body>{children}</Body>
+      <Body>
+        <Outlet/>
+      </Body>
       <Footer />
     </StLayoutBox>
   );

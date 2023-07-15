@@ -4,13 +4,13 @@ import Modal from "react-modal";
 import AuthApi from "shared/api";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { isLoginAtom } from "Recoil/recoilAtoms";
+import { useRecoilState } from "recoil";
 import MENUICON from "imgs/menu_ic.png";
 import Kakaologin from "Components/feature/Kakaologin/Kakaologin";
 
-// const logoutUrl = `${process.env.REACT_APP_BACKEND_SERVER_URL}/auth/logout`;
-
 function Menu() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const [cookies, , removeCookie] = useCookies(["authorization"]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -22,6 +22,7 @@ function Menu() {
     try {
       const { data } = await AuthApi.logOut();
       removeCookie("authorization"); // Remove the 'authorization' cookie
+      setIsLogin(false);
       alert("로그아웃 했습니다.");
       navigate("/");
       console.log(data);
