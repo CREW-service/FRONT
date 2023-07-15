@@ -1,7 +1,6 @@
 import axios from "axios";
 // import { useCookies } from "react-cookie";
 
-
 // 싱글톤 패턴으로 axios 인스터스를 생성
 const api = axios.create({
   baseURL: process.env.REACT_APP_BACKEND_SERVER_URL,
@@ -28,8 +27,6 @@ const getAuthorizationCookieValue = () => {
   return null;
 };
 
-
-
 api.interceptors.request.use(
   (config) => {
     const authorizationCookieValue = getAuthorizationCookieValue();
@@ -42,7 +39,6 @@ api.interceptors.request.use(
   },
   (error) => error
 );
-
 
 // axios 인터셉터 활용해서 작업하면  반복되는 헤더 입력 부분을 개선해 볼 수 있다.
 
@@ -60,6 +56,8 @@ const AuthApi = {
   correctionBoat: (payload) => api.put(`/boat/${payload}`, payload),
 
   deleteBoat: (boatId, payload) => api.patch(`/boat/${boatId}/delete`, payload),
+
+  exitBoat: (boatId, payload) => api.post(`boat/${boatId}/exit`, payload),
 
   comment: (boatId, payload) => api.post(`/boat/${boatId}/comment`, payload),
 

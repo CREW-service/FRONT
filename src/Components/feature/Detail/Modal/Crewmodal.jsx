@@ -5,8 +5,9 @@ import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import AuthApi from "shared/api";
 
-function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
+function Crewmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
   const modalRef = useRef(null);
+  const navigate = useNavigate();
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -24,17 +25,14 @@ function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
 
   const [cookies] = useCookies(["authorization"]);
 
-  const closeBoat = async () => {
+  const exitModalHandler = async () => {
     try {
       const config = {
         headers: {
           authorization: cookies.authorization,
         },
       };
-      const payload = {
-        isDone: true,
-      };
-      const res = await AuthApi.closeBoat(boatId, payload, config);
+      const res = await AuthApi.exitBoat(boatId, config);
       alert(res.data.message);
       navigate("/main");
     } catch (err) {
@@ -42,44 +40,17 @@ function Captainmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
     }
   };
 
-  const deleteBoatList = async () => {
-    try {
-      const deletedAt = new Date();
-      const config = {
-        headers: {
-          authorization: cookies.authorization,
-        },
-      };
-      const newDeleteData = {
-        deletedAt,
-      };
-      const res = await AuthApi.deleteBoat(boatId, newDeleteData, config);
-      alert(res.data.message);
-      renderTriggerHandler();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // 수정버튼 클릭 에디터 이동
-  const navigate = useNavigate();
-
-  const onClick = (url) => {
-    navigate(url);
-  };
-
   return (
     <StContainer ref={modalRef}>
-      <IsDoneBtn onClick={closeBoat}>마감</IsDoneBtn>
-      <EditBtn onClick={() => onClick("/correctionwriting")}>수정</EditBtn>
-      <DeleteBtn onClick={deleteBoatList}>삭제</DeleteBtn>
+      <ExitBtn onClick={exitModalHandler}>나가기</ExitBtn>
+      <ReportBtn onClick={exitModalHandler}>신고하기</ReportBtn>
     </StContainer>
   );
 }
 
-export default Captainmodal;
+export default Crewmodal;
 
-Captainmodal.propTypes = {
+Crewmodal.propTypes = {
   boat: PropTypes.node.isRequired,
   setModalOpen: PropTypes.node.isRequired,
   boatId: PropTypes.node.isRequired,
@@ -92,7 +63,7 @@ const StContainer = styled.div`
   align-items: center;
 `;
 
-const IsDoneBtn = styled.button`
+const ExitBtn = styled.button`
   width: 132px;
   height: 36px;
   flex-grow: 0;
@@ -115,22 +86,7 @@ const IsDoneBtn = styled.button`
   line-height: 20px;
 `;
 
-const EditBtn = styled.button`
-  width: 132px;
-
-  flex-grow: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding: 8px;
-  border-radius: 35px;
-  border: none;
-  background-color: #fff;
-`;
-
-const DeleteBtn = styled.button`
+const ReportBtn = styled.button`
   width: 132px;
   height: 36px;
   flex-grow: 0;
