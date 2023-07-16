@@ -4,7 +4,6 @@ import Alerticon from "imgs/alret_ic_1.png";
 import Alerthaveicon from "imgs/alret_ic_2.png";
 import { isLoginAtom } from "Recoil/recoilAtoms";
 import { useRecoilValue } from "recoil";
-
 import { io } from "socket.io-client";
 
 const getAuthorizationCookieValue = () => {
