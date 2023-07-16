@@ -85,7 +85,6 @@ function Alarmdropdown() {
   };
 
   return (
-    <div>
       <StAlarmButton type="button" onClick={modalHandler}>
         <StImg src={haveAlarms ? Alerthaveicon : Alerticon} alt="알림 아이콘" />
         {showModal && haveAlarms ? (
@@ -105,7 +104,6 @@ function Alarmdropdown() {
           </StModalOverlay>
         ) : null}
       </StAlarmButton>
-    </div>
   );
 }
 

@@ -72,7 +72,7 @@ function Menu() {
   return (
     <div>
       <StMenuButton type="button" onClick={handleButtonClick}>
-        <StImg src={MENUICON} alt="알림 아이콘" />
+        <StImg src={MENUICON} alt="메뉴 아이콘" />
         {isModalOpen && (
           <StModalOverlay isOpen={isModalOpen} onClick={handleOutsideClick}>
             <StModalContainer>
