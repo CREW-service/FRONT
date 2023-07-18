@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import AuthApi from "shared/api";
-import ReportModal from "./ReportModal"
+import CrewReportModal from "./CrewReportModal"
 
 function Crewmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
   const modalRef = useRef(null);
@@ -63,7 +63,7 @@ function Crewmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
       <ReportBtn onClick={openReportSheet}>신고하고 나가기</ReportBtn>
       {/* isReportModalOpen이 true일 때만 ReportModal 컴포넌트를 렌더링합니다 */}
       {isReportModalOpen && (
-        <ReportModal
+        <CrewReportModal
           onClose={() => setIsReportModalOpen(false)}
           boatId={boatId}
           cookies={cookies}

@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const reportReason = ["폭력적 또는 혐오스러운 콘텐츠", "유해한 위험 행위", "아동학대", "스팸 또는 사용자를 현혹하는 콘텐츠"];
 
-function ReportModal({ onClose, boatId, cookies, navigate }) {
+function CrewReportModal({ onClose, boatId, cookies, navigate, exitModalHandler }) {
   const [selectedReason, setSelectedReason] = useState(""); // 선택한 라디오 버튼 값 저장 상태
 
   // 라디오 버튼이 선택되었는지 확인하는 함수
@@ -17,8 +17,10 @@ function ReportModal({ onClose, boatId, cookies, navigate }) {
       const payload = {
         reportContent: selectedReason,
       };
+
       const res = await AuthApi.reportBoat(boatId, payload);
       alert(res.data.message);
+      const exit = await exitModalHandler();
       navigate("/main");
       onClose();
     } catch (err) {
@@ -68,14 +70,15 @@ function ReportModal({ onClose, boatId, cookies, navigate }) {
   );
 }
 
-ReportModal.propTypes = {
+CrewReportModal.propTypes = {
   onClose: PropTypes.node.isRequired,
   cookies: PropTypes.node.isRequired,
   boatId: PropTypes.node.isRequired,
   navigate: PropTypes.node.isRequired,
+  exitModalHandler: PropTypes.node.isRequired,
 };
 
-export default ReportModal;
+export default CrewReportModal;
 
 const ModalBackground = styled.div`
   position: fixed;

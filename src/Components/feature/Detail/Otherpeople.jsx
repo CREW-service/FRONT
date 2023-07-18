@@ -1,12 +1,15 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import DOMPurify from "dompurify"; // DOMPurify 라이브러리 가져오기
 import AuthApi from "shared/api";
+import ReportModal from "./Modal/ReportModal";
 
 function Otherpeople({ boat, renderTriggerHandler }) {
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const navigate = useNavigate();
   const { id } = useParams();
   const [cookies] = useCookies(["authorization"]);
   const config = {
@@ -25,6 +28,10 @@ function Otherpeople({ boat, renderTriggerHandler }) {
       // console.log("Error:", error);
       alert(err.response.data.errorMessage);
     }
+  };
+
+  const openReportSheet = () => {
+    setIsReportModalOpen(true); // 모달을 표시하기 위해 상태 변수를 true로 설정
   };
 
   return (
@@ -55,6 +62,20 @@ function Otherpeople({ boat, renderTriggerHandler }) {
           __html: DOMPurify.sanitize(boat.boat.content),
         }}
       />
+      <StReportContainer>
+        <StReportBtn type="button" onClick={openReportSheet}>
+          신고하기
+        </StReportBtn>
+        {/* isReportModalOpen이 true일 때만 ReportModal 컴포넌트를 렌더링합니다 */}
+        {isReportModalOpen && (
+          <ReportModal
+            onClose={() => setIsReportModalOpen(false)}
+            boatId={id}
+            cookies={cookies}
+            navigate={navigate}
+          />
+        )}
+      </StReportContainer>
       <JoinBtn
         type="button"
         onClick={() => {
@@ -178,7 +199,7 @@ const EndDate = styled.div`
 `;
 
 const Content = styled.div`
-  flex: 1;
+  /* flex: 1; */
   width: 100%;
   margin: 20px 0 5px;
   font-family: Pretendard;
@@ -213,4 +234,26 @@ const JoinBtn = styled.button`
   font-size: 22px;
   font-weight: 500;
   color: #fff;
+`;
+
+const StReportContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex: 1;
+  margin-top: 20px;
+`;
+
+const StReportBtn = styled.button`
+  border: 0;
+  background-color: transparent;
+  color: #d11f35;
+  text-align: center;
+
+  /* Caption/caption */
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
 `;
