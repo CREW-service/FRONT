@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import AuthApi from "shared/api";
+import ReportModal from "./ReportModal"
 
 function Crewmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
   const modalRef = useRef(null);
@@ -11,6 +12,8 @@ function Crewmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
   const closeModal = () => {
     setModalOpen(false);
   };
+
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
   useEffect(() => {
     const handler = (event) => {
@@ -40,10 +43,34 @@ function Crewmodal({ boat, setModalOpen, boatId, renderTriggerHandler }) {
     }
   };
 
+  const openReportSheet = () => {
+    setIsReportModalOpen(true); // 모달을 표시하기 위해 상태 변수를 true로 설정
+  };
+
+  // const reportHandler = async (payload) => {
+  //   try {
+  //     const res = await AuthApi.exitBoat(boatId, payload);
+  //     alert(res.data.message);
+  //     navigate("/main");
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+
   return (
     <StContainer ref={modalRef}>
       <ExitBtn onClick={exitModalHandler}>나가기</ExitBtn>
-      <ReportBtn onClick={exitModalHandler}>신고하기</ReportBtn>
+      <ReportBtn onClick={openReportSheet}>신고하고 나가기</ReportBtn>
+      {/* isReportModalOpen이 true일 때만 ReportModal 컴포넌트를 렌더링합니다 */}
+      {isReportModalOpen && (
+        <ReportModal
+          onClose={() => setIsReportModalOpen(false)}
+          boatId={boatId}
+          cookies={cookies}
+          navigate={navigate}
+          exitModalHandler = {exitModalHandler}
+        />
+      )}
     </StContainer>
   );
 }

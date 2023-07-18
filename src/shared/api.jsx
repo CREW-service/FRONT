@@ -81,6 +81,10 @@ const AuthApi = {
     api.put(`/boat/${boatId}/comment/${commentId}`, payload),
 
   logOut: () => api.get("/auth/logout"),
+
+  reportBoat: (boatId, payload) => api.post(`/report/${boatId}`, payload),
+
+  reportComment: (boatId, commentId, payload) => api.post(`/report/${boatId}/${commentId}`, payload)
 };
 
 export default AuthApi;
