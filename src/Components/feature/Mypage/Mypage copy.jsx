@@ -9,7 +9,6 @@ import { boatAtom } from "Recoil/recoilAtoms";
 import writedboaticon from "imgs/writedboaticon.png";
 import defualtpic from "imgs/defualtpic.jpg";
 import Rectangle from "imgs/Rectangle.png";
-import SETTING from "imgs/Vector.png";
 import LOADING from "imgs/loading.gif";
 
 Modal.setAppElement("#root");
@@ -31,7 +30,6 @@ function Mypage() {
       "Content-Type": "multipart/form-data",
     },
   };
-
   const ProfileHandler = () => {
     navigate("/profile");
   };
@@ -118,20 +116,15 @@ function Mypage() {
         </div>
       ) : (
         <StContainer>
-          <StProfileBox>
+          <StLayoutBox />
+          <StPofileBox>
             <StPropic />
-            <StMessageBox>
-              <StNickNameBox>{myInfo?.user.nickName}</StNickNameBox>
-              <StMyMessage>상태메세지는 최대 40자에요</StMyMessage>
-              <StProfileSetting onClick={ProfileHandler}>
-                <StSettingImg src={SETTING} alt="SETTING" />
-              </StProfileSetting>
-            </StMessageBox>
-          </StProfileBox>
-          <StSubTitleBox>
-            <StMyBoatsListBox>나의 보트들</StMyBoatsListBox>
-            <StChatBox>채팅</StChatBox>
-          </StSubTitleBox>
+            <button type="button" onClick={ProfileHandler}>
+              프로필수정
+            </button>
+            <StNickNameBox>{myInfo?.user.nickName}</StNickNameBox>
+          </StPofileBox>
+          <StSubTitleBox>나의 보트들</StSubTitleBox>
           {haveBoat ? (
             <>
               <StWritedBoatBox>
@@ -179,8 +172,12 @@ function Mypage() {
             </>
           ) : (
             <div>
+              <StWritedBoatTitle>
+                <img src={writedboaticon} alt="보트 아이콘" />
+                <span style={{ marginLeft: "8px" }}>내가 만든 보트</span>
+              </StWritedBoatTitle>
               <StNoShowingContent>
-                <img src={Rectangle} alt="위치마커이미지" />
+                <img src={Rectangle} alt="돋보기 이미지" />
                 <StNoShowingContentsText>
                   현재 참여 중인 모임이 없어요.
                 </StNoShowingContentsText>
@@ -237,18 +234,20 @@ const StLayoutBox = styled.div`
   width: 100%;
   height: 84px;
   flex-shrink: 0;
+  background: var(--gr-pale, #eff4f8);
 `;
 
-const StProfileBox = styled.div`
+const StPofileBox = styled.div`
+  margin-top: -44px;
   display: flex;
-  padding: 32px 16px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const StPropic = styled.div`
-  width: 80px;
-  height: 80px;
-  margin-right: 20px;
-  box-shadow: 0px 1px 2px 2px rgba(0.85, 0.85, 0.85, 0.05);
+  width: 120px;
+  height: 120px;
   flex-shrink: 0;
   border-radius: 12px;
   background-image: url(${defualtpic});
@@ -257,54 +256,31 @@ const StPropic = styled.div`
   background-position: center;
   background-color: #d9d9d9;
 `;
-const StMessageBox = styled.div`
-  position: relative;
-  width: 208px;
-`;
+
 const StNickNameBox = styled.div`
-  font-size: 16px;
-  font-family: Pretendard;
-  font-weight: 500;
-  color: #222;
-  margin-bottom: 16px;
+  margin-top: 16px;
 `;
 
-const StMyMessage = styled.p`
-  font-size: 14px;
-  font-family: Pretendard;
-  color: #222;
-`;
-const StProfileSetting = styled.div`
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  top: 0;
-  right: 0;
-`;
-const StSettingImg = styled.img``;
 const StSubTitleBox = styled.div`
   width: 100%;
   height: 64px;
   flex-shrink: 0;
-  display: flex;
+  margin-top: 48px;
 
+  display: flex;
   align-items: center;
+
   padding-left: 32px;
+
   color: var(--gr-black, #222);
   /* Title/L */
   font-size: 22px;
   font-family: Pretendard;
   font-weight: 500;
+  line-height: 28px;
 
-  border-top: 2px solid var(--gr-pale, #eff4f8);
+  border-bottom: 2px solid var(--gr-pale, #eff4f8);
   background: var(--gr-white, #fff);
-`;
-const StMyBoatsListBox = styled.div`
-  color: #30a2ff;
-  border: 2px solid #000;
-`;
-const StChatBox = styled.div`
-  border: 2px solid #000;
 `;
 
 const StWritedBoatBox = styled.div`
@@ -453,9 +429,8 @@ const StModalDeleteButton = styled.button`
 `;
 
 const StNoShowingContent = styled.div`
-  padding-top: 103px;
+  margin-top: 30px;
   display: flex;
-  height: 390px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -473,8 +448,7 @@ const StNoShowingContentsText = styled.p`
 `;
 
 const StNoShowingContentsButton = styled.button`
-  box-sizing: border-box;
-  margin-top: 105px;
+  margin-top: 30px;
   width: 320px;
   height: 68px;
   padding: 16px 40px;
