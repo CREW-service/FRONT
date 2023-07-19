@@ -6,7 +6,7 @@ import AuthApi from "shared/api";
 import PropTypes from "prop-types";
 import { styled } from "styled-components";
 import MORE_IC from "imgs/more_ic.png";
-// import Commentmodal from "../Modal/Commentmodal";
+import ReportCommentModal from "./ReportCommentModal";
 
 function Comment({ boat, boatId, renderTriggerHandler }) {
   const [currentUserId, setCurrentUserId] = useRecoilState(currentUserIdAtom);
@@ -14,7 +14,8 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
   const [selectedComment, setSeletedComment] = useState(null);
   const [cookies] = useCookies(["authorization"]);
   const [isCommentsEmpty, setIsCommentsEmpty] = useState(true);
-
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [reportCommentId, setReportCommentId] = useState(null);
   const [modiyValue, setModiyValue] = useState("");
   const [isModiy, setIsModiy] = useState(null);
   const modalRef = useRef(null);
@@ -127,6 +128,10 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
     setIsModiy(null); // 수정 상태를 해제
   };
 
+  const openReportSheet = (commentId) => {
+    setReportCommentId(commentId);
+  };
+
   return (
     <StContainer>
       <StLine />
@@ -211,6 +216,22 @@ function Comment({ boat, boatId, renderTriggerHandler }) {
             <StCommnetListField>
               <StNickName>{comment.nickName}</StNickName>
               <StCommentBox>{comment.comment}</StCommentBox>
+              <StReportContainer>
+                <StReportBtn
+                  type="button"
+                  onClick={() => openReportSheet(comment.commentId)} // 해당 댓글의 ID를 전달하여 모달을 엽니다.
+                >
+                  신고하기
+                </StReportBtn>
+                {reportCommentId === comment.commentId && ( // 모달이 이 댓글을 위해 열려 있는지 확인합니다.
+                  <ReportCommentModal
+                    onClose={() => setReportCommentId(null)} // 모달의 닫기 버튼 또는 모달 외부를 클릭하면 상태를 초기화하여 모달을 닫습니다.
+                    boatId={boatId}
+                    cookies={cookies}
+                    commentId={reportCommentId}
+                  />
+                )}
+              </StReportContainer>
               <StCreatedNum>
                 {new Date(comment.createdAt).toISOString().split("T")[0]}
               </StCreatedNum>
@@ -248,6 +269,25 @@ Comment.propTypes = {
   boatId: PropTypes.node.isRequired,
   renderTriggerHandler: PropTypes.node.isRequired,
 };
+
+const StReportContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const StReportBtn = styled.button`
+  border: 0;
+  background-color: transparent;
+  color: #d11f35;
+  text-align: center;
+
+  /* Caption/caption */
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+`;
 
 const StContainer = styled.div`
   width: 100%;

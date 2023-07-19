@@ -2,13 +2,8 @@ import React, { useState } from "react";
 import AuthApi from "shared/api";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-
-const reportReason = [
-  "폭력적 또는 혐오스러운 콘텐츠",
-  "유해한 위험 행위",
-  "아동학대",
-  "스팸 또는 사용자를 현혹하는 콘텐츠",
-];
+import { useRecoilState } from "recoil";
+import { reportReasonAtom } from "Recoil/recoilAtoms";
 
 function CrewReportModal({
   onClose,
@@ -17,6 +12,7 @@ function CrewReportModal({
   navigate,
   exitModalHandler,
 }) {
+  const [reportReason] = useRecoilState(reportReasonAtom);
   const [selectedReason, setSelectedReason] = useState(""); // 선택한 라디오 버튼 값 저장 상태
 
   // 라디오 버튼이 선택되었는지 확인하는 함수
