@@ -209,4 +209,5 @@ const StReportBtn = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: 24px; /* 133.333% */
+
 `;

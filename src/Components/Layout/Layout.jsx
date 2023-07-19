@@ -38,7 +38,7 @@ const StLayoutBox = styled.div`
   overflow: hidden;
   height: 100vh;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 360px) {
     max-width: 100%;
     border-width: 2px;
     border-radius: 15px;

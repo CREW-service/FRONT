@@ -66,6 +66,4 @@ const StCancelButton = styled.button`
   font-family: Pretendard;
   font-weight: 500;
   line-height: 24px;
-
-  cursor: pointer;
 `;

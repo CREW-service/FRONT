@@ -326,8 +326,6 @@ const StCounterButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  cursor: pointer;
 `;
 
 const StEditorBtnBox = styled.div`
@@ -363,7 +361,6 @@ const StCancelButton = styled.button`
   letter-spacing: normal;
   text-align: center;
   color: #3e4756;
-  cursor: pointer;
 `;
 const StSubmitButton = styled.button`
   width: 156px;
@@ -391,7 +388,6 @@ const StSubmitButton = styled.button`
   text-align: center;
   color: #fff;
 
-  cursor: pointer;
 `;
 // 에디터의 모듈 정의
 const modules = {

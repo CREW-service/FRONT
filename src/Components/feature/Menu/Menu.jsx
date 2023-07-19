@@ -170,7 +170,8 @@ const StModalContainer = styled.div`
 `;
 
 const StModalButton = styled.button`
-  padding: 20px 73px;
+  width: 200px;
+  padding: 20px  0 0 0;
   background: #fff;
   border: 0;
 

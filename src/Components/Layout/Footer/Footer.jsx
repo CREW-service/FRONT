@@ -78,6 +78,7 @@ const StIconBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
+  cursor: pointer;
 `;
 const StImg = styled.img`
   width: 52px;

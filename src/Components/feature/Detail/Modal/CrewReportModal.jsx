@@ -89,7 +89,7 @@ export default CrewReportModal;
 
 const ModalBackground = styled.div`
   position: fixed;
-  top: -70px;
+  top: -64px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -101,10 +101,11 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 368px;
+  width: 360px;
+  /* height: 368px; */
   background-color: #fff;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
