@@ -3,7 +3,12 @@ import AuthApi from "shared/api";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const reportReason = ["폭력적 또는 혐오스러운 콘텐츠", "유해한 위험 행위", "아동학대", "스팸 또는 사용자를 현혹하는 콘텐츠"];
+const reportReason = [
+  "폭력적 또는 혐오스러운 콘텐츠",
+  "유해한 위험 행위",
+  "아동학대",
+  "스팸 또는 사용자를 현혹하는 콘텐츠",
+];
 
 function ReportModal({ onClose, boatId, cookies, navigate }) {
   const [selectedReason, setSelectedReason] = useState(""); // 선택한 라디오 버튼 값 저장 상태
@@ -29,40 +34,40 @@ function ReportModal({ onClose, boatId, cookies, navigate }) {
   return (
     <ModalBackground>
       <ModalContainer>
-        <div>
-          <StHeader>
-            <StH2>해당 글을 신고하시겠습니까?</StH2>
-            <StCloseBtn type="button" onClick={onClose}>X</StCloseBtn>
-          </StHeader>
-          <StRadioContainer>
-            {reportReason.map((reason) => (
-              <div style={{ height: "56px" }} key={reason}>
-                {/* 라디오 버튼에 checked 속성을 추가하여 선택 여부를 추적 */}
-                <input
-                  type="radio"
-                  id={reason}
-                  name="reportReason"
-                  value={reason}
-                  checked={selectedReason === reason}
-                  onChange={() => setSelectedReason(reason)}
-                />
-                <StLabel htmlFor={reason}>{reason}</StLabel>
-              </div>
-            ))}
-          </StRadioContainer>
-          <StBtnContainer>
-            <StCancelBtn type="button" onClick={onClose}>
-              취소
-            </StCancelBtn>
-            <StReportBtn
-              type="button"
-              onClick={reportHandler}
-              disabled={!isAnyRadioSelected()}
-            >
-              신고하기
-            </StReportBtn>
-          </StBtnContainer>
-        </div>
+        <StHeader>
+          <StH2>해당 글을 신고하시겠습니까?</StH2>
+          <StCloseBtn type="button" onClick={onClose}>
+            X
+          </StCloseBtn>
+        </StHeader>
+        <StRadioContainer>
+          {reportReason.map((reason) => (
+            <div style={{ height: "56px" }} key={reason}>
+              {/* 라디오 버튼에 checked 속성을 추가하여 선택 여부를 추적 */}
+              <input
+                type="radio"
+                id={reason}
+                name="reportReason"
+                value={reason}
+                checked={selectedReason === reason}
+                onChange={() => setSelectedReason(reason)}
+              />
+              <StLabel htmlFor={reason}>{reason}</StLabel>
+            </div>
+          ))}
+        </StRadioContainer>
+        <StBtnContainer>
+          <StCancelBtn type="button" onClick={onClose}>
+            취소
+          </StCancelBtn>
+          <StReportBtn
+            type="button"
+            onClick={reportHandler}
+            disabled={!isAnyRadioSelected()}
+          >
+            신고하기
+          </StReportBtn>
+        </StBtnContainer>
       </ModalContainer>
     </ModalBackground>
   );
