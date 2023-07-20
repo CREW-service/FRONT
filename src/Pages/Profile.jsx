@@ -10,8 +10,9 @@ function Profile() {
   const { user } = location.state;
   const imageInput = useRef();
 
+  console.log(user)
   const [profileData, setProfileData] = useState({
-    imgFile: null,
+    imgFile: user.profileImage,
     uploadImage: null,
     nickName: user.nickName,
     myMessage: user.myMessage,
@@ -53,7 +54,7 @@ function Profile() {
     formData.append("image", uploadImage);
     formData.append("nickName", nickName);
     formData.append("myMessage", myMessage);
-    
+
     try {
       const res = await AuthApi.myPageEdit(formData);
       alert(res.data.message);
