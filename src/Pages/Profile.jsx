@@ -1,45 +1,60 @@
 import React, { useState, useRef } from "react";
-import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import defualtpic from "imgs/defualtpic.jpg";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Profileimg from "imgs/profile_photo_edit.png";
 import AuthApi from "shared/api";
 
 function Profile() {
-  const [cookies] = useCookies(["authorization"]);
+  const [uploadImage, setUploadImage] = useState(null);
   const [imgFile, setImgFile] = useState(null);
   const location = useLocation();
-  const myInfo = location.state;
+  const { user } = location.state;
   const imageInput = useRef();
+
+  const [nickName, setNickName] = useState(user.nickName);
+  const [myMessage, setMyMessage] = useState(user.myMessage);
+
+  const navigate = useNavigate()
 
   const onCickImageUpload = () => {
     imageInput.current.click();
   };
 
   const saveImgFile = async (e) => {
-    setImgFile(URL.createObjectURL(e.target.files[0]));
-    console.log(e.target.files[0].name);
-    const config = {
-      headers: {
-        authorization: cookies.authorization,
-        "Content-Type": "multipart/form-data",
-      },
-    };
+    const blob = await e.target.files[0];
+    setImgFile(URL.createObjectURL(blob));
 
-    // 서버 api에 Post 요청
+    setUploadImage(blob);
+    // try {
+    //   const res = await AuthApi.myPageEdit(formData);
+    //   alert(res.data.message);
+    // } catch (err) {
+    //   alert(err.response.data.errorMessage);
+    // }
+  };
+
+  const handleNickChange = (e) => {
+    setNickName(e.target.value);
+  };
+
+  const handleMyMessageChange = (e) => {
+    setMyMessage(e.target.value);
+  };
+
+  const onSubmitHandler = async () => {
     const formData = new FormData();
-
-    formData.append("image", e.target.files[0]);
-    console.log(formData);
+    formData.append("image", uploadImage);
+    formData.append("nickName", nickName);
+    formData.append("myMessage", myMessage);
     try {
-      const res = await AuthApi.myPageEdit(formData, config);
+      const res = await AuthApi.myPageEdit(formData);
       alert(res.data.message);
+      navigate("/mypage")
     } catch (err) {
       alert(err.response.data.errorMessage);
     }
   };
-  console.log("img", imgFile);
 
   return (
     <div>
@@ -64,16 +79,18 @@ function Profile() {
         <StSubTitle>프로필 편집</StSubTitle>
         <StNicBox>
           <StNicTitle>이름</StNicTitle>
-          <StNicText>{myInfo.user.nickName}</StNicText>
+          <StNicText value={nickName} onChange={handleNickChange} />
         </StNicBox>
         <div>
           <StMessageTitle>상태메세지</StMessageTitle>
-          <StMyMessage>{myInfo.user.myMessage}</StMyMessage>
+          <StMyMessage value={myMessage} onChange={handleMyMessageChange} />
         </div>
       </StNicMessageBox>
       <StButtonBox>
-        <StCancelBtn type="submit">취소</StCancelBtn>
-        <StSaveBtn type="submit">저장</StSaveBtn>
+        <StCancelBtn type="button" onClick={()=>navigate("/mypage")}>취소</StCancelBtn>
+        <StSaveBtn type="submit" onClick={onSubmitHandler}>
+          저장
+        </StSaveBtn>
       </StButtonBox>
     </div>
   );
