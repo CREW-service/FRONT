@@ -16,6 +16,7 @@ Modal.setAppElement("#root");
 
 function Mypage() {
   const [myInfo, setMyInfo] = useState(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [cookies] = useCookies(["authorization"]);
@@ -28,12 +29,7 @@ function Mypage() {
   const config = {
     headers: {
       authorization: cookies.authorization,
-      "Content-Type": "multipart/form-data",
     },
-  };
-
-  const ProfileHandler = () => {
-    navigate("/profile");
   };
 
   const getMyinfo = async () => {
@@ -69,6 +65,11 @@ function Mypage() {
     setSelectId(boatId);
     setShowModal(true);
   };
+
+  const ProfileHandler = () => {
+    navigate("/profile", { state: myInfo });
+  };
+  console.log("myinfo", myInfo);
 
   const boatDeleteHandler = async (boatId) => {
     const toDay = new Date().toISOString().split("T")[0];
@@ -122,7 +123,7 @@ function Mypage() {
             <StPropic />
             <StMessageBox>
               <StNickNameBox>{myInfo?.user.nickName}</StNickNameBox>
-              <StMyMessage>상태메세지는 최대 40자에요</StMyMessage>
+              <StMyMessage>{myInfo?.user.myMessage}</StMyMessage>
               <StProfileSetting onClick={ProfileHandler}>
                 <StSettingImg src={SETTING} alt="SETTING" />
               </StProfileSetting>
