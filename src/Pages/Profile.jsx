@@ -6,17 +6,20 @@ import Profileimg from "imgs/profile_photo_edit.png";
 import AuthApi from "shared/api";
 
 function Profile() {
-  const [uploadImage, setUploadImage] = useState(null);
   const location = useLocation();
   const { user } = location.state;
-
-  // 기존 이미지 정보를 가져와서 로드하도록 고쳐 주세요. 
-  const [imgFile, setImgFile] = useState(null);
   const imageInput = useRef();
-  const [nickName, setNickName] = useState(user.nickName);
-  const [myMessage, setMyMessage] = useState(user.myMessage);
 
-  const navigate = useNavigate()
+  const [profileData, setProfileData] = useState({
+    imgFile: null,
+    uploadImage: null,
+    nickName: user.nickName,
+    myMessage: user.myMessage,
+  });
+
+  const { imgFile, uploadImage, nickName, myMessage } = profileData;
+
+  const navigate = useNavigate();
 
   const onCickImageUpload = () => {
     imageInput.current.click();
@@ -24,16 +27,25 @@ function Profile() {
 
   const saveImgFile = async (e) => {
     const blob = await e.target.files[0];
-    setImgFile(URL.createObjectURL(blob));
-    setUploadImage(blob);
+    setProfileData((prevData) => ({
+      ...prevData,
+      imgFile: URL.createObjectURL(blob),
+      uploadImage: blob,
+    }));
   };
 
   const handleNickChange = (e) => {
-    setNickName(e.target.value);
+    setProfileData((prevData) => ({
+      ...prevData,
+      nickName: e.target.value,
+    }));
   };
 
   const handleMyMessageChange = (e) => {
-    setMyMessage(e.target.value);
+    setProfileData((prevData) => ({
+      ...prevData,
+      myMessage: e.target.value,
+    }));
   };
 
   const onSubmitHandler = async () => {
@@ -41,10 +53,11 @@ function Profile() {
     formData.append("image", uploadImage);
     formData.append("nickName", nickName);
     formData.append("myMessage", myMessage);
+    
     try {
       const res = await AuthApi.myPageEdit(formData);
       alert(res.data.message);
-      navigate("/mypage")
+      navigate("/mypage");
     } catch (err) {
       alert(err.response.data.errorMessage);
     }
@@ -81,7 +94,9 @@ function Profile() {
         </div>
       </StNicMessageBox>
       <StButtonBox>
-        <StCancelBtn type="button" onClick={()=>navigate("/mypage")}>취소</StCancelBtn>
+        <StCancelBtn type="button" onClick={() => navigate("/mypage")}>
+          취소
+        </StCancelBtn>
         <StSaveBtn type="submit" onClick={onSubmitHandler}>
           저장
         </StSaveBtn>
