@@ -9,7 +9,7 @@ import { boatAtom } from "Recoil/recoilAtoms";
 import writedboaticon from "imgs/writedboaticon.png";
 import defualtpic from "imgs/defualtpic.jpg";
 import Rectangle from "imgs/Rectangle.png";
-import LOADING from "imgs/loading.gif"
+import LOADING from "imgs/loading.gif";
 
 Modal.setAppElement("#root");
 
@@ -107,7 +107,9 @@ function Mypage() {
   return (
     <div>
       {isLoading ? (
-        <div><img src={LOADING} alt="Loading..." /></div>
+        <StLoadingContainer>
+          <img src={LOADING} alt="Loading..." />
+        </StLoadingContainer>
       ) : (
         <StContainer>
           <StLayoutBox />
@@ -218,6 +220,13 @@ function Mypage() {
 }
 
 export default Mypage;
+
+const StLoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+`;
 
 const StContainer = styled.div``;
 
@@ -351,7 +360,6 @@ const StAttendedTitle = styled.div`
   font-weight: 500;
   line-height: 24px;
   margin-bottom: 24px;
-
 `;
 
 const StModalAlert = styled.div`
