@@ -8,46 +8,50 @@ import AuthApi from "shared/api";
 
 function Profile() {
   const [cookies] = useCookies(["authorization"]);
-  const [profileImage, setProfileImage] = useState(defualtpic);
+  const [imgFile, setImgFile] = useState(null);
   const location = useLocation();
   const myInfo = location.state;
-  console.log(myInfo);
-
   const imageInput = useRef();
 
   const onCickImageUpload = () => {
     imageInput.current.click();
   };
 
-  const config = {
-    headers: {
-      authorization: cookies.authorization,
-      "Content-Type": "multipart/form-data",
-    },
-  };
+  const saveImgFile = async (e) => {
+    setImgFile(URL.createObjectURL(e.target.files[0]));
+    console.log(e.target.files[0].name);
+    const config = {
+      headers: {
+        authorization: cookies.authorization,
+        "Content-Type": "multipart/form-data",
+      },
+    };
 
-  const uploadImage = async (blob) => {
+    // 서버 api에 Post 요청
     const formData = new FormData();
-    formData.append("image", blob);
+
+    formData.append("image", e.target.files[0]);
+    console.log(formData);
     try {
       const res = await AuthApi.myPageEdit(formData, config);
       alert(res.data.message);
-      setProfileImage(URL.createObjectURL(blob));
     } catch (err) {
-      console.log(err);
+      alert(err.response.data.errorMessage);
     }
   };
+  console.log("img", imgFile);
 
   return (
     <div>
       <StProfileCorrectionBox>
-        <StProfileImg src={profileImage} alt="Profile Image" />
+        <StProfileImg src={imgFile} />
         <form encType="multipart/form-data">
           <input
             type="file"
             name="image"
             style={{ display: "none" }}
             ref={imageInput}
+            onChange={saveImgFile}
           />
           <StimgCorrectionBtn
             onClick={onCickImageUpload}
@@ -69,9 +73,7 @@ function Profile() {
       </StNicMessageBox>
       <div>
         <button type="submit">취소</button>
-        <button type="submit" onClick={uploadImage}>
-          저장
-        </button>
+        <button type="submit">저장</button>
       </div>
     </div>
   );

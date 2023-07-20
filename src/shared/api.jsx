@@ -66,7 +66,8 @@ const AuthApi = {
 
   getMyInfo: () => api.get("/mypage"),
 
-  myPageEdit: (payload) => api.post("mypage/edit", payload),
+  myPageEdit: (formData, payload) =>
+    api.post("mypage/upload", formData, payload),
 
   getalarm: () => api.get("/alarm"),
 
