@@ -71,10 +71,10 @@ function Profile() {
           <StMyMessage>{myInfo.user.myMessage}</StMyMessage>
         </div>
       </StNicMessageBox>
-      <div>
-        <button type="submit">취소</button>
-        <button type="submit">저장</button>
-      </div>
+      <StButtonBox>
+        <StCancelBtn type="submit">취소</StCancelBtn>
+        <StSaveBtn type="submit">저장</StSaveBtn>
+      </StButtonBox>
     </div>
   );
 }
@@ -142,5 +142,31 @@ const StMessageTitle = styled(StNicTitle)``;
 
 const StMyMessage = styled(StNicText)`
   height: 120px;
+`;
+
+const StButtonBox = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+`;
+const StCancelBtn = styled.button`
+  width: 130px;
+  height: 52px;
+  padding: 16px 40xp;
+  color: #a2acbd;
+  border: none;
+  font-size: 22px;
+  background-color: #fff;
+`;
+const StSaveBtn = styled.button`
+  width: 130px;
+  height: 52px;
+  padding: 16px 40xp;
+  font-size: 22px;
+  color: #fff;
+  border: none;
+  border-radius: 40px;
+
+  background-color: #30a2ff;
 `;
 export default Profile;
