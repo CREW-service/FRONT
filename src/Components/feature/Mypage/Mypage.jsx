@@ -114,9 +114,9 @@ function Mypage() {
   return (
     <div>
       {isLoading ? (
-        <div>
+        <StLoadingContainer>
           <img src={LOADING} alt="Loading..." />
-        </div>
+        </StLoadingContainer>
       ) : (
         <StContainer>
           <StProfileBox>
@@ -232,6 +232,13 @@ function Mypage() {
 
 export default Mypage;
 
+const StLoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+`;
+
 const StContainer = styled.div``;
 
 const StLayoutBox = styled.div`
@@ -341,8 +348,6 @@ const StMyBoatTitle = styled.div`
   font-family: Pretendard;
   font-weight: 500;
   line-height: 24px;
-
-  cursor: pointer;
 `;
 
 const StModiyButtonBox = styled.div`
@@ -360,7 +365,6 @@ const StModiyButton = styled.button`
   font-size: 14px;
   font-family: Pretendard;
   line-height: 20px;
-  cursor: pointer;
 `;
 
 const StDeleteButton = styled.button`
@@ -373,7 +377,6 @@ const StDeleteButton = styled.button`
   font-family: Pretendard;
   font-weight: 700;
   line-height: 20px;
-  cursor: pointer;
 `;
 
 const StAttendedList = styled.div`
@@ -389,8 +392,6 @@ const StAttendedTitle = styled.div`
   font-weight: 500;
   line-height: 24px;
   margin-bottom: 24px;
-
-  cursor: pointer;
 `;
 
 const StModalAlert = styled.div`
@@ -433,7 +434,6 @@ const StModalCancelButton = styled.button`
   font-family: Pretendard;
   font-weight: 700;
   line-height: 24px;
-  cursor: pointer;
 `;
 
 const StModalDeleteButton = styled.button`
@@ -450,7 +450,6 @@ const StModalDeleteButton = styled.button`
   font-family: Pretendard;
   font-weight: 700;
   line-height: 24px;
-  cursor: pointer;
 `;
 
 const StNoShowingContent = styled.div`

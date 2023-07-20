@@ -122,8 +122,7 @@ const StContentTxt = styled.span`
   text-align: center;
   width: 258px;
   margin-bottom: 104px;
-  line-height: 15px;
-
+  line-height: 130%;
   white-space: pre-line;
 `;
 
@@ -133,7 +132,7 @@ const StLoginButton = styled.button`
   background: var(--primary-blue, #30a2ff);
   width: 250px;
   height: 56px;
-  padding: 16px 40px;
+  /* padding: 16px 40px; */
   justify-content: center;
   align-items: center;
 
@@ -146,6 +145,7 @@ const StLoginButton = styled.button`
   font-weight: 500;
 
   margin-bottom: 16px;
+  cursor: pointer;
 `;
 
 const StShowButton = styled(StLoginButton)`

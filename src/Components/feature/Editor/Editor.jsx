@@ -8,7 +8,14 @@ import { useRecoilState } from "recoil";
 import { markerAddressAtom, recoilLatLngAtom } from "Recoil/recoilAtoms";
 import { useNavigate } from "react-router-dom";
 
-const recruitmentTypeList = ["같이 해요", "같이 먹어요", "같이 사요", "같이 놀아요", "같이 가요", "나눔해요"];
+const recruitmentTypeList = [
+  "같이 해요",
+  "같이 먹어요",
+  "같이 사요",
+  "같이 놀아요",
+  "같이 가요",
+  "나눔해요",
+];
 const alertList = {
   noCookie: "로그인 정보가 올바르지 않습니다.",
   missingInfo: "필수 정보가 누락되었습니다.",
@@ -67,21 +74,21 @@ function Editor() {
       ...prevState,
       [name]: newValue,
     }));
-  }
+  };
 
   const handleDecrement = () => {
     setState((prevState) => ({
       ...prevState,
       recruitmentCount: Math.max(prevState.recruitmentCount - 1, 2),
     }));
-  }
+  };
 
   const handleIncrement = () => {
     setState((prevState) => ({
       ...prevState,
       recruitmentCount: Math.min(prevState.recruitmentCount + 1, 20),
     }));
-  }
+  };
 
   const onChangeBodyHandler = (contents) => {
     setBodyContent(contents);
@@ -192,6 +199,7 @@ function Editor() {
             ))}
           </StSelectBox>
         </StTextField>
+
         <ReactQuill onChange={onChangeBodyHandler} modules={modules} />
       </StEditorContainer>
       {/* 버튼 */}
@@ -318,8 +326,6 @@ const StCounterButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  cursor: pointer;
 `;
 
 const StEditorBtnBox = styled.div`
@@ -355,7 +361,6 @@ const StCancelButton = styled.button`
   letter-spacing: normal;
   text-align: center;
   color: #3e4756;
-  cursor: pointer;
 `;
 const StSubmitButton = styled.button`
   width: 156px;
@@ -383,7 +388,6 @@ const StSubmitButton = styled.button`
   text-align: center;
   color: #fff;
 
-  cursor: pointer;
 `;
 // 에디터의 모듈 정의
 const modules = {

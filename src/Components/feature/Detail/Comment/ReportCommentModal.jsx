@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { reportReasonAtom } from "Recoil/recoilAtoms";
 
-function ReportModal({ onClose, boatId, cookies, navigate }) {
+function ReportCommentModal({ onClose, boatId, commentId }) {
   const [selectedReason, setSelectedReason] = useState(""); // 선택한 라디오 버튼 값 저장 상태
   const [reportReason] = useRecoilState(reportReasonAtom);
 
@@ -18,9 +18,8 @@ function ReportModal({ onClose, boatId, cookies, navigate }) {
       const payload = {
         reportContent: selectedReason,
       };
-      const res = await AuthApi.reportBoat(boatId, payload);
+      const res = await AuthApi.reportComment(boatId, commentId, payload);
       alert(res.data.message);
-      navigate("/main");
       onClose();
     } catch (err) {
       console.log(err);
@@ -31,7 +30,7 @@ function ReportModal({ onClose, boatId, cookies, navigate }) {
     <ModalBackground>
       <ModalContainer>
         <StHeader>
-          <StH2>해당 글을 신고하시겠습니까?</StH2>
+          <StH2>해당 댓글을 신고하시겠습니까?</StH2>
           <StCloseBtn type="button" onClick={onClose}>
             X
           </StCloseBtn>
@@ -69,18 +68,17 @@ function ReportModal({ onClose, boatId, cookies, navigate }) {
   );
 }
 
-ReportModal.propTypes = {
+ReportCommentModal.propTypes = {
   onClose: PropTypes.node.isRequired,
-  cookies: PropTypes.node.isRequired,
   boatId: PropTypes.node.isRequired,
-  navigate: PropTypes.node.isRequired,
+  commentId: PropTypes.node.isRequired,
 };
 
-export default ReportModal;
+export default ReportCommentModal;
 
 const ModalBackground = styled.div`
   position: fixed;
-  top: -64px;
+  top: -70px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -92,11 +90,10 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  width: 360px;
-  /* height: 368px; */
+  width: 100%;
+  height: 368px;
   background-color: #fff;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -212,4 +209,5 @@ const StReportBtn = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: 24px; /* 133.333% */
+
 `;

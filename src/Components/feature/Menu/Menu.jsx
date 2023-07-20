@@ -38,7 +38,11 @@ function Menu() {
   };
 
   const handleClick = () => {
-    window.open('http://7z0w1.channel.io', '_blank', 'rel="noopener noreferrer"');
+    window.open(
+      "http://7z0w1.channel.io",
+      "_blank",
+      'rel="noopener noreferrer"'
+    );
   };
 
   useEffect(() => {
@@ -70,27 +74,28 @@ function Menu() {
   };
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
+      {isModalOpen && (
+        <StModalOverlay isOpen={isModalOpen} onClick={handleOutsideClick}>
+          <StModalContainer>
+            {isLogin ? (
+              <StModalButton type="button" onClick={logOutHandler}>
+                로그아웃
+              </StModalButton>
+            ) : (
+              <StModalButton type="button" onClick={openLoginModal}>
+                로그인
+              </StModalButton>
+            )}
+            <StModalButton type="button" onClick={handleClick}>
+              문의하기
+            </StModalButton>
+          </StModalContainer>
+        </StModalOverlay>
+      )}
       <StMenuButton type="button" onClick={handleButtonClick}>
         <StImg src={MENUICON} alt="메뉴 아이콘" />
-        {isModalOpen && (
-          <StModalOverlay isOpen={isModalOpen} onClick={handleOutsideClick}>
-            <StModalContainer>
-              {isLogin ? (
-                <StModalButton type="button" onClick={logOutHandler}>
-                  로그아웃
-                </StModalButton>
-              ) : (
-                <StModalButton type="button" onClick={openLoginModal}>
-                  로그인
-                </StModalButton>
-              )}
-              <StModalButton type="button" onClick={handleClick}>문의하기</StModalButton>
-            </StModalContainer>
-          </StModalOverlay>
-        )}
       </StMenuButton>
-
       <Modal
         isOpen={isLoginModalOpen}
         onRequestClose={closeLoginModal}
@@ -107,7 +112,6 @@ function Menu() {
 const StMenuButton = styled.button`
   background: #fff;
   border: 0;
-  position: relative;
   width: 50px;
   height: 50px;
 `;
@@ -121,8 +125,8 @@ const StImg = styled.img`
 
 const StModalOverlay = styled.div`
   position: absolute;
-  top: 117%;
-  left: -60%;
+  top: 100%;
+  left: -72%;
   /* right: 100%; */
   /* bottom: 0; */
   background-color: transparent;
@@ -165,12 +169,13 @@ const StModalContainer = styled.div`
 
   background: #fff;
   /* box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2); */
-  height: calc(100vh - 128px);
+  height: calc(100vh - 120px);
   z-index: 800;
 `;
 
 const StModalButton = styled.button`
-  padding: 20px 73px;
+  width: 200px;
+  padding: 20px 0 0 0;
   background: #fff;
   border: 0;
 

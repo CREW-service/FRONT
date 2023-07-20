@@ -242,6 +242,7 @@ const StReportContainer = styled.div`
   justify-content: flex-end;
   flex: 1;
   margin-top: 20px;
+  margin-bottom: 40px;
 `;
 
 const StReportBtn = styled.button`

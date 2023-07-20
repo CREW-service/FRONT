@@ -68,7 +68,7 @@ const StContainer = styled.div`
 
   /* shadow1-nav */
   box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.15);
-  z-index: 9999;
+  z-index: 9927;
 `;
 
 const StIconBox = styled.div`
@@ -78,6 +78,7 @@ const StIconBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
+  cursor: pointer;
 `;
 const StImg = styled.img`
   width: 52px;

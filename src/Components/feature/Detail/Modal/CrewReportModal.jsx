@@ -2,10 +2,17 @@ import React, { useState } from "react";
 import AuthApi from "shared/api";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { reportReasonAtom } from "Recoil/recoilAtoms";
 
-const reportReason = ["폭력적 또는 혐오스러운 콘텐츠", "유해한 위험 행위", "아동학대", "스팸 또는 사용자를 현혹하는 콘텐츠"];
-
-function CrewReportModal({ onClose, boatId, cookies, navigate, exitModalHandler }) {
+function CrewReportModal({
+  onClose,
+  boatId,
+  cookies,
+  navigate,
+  exitModalHandler,
+}) {
+  const [reportReason] = useRecoilState(reportReasonAtom);
   const [selectedReason, setSelectedReason] = useState(""); // 선택한 라디오 버튼 값 저장 상태
 
   // 라디오 버튼이 선택되었는지 확인하는 함수
@@ -31,40 +38,40 @@ function CrewReportModal({ onClose, boatId, cookies, navigate, exitModalHandler 
   return (
     <ModalBackground>
       <ModalContainer>
-        <div>
-          <StHeader>
-            <StH2>해당 글을 신고하시겠습니까?</StH2>
-            <StCloseBtn type="button" onClick={onClose}>X</StCloseBtn>
-          </StHeader>
-          <StRadioContainer>
-            {reportReason.map((reason) => (
-              <div style={{ height: "56px" }} key={reason}>
-                {/* 라디오 버튼에 checked 속성을 추가하여 선택 여부를 추적 */}
-                <input
-                  type="radio"
-                  id={reason}
-                  name="reportReason"
-                  value={reason}
-                  checked={selectedReason === reason}
-                  onChange={() => setSelectedReason(reason)}
-                />
-                <StLabel htmlFor={reason}>{reason}</StLabel>
-              </div>
-            ))}
-          </StRadioContainer>
-          <StBtnContainer>
-            <StCancelBtn type="button" onClick={onClose}>
-              취소
-            </StCancelBtn>
-            <StReportBtn
-              type="button"
-              onClick={reportHandler}
-              disabled={!isAnyRadioSelected()}
-            >
-              신고하기
-            </StReportBtn>
-          </StBtnContainer>
-        </div>
+        <StHeader>
+          <StH2>해당 글을 신고하시겠습니까?</StH2>
+          <StCloseBtn type="button" onClick={onClose}>
+            X
+          </StCloseBtn>
+        </StHeader>
+        <StRadioContainer>
+          {reportReason.map((reason) => (
+            <div style={{ height: "56px" }} key={reason}>
+              {/* 라디오 버튼에 checked 속성을 추가하여 선택 여부를 추적 */}
+              <input
+                type="radio"
+                id={reason}
+                name="reportReason"
+                value={reason}
+                checked={selectedReason === reason}
+                onChange={() => setSelectedReason(reason)}
+              />
+              <StLabel htmlFor={reason}>{reason}</StLabel>
+            </div>
+          ))}
+        </StRadioContainer>
+        <StBtnContainer>
+          <StCancelBtn type="button" onClick={onClose}>
+            취소
+          </StCancelBtn>
+          <StReportBtn
+            type="button"
+            onClick={reportHandler}
+            disabled={!isAnyRadioSelected()}
+          >
+            신고하기
+          </StReportBtn>
+        </StBtnContainer>
       </ModalContainer>
     </ModalBackground>
   );
@@ -82,7 +89,7 @@ export default CrewReportModal;
 
 const ModalBackground = styled.div`
   position: fixed;
-  top: -70px;
+  top: -64px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -94,10 +101,11 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 368px;
+  width: 360px;
+  /* height: 368px; */
   background-color: #fff;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;

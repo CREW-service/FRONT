@@ -6,6 +6,7 @@ import { markerAddressAtom, recoilLatLngAtom } from "Recoil/recoilAtoms";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import MYLOCATION from "imgs/Location.svg";
+import Loadoing from "./Loadoing";
 
 const { kakao } = window;
 
@@ -15,7 +16,7 @@ function Kakaomaprefact() {
   const [recoilLatLng, setRecoilLatLng] = useRecoilState(recoilLatLngAtom);
   const [, setMarkerAddress] = useRecoilState(markerAddressAtom); // 마커 주소 상태
   const [selectedMarker, setSelectedMarker] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(true);
   const [getMapState, setGetMapState] = useState({
     center: {
       lat: null,
@@ -119,15 +120,16 @@ function Kakaomaprefact() {
     }
   };
 
+  useEffect(() => {
+    handleMapLoad();
+  }, []);
+
   const handletileLoaded = async () => {
     const mapInfo = await getMapInfo();
     const getList = await getBoatList(mapInfo);
     setBoatList(getList);
+    setIsLoading(false);
   };
-
-  useEffect(() => {
-    handleMapLoad();
-  }, []);
 
   const markerClickHandler = () => {
     setRecoilLatLng({
@@ -169,6 +171,7 @@ function Kakaomaprefact() {
         overflow: "hidden",
       }}
     >
+      {isLoading && <Loadoing />}
       <Map // 지도를 표시할 Container
         // 지도의 중심좌표
         center={getMapState.center}
@@ -178,7 +181,7 @@ function Kakaomaprefact() {
           width: "100%",
           height: "100%",
         }}
-        level={6} // 지도의 확대 레벨
+        level={4} // 지도의 확대 레벨
         onClick={(_t, mouseEvent) => mapClickHandler(mouseEvent)}
         ref={mapRef}
         onBoundsChanged={traceBoundHandler}
