@@ -7,11 +7,12 @@ import AuthApi from "shared/api";
 
 function Profile() {
   const [uploadImage, setUploadImage] = useState(null);
-  const [imgFile, setImgFile] = useState(null);
   const location = useLocation();
   const { user } = location.state;
-  const imageInput = useRef();
 
+  // 기존 이미지 정보를 가져와서 로드하도록 고쳐 주세요. 
+  const [imgFile, setImgFile] = useState(null);
+  const imageInput = useRef();
   const [nickName, setNickName] = useState(user.nickName);
   const [myMessage, setMyMessage] = useState(user.myMessage);
 
@@ -24,7 +25,6 @@ function Profile() {
   const saveImgFile = async (e) => {
     const blob = await e.target.files[0];
     setImgFile(URL.createObjectURL(blob));
-
     setUploadImage(blob);
   };
 
