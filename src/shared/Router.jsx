@@ -7,6 +7,7 @@ import MyPage from "Pages/MyPage";
 import Signin from "Pages/Signin";
 import CorrectionWriting from "Pages/CorrectionWriting";
 import Onboarding from "Pages/Onboarding";
+import Profile from "Pages/Profile";
 import Layout from "Components/Layout/Layout";
 
 function Router() {
@@ -21,6 +22,7 @@ function Router() {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/main" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>
