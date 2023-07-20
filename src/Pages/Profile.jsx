@@ -26,12 +26,6 @@ function Profile() {
     setImgFile(URL.createObjectURL(blob));
 
     setUploadImage(blob);
-    // try {
-    //   const res = await AuthApi.myPageEdit(formData);
-    //   alert(res.data.message);
-    // } catch (err) {
-    //   alert(err.response.data.errorMessage);
-    // }
   };
 
   const handleNickChange = (e) => {
