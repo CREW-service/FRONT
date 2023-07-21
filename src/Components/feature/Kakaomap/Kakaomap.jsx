@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import AuthApi from "shared/api";
-import { Map, MapMarker, ZoomControl } from "react-kakao-maps-sdk";
+import {
+  Map,
+  MapMarker,
+  ZoomControl,
+  MarkerClusterer,
+} from "react-kakao-maps-sdk";
 import { useRecoilState } from "recoil";
 import { markerAddressAtom, recoilLatLngAtom } from "Recoil/recoilAtoms";
 import styled from "styled-components";
@@ -105,6 +110,7 @@ function Kakaomaprefact() {
         map.getBounds().getNorthEast().getLat(),
         map.getBounds().getNorthEast().getLng(),
       ],
+      level: map.getLevel(),
     };
     return bounds;
   };
@@ -187,6 +193,52 @@ function Kakaomaprefact() {
         onBoundsChanged={traceBoundHandler}
         onTileLoaded={handletileLoaded}
       >
+        <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} />
+        <MarkerClusterer
+          averageCenter // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+          minLevel={8} // 클러스터 할 최소 지도 레벨
+        >
+          {boatList.map((boat) => (
+            <MapMarker
+              key={boat.boatId}
+              position={{ lat: boat.latitude, lng: boat.longitude }} // 마커를 표시할 위치
+              image={{
+                src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", // 마커이미지의 주소입니다
+                size: {
+                  width: 24,
+                  height: 35,
+                }, // 마커이미지의 크기입니다
+              }}
+              onClick={() => boatClickHandler(boat.boatId)}
+            >
+              {/* MapMarker의 자식을 넣어줌으로 해당 자식이 InfoWindow로 만들어지게 합니다 */}
+              {/* 인포윈도우에 표출될 내용으로 HTML 문자열이나 React Component가 가능합니다 */}
+              {selectedMarker === boat.boatId && (
+                <div className="wrap marker" id={boat.boatId}>
+                  <div className="title detailtitle">{boat.title}</div>
+                  <div className="body">
+                    <div className="desc">
+                      <div>모집 인원:</div>
+                      <div>
+                        {boat.crewNum}/{boat.maxCrewNum}
+                      </div>
+                    </div>
+                    <div className="desc">
+                      <div>모집 마감:</div>
+                      <div>{boat.endDate ? boat.endDate : "상시 모집"}</div>
+                    </div>
+                    <div className="godetail">
+                      <Link className="detaillink" to={`/boat/${boat.boatId}`}>
+                        자세히 보기
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </MapMarker>
+          ))}
+        </MarkerClusterer>
+
         {recoilLatLng && (
           <MapMarker position={recoilLatLng} onClick={markerClickHandler}>
             {/* MapMarker의 자식을 넣어줌으로 해당 자식이 InfoWindow로 만들어지게 합니다 */}
@@ -201,46 +253,7 @@ function Kakaomaprefact() {
             </StInfowindowContainer> */}
           </MapMarker>
         )}
-        <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} />
-        {boatList.map((boat) => (
-          <MapMarker
-            key={boat.boatId}
-            position={{ lat: boat.latitude, lng: boat.longitude }} // 마커를 표시할 위치
-            image={{
-              src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", // 마커이미지의 주소입니다
-              size: {
-                width: 24,
-                height: 35,
-              }, // 마커이미지의 크기입니다
-            }}
-            onClick={() => boatClickHandler(boat.boatId)}
-          >
-            {/* MapMarker의 자식을 넣어줌으로 해당 자식이 InfoWindow로 만들어지게 합니다 */}
-            {/* 인포윈도우에 표출될 내용으로 HTML 문자열이나 React Component가 가능합니다 */}
-            {selectedMarker === boat.boatId && (
-              <div className="wrap marker" id={boat.boatId}>
-                <div className="title detailtitle">{boat.title}</div>
-                <div className="body">
-                  <div className="desc">
-                    <div>모집 인원:</div>
-                    <div>
-                      {boat.crewNum}/{boat.maxCrewNum}
-                    </div>
-                  </div>
-                  <div className="desc">
-                    <div>모집 마감:</div>
-                    <div>{boat.endDate ? boat.endDate : "상시 모집"}</div>
-                  </div>
-                  <div className="godetail">
-                    <Link className="detaillink" to={`/boat/${boat.boatId}`}>
-                      자세히 보기
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            )}
-          </MapMarker>
-        ))}
+
         <StOverLayButtonDiv className="category">
           <StMyLocationButton type="button" onClick={mapMoveMyLocationHandler}>
             <img src={MYLOCATION} alt="내 위치" />
