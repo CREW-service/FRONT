@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import defualtpic from "imgs/defualtpic.jpg";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Profileimg from "imgs/profile_photo_edit.png";
 import AuthApi from "shared/api";
 
@@ -11,15 +11,18 @@ function Profile() {
   const [imgFile, setImgFile] = useState(null);
   const location = useLocation();
   const myInfo = location.state;
+  const [nickName, setNickName] = useState(myInfo.user.nickName);
+  const [myMessage, setMyMessage] = useState(myInfo.user.myMessage);
   const imageInput = useRef();
 
   const onCickImageUpload = () => {
     imageInput.current.click();
   };
 
-  const saveImgFile = async (e) => {
+  const saveFile = async (e) => {
     setImgFile(URL.createObjectURL(e.target.files[0]));
     console.log(e.target.files[0].name);
+
     const config = {
       headers: {
         authorization: cookies.authorization,
@@ -29,9 +32,11 @@ function Profile() {
 
     // 서버 api에 Post 요청
     const formData = new FormData();
-
     formData.append("image", e.target.files[0]);
+    formData.append("nickName", nickName); // 수정된 닉네임
+    formData.append("myMessage", myMessage); // 수정된 상태 메시지
     console.log(formData);
+
     try {
       const res = await AuthApi.myPageEdit(formData, config);
       alert(res.data.message);
@@ -40,6 +45,13 @@ function Profile() {
     }
   };
   console.log("img", imgFile);
+
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    setImgFile(null);
+    navigate("/mypage");
+  };
 
   return (
     <div>
@@ -51,7 +63,7 @@ function Profile() {
             name="image"
             style={{ display: "none" }}
             ref={imageInput}
-            onChange={saveImgFile}
+            onChange={saveFile}
           />
           <StimgCorrectionBtn
             onClick={onCickImageUpload}
@@ -72,8 +84,12 @@ function Profile() {
         </div>
       </StNicMessageBox>
       <StButtonBox>
-        <StCancelBtn type="submit">취소</StCancelBtn>
-        <StSaveBtn type="submit">저장</StSaveBtn>
+        <StCancelBtn type="submit" onClick={handleCancel}>
+          취소
+        </StCancelBtn>
+        <StSaveBtn type="submit" onClick={saveFile}>
+          저장
+        </StSaveBtn>
       </StButtonBox>
     </div>
   );
@@ -95,7 +111,11 @@ const StProfileImg = styled.img`
   border-radius: 12px;
   background-color: #fff;
   background-image: url(${defualtpic});
-  box-shadow: 0px 1px 2px 2px rgba(0.85, 0.85, 0.85, 0.05);
+  border: 1px solid #d9d9d9;
+
+  -webkit-box-shadow: 0px 0px 8px 1px rgba(217, 217, 217, 1);
+  -moz-box-shadow: 0px 0px 8px 1px rgba(217, 217, 217, 1);
+  box-shadow: 0px 0px 8px 1px rgba(217, 217, 217, 1);
 `;
 
 const StimgCorrectionBtn = styled.img`
@@ -147,7 +167,7 @@ const StMyMessage = styled(StNicText)`
 const StButtonBox = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin: 50px auto;
 `;
 const StCancelBtn = styled.button`
   width: 130px;
