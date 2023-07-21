@@ -121,7 +121,8 @@ function Mypage() {
       ) : (
         <StContainer>
           <StProfileBox>
-            <StPropic />
+            <StPropic src={myInfo?.user.profileImage} alt="" />
+
             <StMessageBox>
               <StNickNameBox>{myInfo?.user.nickName}</StNickNameBox>
               <StMyMessage>{myInfo?.user.myMessage}</StMyMessage>
@@ -254,7 +255,8 @@ const StProfileBox = styled.div`
   padding: 32px 16px;
 `;
 
-const StPropic = styled.div`
+const StPropic = styled.img`
+  display: block;
   width: 80px;
   height: 80px;
   margin-right: 20px;

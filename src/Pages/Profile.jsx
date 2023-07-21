@@ -7,50 +7,62 @@ import Profileimg from "imgs/profile_photo_edit.png";
 import AuthApi from "shared/api";
 
 function Profile() {
-  const [cookies] = useCookies(["authorization"]);
-  const [imgFile, setImgFile] = useState(null);
   const location = useLocation();
-  const myInfo = location.state;
-  const [nickName, setNickName] = useState(myInfo.user.nickName);
-  const [myMessage, setMyMessage] = useState(myInfo.user.myMessage);
+  const { user } = location.state;
   const imageInput = useRef();
+
+  console.log(user);
+  const [profileData, setProfileData] = useState({
+    imgFile: user.profileImage,
+    uploadImage: null,
+    nickName: user.nickName,
+    myMessage: user.myMessage,
+  });
+
+  const { imgFile, uploadImage, nickName, myMessage } = profileData;
+
+  const navigate = useNavigate();
 
   const onCickImageUpload = () => {
     imageInput.current.click();
   };
 
-  const saveFile = async (e) => {
-    setImgFile(URL.createObjectURL(e.target.files[0]));
-    console.log(e.target.files[0].name);
+  const saveImgFile = async (e) => {
+    const blob = await e.target.files[0];
+    setProfileData((prevData) => ({
+      ...prevData,
+      imgFile: URL.createObjectURL(blob),
+      uploadImage: blob,
+    }));
+  };
 
-    const config = {
-      headers: {
-        authorization: cookies.authorization,
-        "Content-Type": "multipart/form-data",
-      },
-    };
+  const handleNickChange = (e) => {
+    setProfileData((prevData) => ({
+      ...prevData,
+      nickName: e.target.value,
+    }));
+  };
 
-    // 서버 api에 Post 요청
+  const handleMyMessageChange = (e) => {
+    setProfileData((prevData) => ({
+      ...prevData,
+      myMessage: e.target.value,
+    }));
+  };
+
+  const onSubmitHandler = async () => {
     const formData = new FormData();
-    formData.append("image", e.target.files[0]);
-    formData.append("nickName", nickName); // 수정된 닉네임
-    formData.append("myMessage", myMessage); // 수정된 상태 메시지
-    console.log(formData);
+    formData.append("image", uploadImage);
+    formData.append("nickName", nickName);
+    formData.append("myMessage", myMessage);
 
     try {
-      const res = await AuthApi.myPageEdit(formData, config);
+      const res = await AuthApi.myPageEdit(formData);
       alert(res.data.message);
+      navigate("/mypage");
     } catch (err) {
       alert(err.response.data.errorMessage);
     }
-  };
-  console.log("img", imgFile);
-
-  const navigate = useNavigate();
-
-  const handleCancel = () => {
-    setImgFile(null);
-    navigate("/mypage");
   };
 
   return (
@@ -63,7 +75,7 @@ function Profile() {
             name="image"
             style={{ display: "none" }}
             ref={imageInput}
-            onChange={saveFile}
+            onChange={saveImgFile}
           />
           <StimgCorrectionBtn
             onClick={onCickImageUpload}
@@ -76,18 +88,18 @@ function Profile() {
         <StSubTitle>프로필 편집</StSubTitle>
         <StNicBox>
           <StNicTitle>이름</StNicTitle>
-          <StNicText>{myInfo.user.nickName}</StNicText>
+          <StNicText value={nickName} onChange={handleNickChange} />
         </StNicBox>
         <div>
           <StMessageTitle>상태메세지</StMessageTitle>
-          <StMyMessage>{myInfo.user.myMessage}</StMyMessage>
+          <StMyMessage value={myMessage} onChange={handleMyMessageChange} />
         </div>
       </StNicMessageBox>
       <StButtonBox>
-        <StCancelBtn type="submit" onClick={handleCancel}>
+        <StCancelBtn type="submit" onClick={() => navigate("/mypage")}>
           취소
         </StCancelBtn>
-        <StSaveBtn type="submit" onClick={saveFile}>
+        <StSaveBtn type="submit" onClick={onSubmitHandler}>
           저장
         </StSaveBtn>
       </StButtonBox>
