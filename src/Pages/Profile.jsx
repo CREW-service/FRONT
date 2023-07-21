@@ -9,17 +9,13 @@ function Profile() {
   const location = useLocation();
   const { user } = location.state;
   const imageInput = useRef();
-
-  console.log(user)
   const [profileData, setProfileData] = useState({
     imgFile: user.profileImage,
     uploadImage: null,
     nickName: user.nickName,
     myMessage: user.myMessage,
   });
-
   const { imgFile, uploadImage, nickName, myMessage } = profileData;
-
   const navigate = useNavigate();
 
   const onCickImageUpload = () => {
@@ -51,6 +47,7 @@ function Profile() {
 
   const onSubmitHandler = async () => {
     const formData = new FormData();
+    
     formData.append("image", uploadImage);
     formData.append("nickName", nickName);
     formData.append("myMessage", myMessage);
