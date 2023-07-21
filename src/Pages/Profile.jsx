@@ -125,8 +125,6 @@ const StProfileImg = styled.img`
   background-image: url(${defualtpic});
   border: 1px solid #d9d9d9;
 
-  -webkit-box-shadow: 0px 0px 8px 1px rgba(217, 217, 217, 1);
-  -moz-box-shadow: 0px 0px 8px 1px rgba(217, 217, 217, 1);
   box-shadow: 0px 0px 8px 1px rgba(217, 217, 217, 1);
 `;
 

@@ -145,12 +145,12 @@ function Mypage() {
                 <StWritedBoatList>
                   {myInfo?.writedBoats.map((boats) => (
                     <StMapBoatList key={boats.boatId}>
+                      {/* <StBoatListBar></StBoatListBar> */}
                       <StMyBoatTitle
                         onClick={() => goingBoatHandler(boats.boatId)}
                       >
                         {boats.title}
                       </StMyBoatTitle>
-
                       <StModiyButtonBox>
                         <StModiyButton
                           type="button"
@@ -244,12 +244,6 @@ export default Mypage;
 
 const StContainer = styled.div``;
 
-const StLayoutBox = styled.div`
-  width: 100%;
-  height: 84px;
-  flex-shrink: 0;
-`;
-
 const StProfileBox = styled.div`
   display: flex;
   padding: 32px 16px;
@@ -268,9 +262,6 @@ const StPropic = styled.img`
   background-size: cover;
   background-position: center;
   background-color: #d9d9d9;
-
-  -webkit-box-shadow: 0px 0px 8px 1px rgba(217, 217, 217, 1);
-  -moz-box-shadow: 0px 0px 8px 1px rgba(217, 217, 217, 1);
   box-shadow: 0px 0px 8px 1px rgba(217, 217, 217, 1);
 `;
 const StMessageBox = styled.div`
@@ -320,6 +311,7 @@ const StMyBoatsListBox = styled.div`
   font-size: 18px;
   padding: 16px 32px;
 `;
+
 const StChatBox = styled.div`
   width: 100%;
 
@@ -329,13 +321,12 @@ const StChatBox = styled.div`
 `;
 
 const StWritedBoatBox = styled.div`
-  padding: 40px 28px 20px;
+  padding: 24px 28px 10px;
   font-family: Pretendard;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   background: #b1dcff;
-  -webkit-box-shadow: -1px 12px 8px -6px rgba(211, 211, 211, 0.67);
-  -moz-box-shadow: -1px 12px 8px -6px rgba(211, 211, 211, 0.67);
+
   box-shadow: -1px 12px 8px -6px rgba(211, 211, 211, 0.67);
 `;
 
@@ -366,7 +357,8 @@ const StBoatIcon = styled.img`
 
 const StWritedBoatList = styled.div``;
 const StMapBoatList = styled.div`
-  margin: 24px 0;
+  margin: 12px 0 24px;
+  border-top: 1px solid #fff;
 `;
 
 const StMyBoatTitle = styled.div`
@@ -376,10 +368,8 @@ const StMyBoatTitle = styled.div`
   font-weight: 500;
   width: 100%;
   height: 48px;
+  margin-top: 20px;
   cursor: pointer;
-`;
-const StBoatListBar = styled.div`
-  border: 0.5px solid #fff;
 `;
 
 const StModiyButtonBox = styled.div`
@@ -423,6 +413,7 @@ const StAttendedList = styled.div`
 `;
 const StMapInboats = styled.div`
   padding: 16px 0;
+  border-top: 1px solid #eff4f8;
 `;
 
 const StAttendedTitle = styled.div`
