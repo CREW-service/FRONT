@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { useRecoilState } from "recoil";
 import { boatAtom } from "Recoil/recoilAtoms";
-import writedboaticon from "imgs/writedboaticon.png";
+import writedboaticon from "imgs/writedboaticon.svg";
+import writedboaticonBlue from "imgs/writedboaticon.png";
 import defualtpic from "imgs/defualtpic.jpg";
 import Rectangle from "imgs/Rectangle.png";
 import SETTING from "imgs/Vector.png";
@@ -120,7 +121,8 @@ function Mypage() {
       ) : (
         <StContainer>
           <StProfileBox>
-            <StPropic />
+            <StPropic src={myInfo?.user.profileImage} alt="" />
+
             <StMessageBox>
               <StNickNameBox>{myInfo?.user.nickName}</StNickNameBox>
               <StMyMessage>{myInfo?.user.myMessage}</StMyMessage>
@@ -137,12 +139,13 @@ function Mypage() {
             <>
               <StWritedBoatBox>
                 <StWritedBoatTitle>
-                  <img src={writedboaticon} alt="보트 아이콘" />
-                  <span style={{ marginLeft: "8px" }}>내가 만든 보트</span>
+                  <StMyWriteBoats>내가 만든 보트</StMyWriteBoats>
+                  <StBoatIcon src={writedboaticon} alt="보트 아이콘" />
                 </StWritedBoatTitle>
                 <StWritedBoatList>
                   {myInfo?.writedBoats.map((boats) => (
-                    <div key={boats.boatId}>
+                    <StMapBoatList key={boats.boatId}>
+                      {/* <StBoatListBar></StBoatListBar> */}
                       <StMyBoatTitle
                         onClick={() => goingBoatHandler(boats.boatId)}
                       >
@@ -162,19 +165,23 @@ function Mypage() {
                           삭제
                         </StDeleteButton>
                       </StModiyButtonBox>
-                    </div>
+                    </StMapBoatList>
                   ))}
                 </StWritedBoatList>
               </StWritedBoatBox>
               <StAttendedList>
+                <StWritedBoatTitle>
+                  <StInBoats>참여 중인 보트</StInBoats>
+                  <StBoatIcon src={writedboaticonBlue} alt="보트 아이콘" />
+                </StWritedBoatTitle>
                 {myInfo.attendedBoats.map((attended) => (
-                  <div key={attended.boatId}>
+                  <StMapInboats key={attended.boatId}>
                     <StAttendedTitle
                       onClick={() => goingBoatHandler(attended.boatId)}
                     >
                       {attended.title}
                     </StAttendedTitle>
-                  </div>
+                  </StMapInboats>
                 ))}
               </StAttendedList>
             </>
@@ -206,7 +213,10 @@ function Mypage() {
           >
             <StModalAlert>
               <p>잠깐!</p>
-              <p>해당 글을 삭제할 경우 복구할 수 없습니다.</p>
+              <p>
+                해당 글을 삭제할 경우
+                <br /> 복구할 수 없습니다.
+              </p>
             </StModalAlert>
             <StModalContent>작성한 글을 삭제하시겠습니까?</StModalContent>
             <StModalButtonBox>
@@ -241,22 +251,17 @@ const StLoadingContainer = styled.div`
 
 const StContainer = styled.div``;
 
-const StLayoutBox = styled.div`
-  width: 100%;
-  height: 84px;
-  flex-shrink: 0;
-`;
-
 const StProfileBox = styled.div`
   display: flex;
   padding: 32px 16px;
 `;
 
-const StPropic = styled.div`
+const StPropic = styled.img`
+  display: block;
   width: 80px;
   height: 80px;
   margin-right: 20px;
-  box-shadow: 0px 1px 2px 2px rgba(0.85, 0.85, 0.85, 0.05);
+
   flex-shrink: 0;
   border-radius: 12px;
   background-image: url(${defualtpic});
@@ -264,10 +269,11 @@ const StPropic = styled.div`
   background-size: cover;
   background-position: center;
   background-color: #d9d9d9;
+  box-shadow: 0px 0px 8px 1px rgba(217, 217, 217, 1);
 `;
 const StMessageBox = styled.div`
   position: relative;
-  width: 208px;
+  width: 100%;
 `;
 const StNickNameBox = styled.div`
   font-size: 16px;
@@ -291,63 +297,86 @@ const StProfileSetting = styled.div`
 `;
 const StSettingImg = styled.img``;
 const StSubTitleBox = styled.div`
+  display: flex;
+  align-items: center;
   width: 100%;
   height: 64px;
   flex-shrink: 0;
-  display: flex;
 
-  align-items: center;
-  padding-left: 32px;
-  color: var(--gr-black, #222);
-  /* Title/L */
+  color: #222;
   font-size: 22px;
   font-family: Pretendard;
   font-weight: 500;
-
-  border-top: 2px solid var(--gr-pale, #eff4f8);
-  background: var(--gr-white, #fff);
+  border-top: 2px solid #eff4f8;
+  background: #fff;
 `;
 const StMyBoatsListBox = styled.div`
+  width: 100%;
   color: #30a2ff;
-  border: 2px solid #000;
+
+  text-align: center;
+  font-size: 18px;
+  padding: 16px 32px;
 `;
+
 const StChatBox = styled.div`
-  border: 2px solid #000;
+  width: 100%;
+
+  text-align: center;
+  font-size: 18px;
+  padding: 16px 32px;
 `;
 
 const StWritedBoatBox = styled.div`
-  /* Title/M */
-  font-size: 18px;
+  padding: 24px 28px 10px;
   font-family: Pretendard;
-  font-weight: 500;
-  line-height: 24px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background: #b1dcff;
 
-  margin: 16px auto;
-  margin-right: 2px;
-  margin-left: 2px;
-  padding: 28px auto 40px 20px;
-  border-radius: 12px;
-  border: 1px solid var(--primary-p-blue, #b1dcff);
-  background: var(--gr-white, #fff);
+  box-shadow: -1px 12px 8px -6px rgba(211, 211, 211, 0.67);
 `;
 
 const StWritedBoatTitle = styled.div`
-  color: var(--primary-blue, #30a2ff);
-  margin: 28px 0 0 20px;
+  display: flex;
+  color: #222;
+  font-size: 24px;
+  font-weight: 500;
+  height: 40px;
+  align-items: center;
+  margin-bottom: 8px;
 `;
 
-const StWritedBoatList = styled.div`
-  margin: 24px 16px 10px 16px;
+const StInBoats = styled.div`
+  color: #00c7ff;
+  margin-right: 8px;
+
+  text-align: center;
+`;
+
+const StMyWriteBoats = styled.span`
+  text-align: center;
+`;
+
+const StBoatIcon = styled.img`
+  display: block;
+`;
+
+const StWritedBoatList = styled.div``;
+const StMapBoatList = styled.div`
+  margin: 12px 0 24px;
+  border-top: 1px solid #fff;
 `;
 
 const StMyBoatTitle = styled.div`
-  color: var(--gr-black, #222);
-
-  /* Title/M */
+  color: #222;
   font-size: 18px;
   font-family: Pretendard;
   font-weight: 500;
-  line-height: 24px;
+  width: 100%;
+  height: 48px;
+  margin-top: 20px;
+  cursor: pointer;
 `;
 
 const StModiyButtonBox = styled.div`
@@ -356,100 +385,102 @@ const StModiyButtonBox = styled.div`
 `;
 
 const StModiyButton = styled.button`
-  margin: 0 16px 28px 10px;
-  border: 0;
-  background: var(--gr-white, #fff);
-
-  color: var(--gr-deep, #3e4756);
+  border: none;
+  background: #fff;
+  padding: 8px 16px;
+  margin-right: 10px;
+  border-radius: 35px;
+  color: #3e4756;
   text-align: center;
   font-size: 14px;
   font-family: Pretendard;
-  line-height: 20px;
+  cursor: pointer;
 `;
 
 const StDeleteButton = styled.button`
-  margin: 0 16px 28px 10px;
-  border: 0;
-  background: var(--gr-white, #fff);
-  color: var(--red-red, #ea122b);
+  border: none;
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 35px;
+  background: #fff;
+  color: #ea122b;
   text-align: center;
   font-size: 14px;
   font-family: Pretendard;
   font-weight: 700;
-  line-height: 20px;
+  cursor: pointer;
 `;
 
 const StAttendedList = styled.div`
-  margin: 24px 16px 10px 16px;
+  margin: 24px 16px;
+  padding: 28px 18px;
+  border: 1px solid #f5f5f5;
+  border-radius: 12px;
+  background-color: #fff;
+`;
+const StMapInboats = styled.div`
+  padding: 16px 0;
+  border-top: 1px solid #eff4f8;
 `;
 
 const StAttendedTitle = styled.div`
-  color: var(--gr-black, #222);
-
-  /* Title/M */
+  color: #222;
   font-size: 18px;
   font-family: Pretendard;
   font-weight: 500;
-  line-height: 24px;
-  margin-bottom: 24px;
+  cursor: pointer;
 `;
 
 const StModalAlert = styled.div`
-  margin: 40px 36px 16px 36px;
-  color: var(--gr-black, #222);
+  color: #222;
   font-size: 24px;
   font-family: Pretendard;
   font-weight: 700;
   line-height: 34px;
+  margin: 20px 16px 32px;
 `;
 
 const StModalContent = styled.div`
-  margin: 16px 36px 16px 36px;
-  color: var(--gr-black, #222);
-
-  /* Title/M */
+  color: #222;
+  margin: 0 15px 48px;
   font-size: 18px;
   font-family: Pretendard;
   font-weight: 500;
-  line-height: 24px;
 `;
 
 const StModalButtonBox = styled.div`
-  margin: 16px 20px 40px 20px;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
 `;
 
 const StModalCancelButton = styled.button`
-  border: 0;
-  background: var(--gr-white, #fff);
-
-  width: 144px;
-  height: 64px;
+  border: none;
+  border-radius: 35px;
+  background: #fff;
+  width: 100%;
   padding: 16px 40px;
-
-  color: var(--gr-deep, #3e4756);
+  height: 56px;
+  color: #3e4756;
   text-align: center;
-  font-size: 22px;
+  font-size: 20px;
   font-family: Pretendard;
   font-weight: 700;
-  line-height: 24px;
+  cursor: pointer;
 `;
 
 const StModalDeleteButton = styled.button`
-  border: 0;
-  background: var(--red-red, #ea122b);
-
-  width: 144px;
-  height: 64px;
+  border: none;
+  border-radius: 35px;
+  background: #ea122b;
+  width: 100%;
   padding: 16px 40px;
-
-  color: var(--gr-white, #fff);
+  height: 56px;
+  color: #fff;
   text-align: center;
-  font-size: 22px;
+  font-size: 20px;
   font-family: Pretendard;
   font-weight: 700;
-  line-height: 24px;
+  cursor: pointer;
 `;
 
 const StNoShowingContent = styled.div`
@@ -496,8 +527,8 @@ const modalstyles = {
     zIndex: 1000,
   },
   content: {
-    width: "328px",
-    height: "400px",
+    width: "334px",
+    height: "325px",
     margin: "auto",
     padding: "20px",
     borderRadius: "8px",
