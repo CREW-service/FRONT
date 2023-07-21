@@ -15,6 +15,7 @@ function Profile() {
     nickName: user.nickName,
     myMessage: user.myMessage,
   });
+  
   const { imgFile, uploadImage, nickName, myMessage } = profileData;
   const navigate = useNavigate();
 
