@@ -15,9 +15,12 @@
 
 ## 2. 팀 멤버 
 `Back-end (Node.js)`
+
 * 박윤수(Team Leader)
+
 `Front-end (React)`
 * 윤진영A, 윤진영B(Project Leader)
+
 `Design`
 * 이도림
 
