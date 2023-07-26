@@ -26,7 +26,6 @@ function CrewReportModal({
       };
 
       const res = await AuthApi.reportBoat(boatId, payload);
-      alert(res.data.message);
       const exit = await exitModalHandler();
       navigate("/main");
       onClose();
