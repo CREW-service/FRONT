@@ -92,7 +92,7 @@ const ModalBackground = styled.div`
 const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 360px;
   height: 368px;
   background-color: #fff;
   border-top-left-radius: 10px;
