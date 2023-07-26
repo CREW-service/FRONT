@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import AuthApi from "shared/api";
 
 function Commentmodal({ boatId, comment, renderTriggerHandler, closeModal }) {
-  console.log("comment", comment);
   const modalRef = useRef(null);
 
   useEffect(() => {

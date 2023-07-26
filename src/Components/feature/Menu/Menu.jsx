@@ -25,7 +25,6 @@ function Menu() {
       setIsLogin(false);
       alert("로그아웃 했습니다.");
       navigate("/");
-      console.log(data);
     } catch (error) {
       console.error("Error fetching post:", error);
     }

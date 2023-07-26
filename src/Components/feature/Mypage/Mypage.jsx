@@ -70,7 +70,6 @@ function Mypage() {
   const ProfileHandler = () => {
     navigate("/profile", { state: myInfo });
   };
-  console.log("myinfo", myInfo);
 
   const boatDeleteHandler = async (boatId) => {
     const toDay = new Date().toISOString().split("T")[0];

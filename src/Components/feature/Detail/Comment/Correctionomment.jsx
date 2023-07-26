@@ -109,7 +109,6 @@ function Correctionomment({ boat, boatId, renderTriggerHandler }) {
             key={comment.commentId}
           >
             {comment.comment}
-            {console.log(comment)}
             <div>
               {currentUserId === comment.userId && (
                 <button
