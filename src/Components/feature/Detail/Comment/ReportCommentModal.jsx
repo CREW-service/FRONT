@@ -90,10 +90,11 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   width: 360px;
-  height: 368px;
+  /* height: 368px; */
   background-color: #fff;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
