@@ -2,8 +2,8 @@
 ![bs](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc8eb68c2-2877-4eeb-95cc-4c77c944c5e3%2Ff24ff368b03ea0d9.jpg?id=6bb14bf5-9e6e-414e-b1a9-f77610826e2d&table=block&spaceId=aa8571ff-db5c-4c63-a227-0bac038f37bc&width=2000&userId=d31e8c48-c9f3-40c3-8452-373f12137b7d&cache=v2)
 
 - 서비스 : [서비스 바로가기](https://crew.ysizuku.com/)
-- 시연 영상 : 
-- 발표 자료 : https://www.notion.so/CREW-ea485c74cc3d481ebc17beac59c33e51
+- 시연 영상 : [유튜브 링크](https://youtu.be/A8RVX12fDa4)
+- 발표 자료 : [노션 자료](https://www.notion.so/CREW-ea485c74cc3d481ebc17beac59c33e51)
 ---------------------------------------
 ## 1. 프로젝트의 설명
 우리는 사회를 구성하고 관계를 맺길 원합니다.
