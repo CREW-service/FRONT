@@ -25,10 +25,10 @@ function Profile() {
   };
 
   const saveImgFile = async (e) => {
-    const blob = await e.target.files[0];
+    const file = await e.target.files[0];
     // 파일 형식이 지원되는지 확인합니다. (JPEG, PNG, 또는 WEBP)
     const supportedFormats = ["image/jpeg", "image/png", "image/webp"];
-    if (!supportedFormats.includes(blob.type)) {
+    if (!supportedFormats.includes(file.type)) {
       alert(
         "지원되지 않는 이미지 형식입니다. JPEG, PNG 또는 WEBP 형식의 이미지를 업로드해주세요."
       );
@@ -37,7 +37,7 @@ function Profile() {
 
     try {
       const compressedFile = await imageFileResizer(
-        blob,
+        file,
         500,
         500,
         "JPEG",
