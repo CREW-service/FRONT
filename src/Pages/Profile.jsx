@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { imageFileResizer } from "react-image-file-resizer";
+import Resizer from "react-image-file-resizer";
 import styled from "styled-components";
 import defualtpic from "imgs/defualtpic.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -24,6 +24,13 @@ function Profile() {
     imageInput.current.click();
   };
 
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(file, 500, 500, "JPEG", 100, 0, (uri) => {
+        resolve(uri);
+      });
+    });
+
   const saveImgFile = async (e) => {
     const file = await e.target.files[0];
     // 파일 형식이 지원되는지 확인합니다. (JPEG, PNG, 또는 WEBP)
@@ -36,15 +43,7 @@ function Profile() {
     }
 
     try {
-      const compressedFile = await imageFileResizer(
-        file,
-        500,
-        500,
-        "JPEG",
-        0.8,
-        0,
-        (uri) => console.log(uri)
-      );
+      const compressedFile = await resizeFile(file);
       // 압축된 이미지를 서버에 업로드하거나 사용할 수 있습니다.
       setProfileData((prevData) => ({
         ...prevData,
