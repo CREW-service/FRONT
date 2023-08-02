@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { imageFileResizer } from "react-image-file-resizer";
 import styled from "styled-components";
 import defualtpic from "imgs/defualtpic.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -15,7 +16,7 @@ function Profile() {
     nickName: user.nickName,
     myMessage: user.myMessage,
   });
-  
+
   const { imgFile, uploadImage, nickName, myMessage } = profileData;
   const navigate = useNavigate();
 
@@ -24,12 +25,36 @@ function Profile() {
   };
 
   const saveImgFile = async (e) => {
-    const blob = await e.target.files[0];
-    setProfileData((prevData) => ({
-      ...prevData,
-      imgFile: URL.createObjectURL(blob),
-      uploadImage: blob,
-    }));
+    const file = await e.target.files[0];
+    // 파일 형식이 지원되는지 확인합니다. (JPEG, PNG, 또는 WEBP)
+    const supportedFormats = ["image/jpeg", "image/png", "image/webp"];
+    if (!supportedFormats.includes(file.type)) {
+      alert(
+        "지원되지 않는 이미지 형식입니다. JPEG, PNG 또는 WEBP 형식의 이미지를 업로드해주세요."
+      );
+      return;
+    }
+
+    try {
+      const compressedFile = await imageFileResizer(
+        file,
+        500,
+        500,
+        "JPEG",
+        0.8,
+        0,
+        (uri) => console.log(uri)
+      );
+      // 압축된 이미지를 서버에 업로드하거나 사용할 수 있습니다.
+      setProfileData((prevData) => ({
+        ...prevData,
+        imgFile: URL.createObjectURL(compressedFile),
+        uploadImage: compressedFile,
+      }));
+    } catch (error) {
+      console.error("이미지 리사이징 및 압축 중 오류가 발생했습니다:", error);
+      // 오류를 적절하게 처리합니다. (예: 사용자에게 오류 메시지를 표시)
+    }
   };
 
   const handleNickChange = (e) => {
@@ -48,7 +73,7 @@ function Profile() {
 
   const onSubmitHandler = async () => {
     const formData = new FormData();
-    
+
     formData.append("image", uploadImage);
     formData.append("nickName", nickName);
     formData.append("myMessage", myMessage);
