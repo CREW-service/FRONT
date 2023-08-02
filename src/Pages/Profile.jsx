@@ -28,7 +28,7 @@ function Profile() {
     new Promise((resolve) => {
       Resizer.imageFileResizer(file, 500, 500, "JPEG", 100, 0, (uri) => {
         resolve(uri);
-      });
+      },"file");
     });
 
   const saveImgFile = async (e) => {
