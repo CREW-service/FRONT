@@ -45,9 +45,15 @@ function Profile() {
     try {
       const compressedFile = await resizeFile(file);
       // 압축된 이미지를 서버에 업로드하거나 사용할 수 있습니다.
+
+      // imgFile이 이미지 파일인 경우에만 createObjectURL 함수를 사용합니다.
+      if (imgFile instanceof File || imgFile instanceof Blob) {
+        URL.revokeObjectURL(imgFile); // 기존에 생성한 URL을 해제합니다.
+      }
+
       setProfileData((prevData) => ({
         ...prevData,
-        imgFile: URL.createObjectURL(compressedFile),
+        imgFile: compressedFile,
         uploadImage: compressedFile,
       }));
     } catch (error) {
