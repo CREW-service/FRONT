@@ -53,7 +53,7 @@ function Profile() {
 
       setProfileData((prevData) => ({
         ...prevData,
-        imgFile: compressedFile,
+        imgFile: URL.createObjectURL(compressedFile),
         uploadImage: compressedFile,
       }));
     } catch (error) {
