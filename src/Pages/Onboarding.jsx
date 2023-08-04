@@ -44,7 +44,10 @@ function Onboarding() {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
     if (token) {
-      setCookie("authorization", `Bearer ${token}`);
+      const now = new Date();
+      const expirationDate = new Date(now.getTime() + 2 * 60 * 60 * 1000); // 2시간 후의 시간을 계산
+
+      setCookie("authorization", `Bearer ${token}`, expirationDate);
       getUserInfo();
       setIsLogin(true);
       navigate("/main");
