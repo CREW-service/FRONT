@@ -26,12 +26,13 @@
   ![스크린샷(68).png](<https://file.notion.so/f/f/57361b30-3e1c-49d5-a9cd-631aecf12902/4b509ee8-69f7-4f9e-b4f2-7c735b914af9/스크린샷(68).png?id=85975d4f-701d-4629-94a3-a75618ca5cfa&table=block&spaceId=57361b30-3e1c-49d5-a9cd-631aecf12902&expirationTimestamp=1694253600000&signature=K-AmnbHGvJgxD7kTEyP5Kxztzg_4hQT1sh5MuSGmUHo&downloadName=스크린샷%2868%29.png>)
   - 실시간으로 알림을 얻을 수 있습니다.
 </details>
+
 ### 상세 페이지
 
 <details>
 <summary>- 참여하기</summary>
 
-  ![스크린샷(69).png](<https://prod-files-secure.s3.us-west-2.amazonaws.com/57361b30-3e1c-49d5-a9cd-631aecf12902/63f8bc2f-3a77-40f6-9c81-bad8841b61c7/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7(69).png>)
+  ![스크린샷(69).png](<https://file.notion.so/f/f/57361b30-3e1c-49d5-a9cd-631aecf12902/63f8bc2f-3a77-40f6-9c81-bad8841b61c7/스크린샷(69).png?id=75f648b2-5ad3-450f-9b5a-149d2af3bc84&table=block&spaceId=57361b30-3e1c-49d5-a9cd-631aecf12902&expirationTimestamp=1694253600000&signature=P8MqcDpCITLQdEGc4Wv9pQUdK5zAlHTp4xJyFKljeDE&downloadName=스크린샷%2869%29.png>)
   - 모임 글의 정보를 확인 후에 참여할 수 있습니다.
   - 참여 후에는 모임의 CREW 원을 확인할 수 있습니다.
 </details>
@@ -39,28 +40,28 @@
 <details>
 <summary>- 댓글 작성 및 수정</summary>
 
-  ![스크린샷(70).png](<https://prod-files-secure.s3.us-west-2.amazonaws.com/57361b30-3e1c-49d5-a9cd-631aecf12902/ee6e5aaa-eef2-4806-aeed-6afbafbafee5/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7(70).png>)
+  ![스크린샷(70).png](<https://file.notion.so/f/f/57361b30-3e1c-49d5-a9cd-631aecf12902/ee6e5aaa-eef2-4806-aeed-6afbafbafee5/스크린샷(70).png?id=7a229b24-4a9e-425f-9261-484287b7c381&table=block&spaceId=57361b30-3e1c-49d5-a9cd-631aecf12902&expirationTimestamp=1694253600000&signature=KMKKtDI8dQFc7i_o-oK1pRL4HtGRDSq7e63pna5GXQQ&downloadName=스크린샷%2870%29.png>)
   - CREW 원들의 활동 또는 소통을 할 수 있는 공간입니다.
 </details>
 
 <details>
 <summary>- 나가기</summary>
 
-  ![스크린샷(71).png](<https://prod-files-secure.s3.us-west-2.amazonaws.com/57361b30-3e1c-49d5-a9cd-631aecf12902/bd8bef5f-88c3-4c03-b6fc-0c4b7a7fbb50/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7(71).png>)
+  ![스크린샷(71).png](<https://file.notion.so/f/f/57361b30-3e1c-49d5-a9cd-631aecf12902/bd8bef5f-88c3-4c03-b6fc-0c4b7a7fbb50/스크린샷(71).png?id=99519eb9-21d9-49be-b722-604373b48d35&table=block&spaceId=57361b30-3e1c-49d5-a9cd-631aecf12902&expirationTimestamp=1694253600000&signature=wwQLUlFFBymoxeVtGnk3ekMK0_fDxkJ-iWW3sl8MHBY&downloadName=스크린샷%2871%29.png>)
   - 개인 사정이나 특정 상황을 위해 모임에서 나갈 수 있는 기능입니다.
 </details>
 
 <details>
 <summary>- 내보내기</summary>
 
-  ![스크린샷(73).png](<https://prod-files-secure.s3.us-west-2.amazonaws.com/57361b30-3e1c-49d5-a9cd-631aecf12902/60364537-c68b-4089-9121-255d9f11591f/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7(73).png>)
+  ![스크린샷(73).png](<https://file.notion.so/f/f/57361b30-3e1c-49d5-a9cd-631aecf12902/60364537-c68b-4089-9121-255d9f11591f/스크린샷(73).png?id=b6382d6f-d927-4042-a0f4-8f7cd9179bc2&table=block&spaceId=57361b30-3e1c-49d5-a9cd-631aecf12902&expirationTimestamp=1694253600000&signature=vH-RQrJykO1m7PrRbyQXHlNoVJ60ffx_rKpNPdxx4pA&downloadName=스크린샷%2873%29.png>)
   - Captain의 고유한 권한이며 모임의 원활한 진행을 위한 기능입니다.
 </details>
 
 <details>
 <summary>- 신고하기</summary>
 
-  ![스크린샷(72).png](<https://prod-files-secure.s3.us-west-2.amazonaws.com/57361b30-3e1c-49d5-a9cd-631aecf12902/57d44afa-f91c-4fec-8f5d-23f74560a74a/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7(72).png>)
+  ![스크린샷(72).png](<https://file.notion.so/f/f/57361b30-3e1c-49d5-a9cd-631aecf12902/57d44afa-f91c-4fec-8f5d-23f74560a74a/스크린샷(72).png?id=13056bf9-d22f-470b-90a0-3a074f5b3282&table=block&spaceId=57361b30-3e1c-49d5-a9cd-631aecf12902&expirationTimestamp=1694253600000&signature=MSWVMiKTTdklrdWutmZe3zWauRZwhDhiEfPtm2xFg6M&downloadName=스크린샷%2872%29.png>)
   - 부적절한 모임이나 활동 또는 댓글 작성을 빠르게 인지하기 위한 기능입니다.
 </details>
 
@@ -69,7 +70,7 @@
 <details>
 <summary>- 문의하기</summary>
 
-  ![스크린샷(74).png](<https://prod-files-secure.s3.us-west-2.amazonaws.com/57361b30-3e1c-49d5-a9cd-631aecf12902/73d5c261-41d5-47fb-93f4-f660d59ddbae/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7(74).png>)
+  ![스크린샷(74).png](<https://file.notion.so/f/f/57361b30-3e1c-49d5-a9cd-631aecf12902/73d5c261-41d5-47fb-93f4-f660d59ddbae/스크린샷(74).png?id=3f64911d-4435-40ed-9366-e18244098ddf&table=block&spaceId=57361b30-3e1c-49d5-a9cd-631aecf12902&expirationTimestamp=1694253600000&signature=Mo4kHZ_I-hcjWzz38CYMOz-aY7AwT1CnozjGXNDgPCg&downloadName=스크린샷%2874%29.png>)
   - 유저는 채널톡을 이용해서 자유롭게 서비스에 대한 문의를 할 수 있습니다.
 </details>
 
@@ -78,14 +79,14 @@
 <details>
 <summary>- 프로필</summary>
 
-  ![스크린샷(75).png](<https://prod-files-secure.s3.us-west-2.amazonaws.com/57361b30-3e1c-49d5-a9cd-631aecf12902/52d7b5fa-e13e-44b6-97fe-8654da99619e/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7(75).png>)
+  ![스크린샷(75).png](<https://file.notion.so/f/f/57361b30-3e1c-49d5-a9cd-631aecf12902/52d7b5fa-e13e-44b6-97fe-8654da99619e/스크린샷(75).png?id=d2770245-d9ff-4aa5-864a-64cd86d6c0e0&table=block&spaceId=57361b30-3e1c-49d5-a9cd-631aecf12902&expirationTimestamp=1694253600000&signature=p4wSeQlPZLcggWp3UlP2wYIMT6SloIaeiB1oTVadCdI&downloadName=스크린샷%2875%29.png>)
   - 유저 본인의 정보를 확인할 수 있으며, 생성한 모임과 참여한 모임의 정보를 간단하게 알 수 있습니다.
   </details>
 
 <details>
 <summary>- 프로필 수정</summary>
 
-  ![스크린샷(76).png](<https://prod-files-secure.s3.us-west-2.amazonaws.com/57361b30-3e1c-49d5-a9cd-631aecf12902/6a6d9404-85fc-4387-85ac-343fd48e930c/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7(76).png>)
+  ![스크린샷(76).png](<https://file.notion.so/f/f/57361b30-3e1c-49d5-a9cd-631aecf12902/6a6d9404-85fc-4387-85ac-343fd48e930c/스크린샷(76).png?id=2835a642-0676-41f6-800e-bc5bca0d32a0&table=block&spaceId=57361b30-3e1c-49d5-a9cd-631aecf12902&expirationTimestamp=1694253600000&signature=I_O2fB3N38paBehPsP-i79mK8omDA9LTqDr4BAasqAk&downloadName=스크린샷%2876%29.png>)
   - 본인이 원하는 이미지를 프로필 이미지로 바꿀 수 있으며, 닉네임과 상태메시지를 변경할 수 있습니다.
 </details>
 
