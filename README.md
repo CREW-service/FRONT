@@ -17,13 +17,13 @@
 <details>
 <summary>- 카카오 맵 </summary>
 
-  ![스크린샷(67).png](<https://prod-files-secure.s3.us-west-2.amazonaws.com/57361b30-3e1c-49d5-a9cd-631aecf12902/549536c6-c283-471d-9052-9fc7779de97a/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7(67).png>)
+  ![스크린샷(67).png](<https://file.notion.so/f/f/57361b30-3e1c-49d5-a9cd-631aecf12902/549536c6-c283-471d-9052-9fc7779de97a/스크린샷(67).png?id=73e27009-4c8a-403e-a1a3-5d0661680c3a&table=block&spaceId=57361b30-3e1c-49d5-a9cd-631aecf12902&expirationTimestamp=1694253600000&signature=jOShqz8cd2iEOz22KMh1r_063U3ojGf1L-eY1PsVt2E&downloadName=스크린샷%2867%29.png>)
   - 원하는 위치에 모임을 생성할 수 있으며, 모임이 있다면 모임의 정보를 얻을 수 있습니다.
 </details>
 <details>
 <summary>- 알림 기능</summary>
 
-  ![스크린샷(68).png](<https://prod-files-secure.s3.us-west-2.amazonaws.com/57361b30-3e1c-49d5-a9cd-631aecf12902/4b509ee8-69f7-4f9e-b4f2-7c735b914af9/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7(68).png>)
+  ![스크린샷(68).png](<https://file.notion.so/f/f/57361b30-3e1c-49d5-a9cd-631aecf12902/4b509ee8-69f7-4f9e-b4f2-7c735b914af9/스크린샷(68).png?id=85975d4f-701d-4629-94a3-a75618ca5cfa&table=block&spaceId=57361b30-3e1c-49d5-a9cd-631aecf12902&expirationTimestamp=1694253600000&signature=K-AmnbHGvJgxD7kTEyP5Kxztzg_4hQT1sh5MuSGmUHo&downloadName=스크린샷%2868%29.png>)
   - 실시간으로 알림을 얻을 수 있습니다.
 </details>
 ### 상세 페이지
